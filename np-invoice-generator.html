@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>North Point Invoice Generator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1B3A6B;
+    --blue: #2563EB;
+    --light: #F4F6F9;
+    --border: #D9DEE8;
+    --text: #1A202C;
+    --muted: #4A5568;
+    --white: #fff;
+    --green: #059669;
+    --red: #DC2626;
+  }
+
+  body { font-family: Arial, sans-serif; background: #EEF2F7; color: var(--text); min-height: 100vh; }
+
+  /* ── TOP NAV ── */
+  .topbar {
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px; position: sticky; top: 0; z-index: 100;
+  }
+  .topbar-logo { display: flex; align-items: center; gap: 10px; }
+  .topbar-logo .npsq {
+    width: 36px; height: 36px; background: #2563EB;
+    border: 2px solid #fff; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; color: #fff; letter-spacing: -1px;
+  }
+  .topbar-logo span { color: #fff; font-size: 15px; font-weight: 700; }
+  .topbar-sub { color: #93C5FD; font-size: 12px; margin-top: 1px; }
+  .btn-group { display: flex; gap: 8px; }
+  .btn { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: .15s; }
+  .btn-outline { background: transparent; border: 1.5px solid rgba(255,255,255,.4); color: #fff; }
+  .btn-outline:hover { background: rgba(255,255,255,.1); }
+  .btn-primary { background: #2563EB; color: #fff; }
+  .btn-primary:hover { background: #1D4ED8; }
+  .btn-success { background: var(--green); color: #fff; }
+  .btn-success:hover { background: #047857; }
+  .btn-ai { background: linear-gradient(135deg, #7C3AED, #2563EB); color: #fff; }
+  .btn-ai:hover { opacity: .9; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* ── CARDS ── */
+  .card { background: var(--white); border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
+  .card-header { background: var(--navy); color: #fff; padding: 12px 16px; font-size: 13px; font-weight: 700; letter-spacing: .5px; display: flex; align-items: center; gap: 8px; }
+  .card-header .icon { font-size: 15px; }
+  .card-body { padding: 16px; }
+
+  /* ── FORM FIELDS ── */
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 4px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 8px 10px; border: 1.5px solid var(--border);
+    border-radius: 6px; font-size: 13px; color: var(--text); background: var(--white);
+    transition: border .15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+  }
+  .field textarea { resize: vertical; min-height: 60px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field-row.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* ── LINE ITEMS ── */
+  .items-table { width: 100%; border-collapse: collapse; }
+  .items-table th {
+    background: var(--navy); color: #fff; font-size: 11px; font-weight: 700;
+    padding: 9px 10px; text-align: left; letter-spacing: .4px;
+  }
+  .items-table th.right { text-align: right; }
+  .items-table th.center { text-align: center; }
+  .items-table td { padding: 4px 6px; border-bottom: 1px solid var(--border); }
+  .items-table tr:last-child td { border-bottom: none; }
+  .items-table tr:nth-child(even) { background: var(--light); }
+  .items-table input {
+    width: 100%; padding: 6px 8px; border: 1px solid transparent;
+    border-radius: 4px; font-size: 13px; background: transparent;
+  }
+  .items-table input:focus { border-color: var(--blue); background: #fff; outline: none; }
+  .items-table input.right { text-align: right; }
+  .items-table input.center { text-align: center; }
+  .delete-row { background: none; border: none; color: #CBD5E0; cursor: pointer; font-size: 16px; padding: 4px 6px; }
+  .delete-row:hover { color: var(--red); }
+
+  /* ── TOTALS ── */
+  .totals-box { margin-top: 0; }
+  .totals-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 12px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  .totals-row:last-child { border-bottom: none; }
+  .totals-row.grand { background: var(--navy); color: #fff; font-weight: 700; font-size: 15px; border-radius: 0 0 8px 8px; }
+  .totals-row input {
+    width: 80px; text-align: right; border: none; background: transparent;
+    font-size: 13px; color: var(--text); padding: 2px 4px;
+  }
+  .totals-row.grand input { color: #fff; }
+  .totals-row input:focus { outline: 1px solid var(--blue); border-radius: 3px; }
+
+  /* ── AI PANEL ── */
+  .ai-panel { background: linear-gradient(135deg, #EEF2FF, #F0F9FF); border: 1.5px solid #C7D2FE; border-radius: 10px; padding: 14px 16px; }
+  .ai-panel h4 { font-size: 13px; font-weight: 700; color: #4338CA; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .ai-response { background: #fff; border: 1px solid #C7D2FE; border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.6; color: var(--text); min-height: 60px; white-space: pre-wrap; }
+  .ai-loading { color: #6366F1; font-style: italic; }
+
+  /* ── INVOICE PREVIEW ── */
+  #preview-section { display: none; }
+  .preview-wrap { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 40px; }
+  .inv-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+  .inv-logo-area h1 { font-size: 22px; font-weight: 900; color: var(--navy); letter-spacing: -.5px; }
+  .inv-logo-area p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .inv-title-area { text-align: right; }
+  .inv-title-area .big { font-size: 36px; font-weight: 900; color: var(--navy); }
+  .inv-title-area .meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .inv-title-area .meta strong { color: var(--navy); }
+  .inv-rule { border: none; border-top: 3px solid var(--navy); margin: 16px 0; }
+  .inv-bill-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
+  .inv-section-label { font-size: 10px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .inv-bill-box { background: var(--light); border-radius: 6px; padding: 14px; font-size: 12px; line-height: 1.8; }
+  .inv-proj-box { font-size: 12px; line-height: 1.8; padding-left: 20px; border-left: 2px solid var(--border); }
+  .inv-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12px; }
+  .inv-table th { background: var(--navy); color: #fff; padding: 8px 10px; text-align: left; font-size: 11px; }
+  .inv-table th.r { text-align: right; }
+  .inv-table th.c { text-align: center; }
+  .inv-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .inv-table td.r { text-align: right; }
+  .inv-table td.c { text-align: center; }
+  .inv-table tr:nth-child(even) td { background: var(--light); }
+  .inv-totals { display: flex; justify-content: flex-end; }
+  .inv-totals-inner { min-width: 280px; font-size: 12px; }
+  .inv-tot-row { display: flex; justify-content: space-between; padding: 5px 10px; border-bottom: 1px solid var(--border); }
+  .inv-tot-row.grand { background: var(--navy); color: #fff; font-weight: 700; font-size: 14px; border-radius: 4px; margin-top: 4px; }
+  .inv-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; font-size: 11px; }
+  .inv-bottom-label { font-size: 10px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .inv-footer { text-align: center; margin-top: 24px; font-size: 11px; color: var(--muted); border-top: 2px solid var(--navy); padding-top: 14px; font-style: italic; }
+
+  /* ── STATUS BADGE ── */
+  .status-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-draft { background: #FEF3C7; color: #92400E; }
+  .badge-sent { background: #DBEAFE; color: #1E40AF; }
+  .badge-paid { background: #D1FAE5; color: #065F46; }
+  .badge-overdue { background: #FEE2E2; color: #991B1B; }
+
+  /* ── ADD ROW BTN ── */
+  .add-row-btn { background: none; border: 1.5px dashed var(--border); border-radius: 6px; width: 100%; padding: 8px; font-size: 12px; color: var(--muted); cursor: pointer; margin-top: 6px; transition: .15s; }
+  .add-row-btn:hover { border-color: var(--blue); color: var(--blue); background: #EFF6FF; }
+
+  /* ── TABS ── */
+  .tab-bar { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 16px; }
+  .tab { padding: 10px 18px; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: .15s; }
+  .tab.active { color: var(--navy); border-bottom-color: var(--navy); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  @media (max-width: 700px) {
+    .two-col, .three-col, .inv-bill-row, .inv-bottom { grid-template-columns: 1fr; }
+    .field-row, .field-row.three { grid-template-columns: 1fr; }
+    .btn span { display: none; }
+    .preview-wrap { padding: 20px; }
+  }
+  @media print {
+    .topbar, .card-header .icon, .btn-group, .delete-row, .add-row-btn, #form-section { display: none !important; }
+    #preview-section { display: block !important; }
+    body { background: white; }
+    .preview-wrap { border: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="npsq">NP</div>
+    <div>
+      <div style="color:#fff;font-size:15px;font-weight:700;">North Point Advisory Group</div>
+      <div style="color:#93C5FD;font-size:11px;">Invoice Generator</div>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-ai" onclick="openAI()">✨ <span>AI Assist</span></button>
+    <button class="btn btn-outline" onclick="togglePreview()">👁 <span>Preview</span></button>
+    <button class="btn btn-success" onclick="printInvoice()">🖨 <span>Print / PDF</span></button>
+    <button class="btn btn-primary" onclick="saveInvoice()">💾 <span>Save</span></button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STATUS -->
+  <div class="status-row" style="margin-top:4px;">
+    <span style="font-size:13px;font-weight:700;color:var(--navy);">New Invoice</span>
+    <select onchange="updateStatus(this.value)" id="status-sel" style="padding:4px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:12px;font-weight:600;">
+      <option value="draft">Draft</option>
+      <option value="sent">Sent</option>
+      <option value="paid">Paid</option>
+      <option value="overdue">Overdue</option>
+    </select>
+    <span class="badge badge-draft" id="status-badge">DRAFT</span>
+  </div>
+
+  <!-- FORM SECTION -->
+  <div id="form-section">
+
+    <!-- ROW 1: Invoice Info + Client Info -->
+    <div class="two-col" style="margin-bottom:16px;">
+
+      <!-- Invoice Info -->
+      <div class="card">
+        <div class="card-header"><span class="icon">📋</span> Invoice Details</div>
+        <div class="card-body">
+          <div class="field-row">
+            <div class="field">
+              <label>Invoice Number</label>
+              <input type="text" id="inv-num" placeholder="NP-2026-001" oninput="updatePreview()">
+            </div>
+            <div class="field">
+              <label>Invoice Date</label>
+              <input type="date" id="inv-date" oninput="updatePreview()">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Due Date</label>
+              <input type="date" id="due-date" oninput="updatePreview()">
+            </div>
+            <div class="field">
+              <label>Payment Terms</label>
+              <select id="pay-terms" onchange="updatePreview()">
+                <option>Net 30</option>
+                <option>Net 15</option>
+                <option>Net 60</option>
+                <option>Due on Receipt</option>
+                <option>50% Deposit / 50% on Completion</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>PO / Reference #</label>
+              <input type="text" id="po-num" placeholder="Optional" oninput="updatePreview()">
+            </div>
+            <div class="field">
+              <label>Engagement Type</label>
+              <select id="eng-type" onchange="updatePreview()">
+                <option>BD Consulting</option>
+                <option>Strategic Planning</option>
+                <option>Partnership Development</option>
+                <option>Fundraising Advisory</option>
+                <option>Board Development</option>
+                <option>Workforce / Higher Ed</option>
+                <option>Project-Based</option>
+                <option>Retainer</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Project / Engagement Name</label>
+            <input type="text" id="project-name" placeholder="Q3 Partnership Development" oninput="updatePreview()">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Service Period Start</label>
+              <input type="date" id="period-start" oninput="updatePreview()">
+            </div>
+            <div class="field">
+              <label>Service Period End</label>
+              <input type="date" id="period-end" oninput="updatePreview()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client Info -->
+      <div class="card">
+        <div class="card-header"><span class="icon">🏢</span> Bill To</div>
+        <div class="card-body">
+          <div class="field">
+            <label>Organization Name</label>
+            <input type="text" id="client-org" placeholder="Client Organization" oninput="updatePreview()">
+          </div>
+          <div class="field">
+            <label>Contact Name</label>
+            <input type="text" id="client-name" placeholder="Primary Contact" oninput="updatePreview()">
+          </div>
+          <div class="field">
+            <label>Street Address</label>
+            <input type="text" id="client-addr" placeholder="123 Main St" oninput="updatePreview()">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>City</label>
+              <input type="text" id="client-city" placeholder="Dayton" oninput="updatePreview()">
+            </div>
+            <div class="field">
+              <label>State / ZIP</label>
+              <input type="text" id="client-zip" placeholder="OH 45402" oninput="updatePreview()">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Email</label>
+              <input type="email" id="client-email" placeholder="contact@company.com" oninput="updatePreview()">
+            </div>
+            <div class="field">
+              <label>Phone</label>
+              <input type="tel" id="client-phone" placeholder="(937) 555-0100" oninput="updatePreview()">
+            </div>
+          </div>
+          <div class="field">
+            <label>Quick Load Client</label>
+            <select onchange="loadClient(this.value)" style="width:100%;padding:8px;border:1.5px solid var(--border);border-radius:6px;font-size:13px;">
+              <option value="">— Select saved client —</option>
+              <option value="techfirst">Technology First</option>
+              <option value="concession">Concession TV</option>
+              <option value="nexusblue">NexusBlue / Resonance</option>
+              <option value="mvh">Miami Valley Hospital Foundation</option>
+              <option value="graceworks">Graceworks Lutheran Services</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Line Items -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-header"><span class="icon">📝</span> Services / Line Items</div>
+      <div class="card-body" style="padding:0;">
+        <table class="items-table" id="items-table">
+          <thead>
+            <tr>
+              <th style="width:42%">Description of Services</th>
+              <th class="center" style="width:10%">Qty / Hrs</th>
+              <th class="center" style="width:10%">Unit</th>
+              <th class="right" style="width:13%">Rate ($)</th>
+              <th class="right" style="width:13%">Amount</th>
+              <th style="width:5%"></th>
+            </tr>
+          </thead>
+          <tbody id="line-items">
+          </tbody>
+        </table>
+        <div style="padding:8px 12px; display:flex; gap:8px;">
+          <button class="add-row-btn" onclick="addRow()" style="flex:1;">+ Add Line Item</button>
+          <button class="add-row-btn" onclick="addMileageRow()" style="flex:1; border-color:#2563EB; color:#2563EB;">🚗 Add Mileage</button>
+        </div>
+      </div>
+
+      <!-- Totals -->
+      <div style="padding:0 16px 16px; display:flex; justify-content:flex-end;">
+        <div style="min-width:320px; border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <div class="totals-row">
+            <span>Subtotal</span>
+            <strong id="subtotal-display">$0.00</strong>
+          </div>
+          <div class="totals-row">
+            <span>Discount</span>
+            <div style="display:flex;align-items:center;gap:4px;">
+              <span>$</span><input type="number" id="discount" value="0" min="0" oninput="calcTotals()" style="width:80px;text-align:right;border:1px solid var(--border);border-radius:4px;padding:3px 6px;font-size:13px;">
+            </div>
+          </div>
+          <div class="totals-row">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span>Tax</span>
+              <input type="number" id="tax-rate" value="0" min="0" max="100" step="0.1" oninput="calcTotals()" style="width:50px;text-align:center;border:1px solid var(--border);border-radius:4px;padding:3px 6px;font-size:12px;">
+              <span>%</span>
+            </div>
+            <strong id="tax-display">$0.00</strong>
+          </div>
+          <div class="totals-row grand">
+            <span>TOTAL DUE</span>
+            <strong id="total-display">$0.00</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 3: Notes + AI -->
+    <div class="two-col" style="margin-bottom:16px;">
+      <div class="card">
+        <div class="card-header"><span class="icon">📌</span> Notes & Payment Instructions</div>
+        <div class="card-body">
+          <div class="field">
+            <label>Remit to Email</label>
+            <input type="email" id="remit-email" value="dan@np-advisory.com" oninput="updatePreview()">
+          </div>
+          <div class="field">
+            <label>Internal Notes (not on invoice)</label>
+            <textarea id="int-notes" rows="3" placeholder="Internal memo, follow-up reminders..."></textarea>
+          </div>
+          <div class="field">
+            <label>Invoice Notes (appears on invoice)</label>
+            <textarea id="inv-notes" rows="3" placeholder="Special terms, project notes, thank you message..." oninput="updatePreview()">Late payments subject to 1.5% monthly finance charge. Please reference invoice # on all payments.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Assist -->
+      <div class="card">
+        <div class="card-header" style="background:linear-gradient(135deg,#4338CA,#1B3A6B)"><span class="icon">✨</span> AI Business Advisor</div>
+        <div class="card-body">
+          <div class="ai-panel">
+            <h4>✨ AI Assist</h4>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+              <button class="btn btn-ai" style="font-size:12px;padding:6px 12px;" onclick="aiAssist('write_description')">Write Descriptions</button>
+              <button class="btn btn-ai" style="font-size:12px;padding:6px 12px;" onclick="aiAssist('suggest_rate')">Suggest Rate</button>
+              <button class="btn btn-ai" style="font-size:12px;padding:6px 12px;" onclick="aiAssist('write_notes')">Draft Notes</button>
+              <button class="btn btn-ai" style="font-size:12px;padding:6px 12px;" onclick="aiAssist('follow_up')">Follow-up Email</button>
+            </div>
+            <div class="ai-response" id="ai-output">Ask AI to help write service descriptions, suggest consulting rates, draft professional invoice notes, or generate a follow-up email for unpaid invoices.</div>
+          </div>
+          <div style="margin-top:12px;">
+            <div class="field">
+              <label>Custom AI Request</label>
+              <div style="display:flex;gap:8px;">
+                <input type="text" id="ai-custom" placeholder="e.g. Write a scope summary for workforce BD..." style="flex:1;">
+                <button class="btn btn-ai" onclick="aiCustom()" style="white-space:nowrap;">Ask</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /form-section -->
+
+  <!-- PREVIEW SECTION -->
+  <div id="preview-section">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <span style="font-size:14px;font-weight:700;color:var(--navy);">Invoice Preview</span>
+      <div class="btn-group">
+        <button class="btn btn-outline" style="background:var(--navy);color:#fff;" onclick="togglePreview()">← Back to Edit</button>
+        <button class="btn btn-success" onclick="printInvoice()">🖨 Print / Save PDF</button>
+      </div>
+    </div>
+    <div class="preview-wrap" id="invoice-preview">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- AI MODAL -->
+<div id="ai-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:24px;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+    <h3 style="color:var(--navy);margin-bottom:12px;">✨ AI Business Advisor</h3>
+    <textarea id="modal-prompt" rows="4" style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;margin-bottom:12px;" placeholder="Describe what you need..."></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-outline" style="background:var(--navy);color:#fff;" onclick="closeAI()">Cancel</button>
+      <button class="btn btn-ai" onclick="sendModalAI()">Generate</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────
+const AI_PROXY = 'https://orange-unit-d4c5.dan-29e.workers.dev';
+
+const CLIENTS = {
+  techfirst: { org: 'Technology First', name: '', addr: '1435 Cincinnati St', city: 'Dayton', zip: 'OH 45417', email: '', phone: '' },
+  concession: { org: 'Concession TV', name: '', addr: '', city: '', zip: '', email: '', phone: '' },
+  nexusblue: { org: 'NexusBlue / Resonance', name: '', addr: '', city: '', zip: '', email: '', phone: '' },
+  mvh: { org: 'Miami Valley Hospital Foundation', name: '', addr: '1 Wyoming St', city: 'Dayton', zip: 'OH 45409', email: '', phone: '' },
+  graceworks: { org: 'Graceworks Lutheran Services', name: '', addr: '1 Wyoming St', city: 'Dayton', zip: 'OH 45409', email: '', phone: '' },
+};
+
+let rowId = 0;
+let isPreview = false;
+
+// ── INIT ─────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Set today's date
+  const today = new Date().toISOString().split('T')[0];
+  const due = new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0];
+  document.getElementById('inv-date').value = today;
+  document.getElementById('due-date').value = due;
+  // Auto invoice number
+  const num = 'NP-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*900)+100);
+  document.getElementById('inv-num').value = num;
+  // Add 3 default rows
+  addRow(); addRow(); addRow();
+});
+
+// ── IRS RATE (2025) ───────────────────────────────────────────────
+const IRS_RATE = 0.70; // $0.70/mile — update each Jan
+
+// ── ROWS ─────────────────────────────────────────────────────────
+function addRow() {
+  rowId++;
+  const tbody = document.getElementById('line-items');
+  const tr = document.createElement('tr');
+  tr.id = 'row-' + rowId;
+  tr.dataset.type = 'service';
+  tr.innerHTML = `
+    <td><input type="text" placeholder="Service description..." oninput="updatePreview()"></td>
+    <td><input type="number" class="center" value="" min="0" step="0.5" oninput="calcRow(${rowId})" placeholder="0"></td>
+    <td>
+      <select style="width:100%;padding:5px;border:1px solid transparent;border-radius:4px;font-size:12px;" onchange="updatePreview()">
+        <option>hrs</option><option>days</option><option>months</option><option>flat</option><option>sessions</option>
+      </select>
+    </td>
+    <td><input type="number" class="right" value="" min="0" step="25" oninput="calcRow(${rowId})" placeholder="0.00"></td>
+    <td><input type="text" class="right" id="amt-${rowId}" value="" readonly style="font-weight:600;color:var(--navy);background:var(--light);"></td>
+    <td><button class="delete-row" onclick="deleteRow(${rowId})">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+}
+
+function addMileageRow() {
+  rowId++;
+  const id = rowId;
+  const tbody = document.getElementById('line-items');
+  const tr = document.createElement('tr');
+  tr.id = 'row-' + id;
+  tr.dataset.type = 'mileage';
+  tr.style.background = '#EFF6FF';
+  tr.innerHTML = `
+    <td colspan="5" style="padding:0;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid #D9DEE8;">
+        <!-- Top: route inputs -->
+        <div style="padding:6px 10px;border-right:1px solid #D9DEE8;">
+          <div style="font-size:10px;font-weight:700;color:#1B3A6B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">🚗 Mileage / Travel</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:10px;color:#4A5568;min-width:30px;">FROM</span>
+              <input type="text" id="from-${id}" placeholder="Origin address..." style="flex:1;padding:5px 8px;border:1.5px solid #D9DEE8;border-radius:5px;font-size:12px;" oninput="updatePreview()">
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:10px;color:#4A5568;min-width:30px;">TO</span>
+              <input type="text" id="to-${id}" placeholder="Destination address..." style="flex:1;padding:5px 8px;border:1.5px solid #D9DEE8;border-radius:5px;font-size:12px;" oninput="updatePreview()">
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:2px;">
+              <button onclick="lookupMiles(${id})" style="background:#2563EB;color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">📍 Get Miles</button>
+              <span id="route-status-${id}" style="font-size:11px;color:#4A5568;font-style:italic;"></span>
+            </div>
+          </div>
+        </div>
+        <!-- Right: calc inputs -->
+        <div style="padding:6px 10px;">
+          <div style="font-size:10px;font-weight:700;color:#1B3A6B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Calculation</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:11px;color:#4A5568;min-width:52px;">Miles</span>
+              <input type="number" id="miles-${id}" class="right" min="0" step="0.1" placeholder="0.0" oninput="calcMileage(${id})" style="width:80px;padding:5px 8px;border:1.5px solid #D9DEE8;border-radius:5px;font-size:12px;text-align:right;">
+              <label style="font-size:11px;color:#4A5568;display:flex;align-items:center;gap:4px;">
+                <input type="checkbox" id="roundtrip-${id}" onchange="calcMileage(${id})"> Round trip
+              </label>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:11px;color:#4A5568;min-width:52px;">Rate/mi</span>
+              <span style="font-size:12px;color:#4A5568;">$</span>
+              <input type="number" id="rate-${id}" value="${IRS_RATE}" min="0" step="0.005" oninput="calcMileage(${id})" style="width:70px;padding:5px 8px;border:1.5px solid #D9DEE8;border-radius:5px;font-size:12px;text-align:right;">
+              <span style="font-size:10px;color:#6B7280;font-style:italic;">IRS 2025</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:11px;color:#4A5568;min-width:52px;">Total mi</span>
+              <input type="text" id="totalmiles-${id}" readonly placeholder="—" style="width:80px;padding:5px 8px;border:1px solid #E2E8F0;border-radius:5px;font-size:12px;text-align:right;background:#F4F6F9;color:#1B3A6B;font-weight:700;">
+              <strong id="amt-${id}" style="font-size:13px;color:#1B3A6B;min-width:70px;text-align:right;"></strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+    <td style="vertical-align:top;padding:8px 4px;"><button class="delete-row" onclick="deleteRow(${id})">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+}
+
+function deleteRow(id) {
+  const row = document.getElementById('row-' + id);
+  if (row) { row.remove(); calcTotals(); }
+}
+
+function calcRow(id) {
+  const row = document.getElementById('row-' + id);
+  const inputs = row.querySelectorAll('input[type="number"]');
+  const qty = parseFloat(inputs[0].value) || 0;
+  const rate = parseFloat(inputs[1].value) || 0;
+  const amt = qty * rate;
+  document.getElementById('amt-' + id).value = amt > 0 ? '$' + amt.toFixed(2) : '';
+  calcTotals();
+}
+
+function calcMileage(id) {
+  const oneway = parseFloat(document.getElementById('miles-' + id)?.value) || 0;
+  const isRT = document.getElementById('roundtrip-' + id)?.checked;
+  const rate = parseFloat(document.getElementById('rate-' + id)?.value) || IRS_RATE;
+  const totalMiles = isRT ? oneway * 2 : oneway;
+  const amt = totalMiles * rate;
+  const tmEl = document.getElementById('totalmiles-' + id);
+  const amtEl = document.getElementById('amt-' + id);
+  if (tmEl) tmEl.value = totalMiles > 0 ? totalMiles.toFixed(1) + ' mi' : '';
+  if (amtEl) amtEl.textContent = amt > 0 ? '$' + amt.toFixed(2) : '';
+  calcTotals();
+}
+
+// ── MAP DISTANCE LOOKUP (OpenStreetMap Nominatim + OSRM) ──────────
+async function lookupMiles(id) {
+  const from = document.getElementById('from-' + id)?.value.trim();
+  const to   = document.getElementById('to-' + id)?.value.trim();
+  const statusEl = document.getElementById('route-status-' + id);
+
+  if (!from || !to) { statusEl.innerHTML = '<span style="color:#DC2626">Enter both addresses first.</span>'; return; }
+
+  statusEl.innerHTML = '<span style="color:#4A5568">🔍 Looking up route…</span>';
+
+  // Primary: direct browser fetch to OSM (works fine from GitHub Pages)
+  await lookupMilesDirect(id, from, to, statusEl);
+}
+
+// Geocode via Nominatim + route via OSRM — both free, no API key needed
+// Works from any browser; was blocked only in Claude's build sandbox
+async function lookupMilesDirect(id, from, to, statusEl) {
+  try {
+    statusEl.innerHTML = '<span style="color:#4A5568">🗺 Geocoding addresses…</span>';
+
+    const geo = async (addr) => {
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addr)}&format=json&limit=1`;
+      const res = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+      const data = await res.json();
+      if (!data.length) throw new Error(`Address not found: "${addr}"`);
+      return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+    };
+
+    const [origin, dest] = await Promise.all([geo(from), geo(to)]);
+
+    statusEl.innerHTML = '<span style="color:#4A5568">📐 Calculating driving route…</span>';
+    const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${origin.lon},${origin.lat};${dest.lon},${dest.lat}?overview=false`;
+    const routeRes = await fetch(osrmUrl);
+    const routeData = await routeRes.json();
+    if (routeData.code !== 'Ok') throw new Error('No driving route found between those addresses.');
+
+    const miles = routeData.routes[0].distance / 1609.344;
+    document.getElementById('miles-' + id).value = miles.toFixed(1);
+
+    const mapLink = `https://www.google.com/maps/dir/${encodeURIComponent(from)}/${encodeURIComponent(to)}`;
+    statusEl.innerHTML = `<span style="color:#059669">✓ ${miles.toFixed(1)} mi one-way</span> &nbsp;<a href="${mapLink}" target="_blank" style="color:#2563EB;font-size:10px;font-weight:600;">View in Google Maps ↗</a>`;
+    calcMileage(id);
+
+  } catch(e) {
+    // Graceful fallback: open Google Maps so Dan can read mileage manually
+    const mapLink = `https://www.google.com/maps/dir/${encodeURIComponent(from)}/${encodeURIComponent(to)}`;
+    statusEl.innerHTML = `<span style="color:#B45309">⚠ Auto-lookup failed.</span> <a href="${mapLink}" target="_blank" style="color:#2563EB;font-weight:700;">Open Google Maps ↗</a> then enter miles manually.`;
+  }
+}
+
+function calcTotals() {
+  const rows = document.querySelectorAll('#line-items tr');
+  let sub = 0;
+  rows.forEach(tr => {
+    if (tr.dataset.type === 'mileage') {
+      const amtEl = tr.querySelector('[id^="amt-"]');
+      if (amtEl && amtEl.textContent) {
+        sub += parseFloat(amtEl.textContent.replace('$','')) || 0;
+      }
+    } else {
+      const amtEl = tr.querySelector('input[id^="amt-"]');
+      if (amtEl && amtEl.value) {
+        sub += parseFloat(amtEl.value.replace('$','')) || 0;
+      }
+    }
+  });
+  const discount = parseFloat(document.getElementById('discount').value) || 0;
+  const taxRate = parseFloat(document.getElementById('tax-rate').value) || 0;
+  const taxed = (sub - discount) * (taxRate / 100);
+  const total = sub - discount + taxed;
+  document.getElementById('subtotal-display').textContent = '$' + sub.toFixed(2);
+  document.getElementById('tax-display').textContent = '$' + taxed.toFixed(2);
+  document.getElementById('total-display').textContent = '$' + total.toFixed(2);
+  updatePreview();
+}
+
+// ── STATUS ────────────────────────────────────────────────────────
+function updateStatus(val) {
+  const badge = document.getElementById('status-badge');
+  const map = { draft:'DRAFT', sent:'SENT', paid:'PAID', overdue:'OVERDUE' };
+  const cls = { draft:'badge-draft', sent:'badge-sent', paid:'badge-paid', overdue:'badge-overdue' };
+  badge.textContent = map[val];
+  badge.className = 'badge ' + cls[val];
+}
+
+// ── QUICK LOAD CLIENT ─────────────────────────────────────────────
+function loadClient(key) {
+  if (!key) return;
+  const c = CLIENTS[key];
+  document.getElementById('client-org').value = c.org;
+  document.getElementById('client-name').value = c.name;
+  document.getElementById('client-addr').value = c.addr;
+  document.getElementById('client-city').value = c.city;
+  document.getElementById('client-zip').value = c.zip;
+  document.getElementById('client-email').value = c.email;
+  document.getElementById('client-phone').value = c.phone;
+  updatePreview();
+}
+
+// ── PREVIEW ───────────────────────────────────────────────────────
+function togglePreview() {
+  isPreview = !isPreview;
+  document.getElementById('form-section').style.display = isPreview ? 'none' : 'block';
+  document.getElementById('preview-section').style.display = isPreview ? 'block' : 'none';
+  if (isPreview) renderPreview();
+}
+
+function updatePreview() {
+  if (isPreview) renderPreview();
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  const [y,m,day] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[parseInt(m)-1] + ' ' + parseInt(day) + ', ' + y;
+}
+
+function renderPreview() {
+  const $ = id => document.getElementById(id)?.value || '';
+
+  // Collect line items
+  const rows = document.querySelectorAll('#line-items tr');
+  let itemRows = '';
+  rows.forEach(tr => {
+    if (tr.dataset.type === 'mileage') {
+      // Find the row id from the amt element
+      const amtEl = tr.querySelector('[id^="amt-"]');
+      if (!amtEl) return;
+      const rid = amtEl.id.replace('amt-','');
+      const from = document.getElementById('from-' + rid)?.value || '';
+      const to   = document.getElementById('to-' + rid)?.value || '';
+      const miles = document.getElementById('totalmiles-' + rid)?.value || '';
+      const rate  = document.getElementById('rate-' + rid)?.value || '';
+      const amt   = amtEl.textContent || '';
+      const isRT  = document.getElementById('roundtrip-' + rid)?.checked;
+      if (!miles && !from) return;
+      const desc = `Mileage/Travel${from ? ': ' + from + ' → ' + to : ''}${isRT ? ' (round trip)' : ''}`;
+      itemRows += `<tr>
+        <td style="font-size:11px;">${desc}</td>
+        <td class="c">${miles}</td>
+        <td class="c">mi</td>
+        <td class="r">${rate ? '$' + parseFloat(rate).toFixed(3) + '/mi' : ''}</td>
+        <td class="r">${amt}</td>
+      </tr>`;
+    } else {
+      const desc = tr.querySelector('td:nth-child(1) input')?.value || '';
+      const qty  = tr.querySelector('td:nth-child(2) input')?.value || '';
+      const unit = tr.querySelector('td:nth-child(3) select')?.value || '';
+      const rate = tr.querySelector('td:nth-child(4) input')?.value || '';
+      const amtEl = tr.querySelector('input[id^="amt-"]');
+      const amt  = amtEl?.value || '';
+      if (desc || qty || rate) {
+        itemRows += `<tr>
+          <td>${desc || '&nbsp;'}</td>
+          <td class="c">${qty}</td>
+          <td class="c">${unit}</td>
+          <td class="r">${rate ? '$' + parseFloat(rate).toFixed(2) : ''}</td>
+          <td class="r">${amt}</td>
+        </tr>`;
+      }
+    }
+  });
+
+  const sub = document.getElementById('subtotal-display')?.textContent || '$0.00';
+  const tax = document.getElementById('tax-display')?.textContent || '$0.00';
+  const total = document.getElementById('total-display')?.textContent || '$0.00';
+  const discount = parseFloat($('discount')) || 0;
+  const taxRate = parseFloat($('tax-rate')) || 0;
+
+  const periodStart = fmtDate($('period-start'));
+  const periodEnd = fmtDate($('period-end'));
+  const period = $('period-start') ? `${periodStart} – ${periodEnd}` : '—';
+
+  document.getElementById('invoice-preview').innerHTML = `
+    <div class="inv-header">
+      <div class="inv-logo-area">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:44px;height:44px;background:#1B3A6B;border:2px solid #2563EB;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;letter-spacing:-2px;">NP</div>
+          <div>
+            <div style="font-size:18px;font-weight:900;color:#1B3A6B;">North Point Advisory Group</div>
+            <div style="font-size:11px;color:#4A5568;">Insight-Driven. Purpose-Led.</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:#4A5568;line-height:1.8;">
+          Dan Driskell, Senior Consultant<br>Xenia, Ohio &nbsp;|&nbsp; np-advisory.com
+        </div>
+      </div>
+      <div class="inv-title-area">
+        <div class="big">INVOICE</div>
+        <div class="meta">Invoice #: <strong>${$('inv-num') || '—'}</strong></div>
+        <div class="meta">Invoice Date: <strong>${fmtDate($('inv-date'))}</strong></div>
+        <div class="meta">Due Date: <strong>${fmtDate($('due-date'))}</strong></div>
+        <div class="meta">Terms: <strong>${$('pay-terms') || 'Net 30'}</strong></div>
+        ${$('po-num') ? `<div class="meta">PO #: <strong>${$('po-num')}</strong></div>` : ''}
+      </div>
+    </div>
+
+    <hr class="inv-rule">
+
+    <div class="inv-bill-row">
+      <div>
+        <div class="inv-section-label">Bill To</div>
+        <div class="inv-bill-box">
+          <strong>${$('client-org') || 'Organization Name'}</strong><br>
+          ${$('client-name') ? $('client-name') + '<br>' : ''}
+          ${$('client-addr') ? $('client-addr') + '<br>' : ''}
+          ${$('client-city') ? $('client-city') + ', ' + $('client-zip') + '<br>' : ''}
+          ${$('client-email') ? '📧 ' + $('client-email') + '<br>' : ''}
+          ${$('client-phone') ? '📞 ' + $('client-phone') : ''}
+        </div>
+      </div>
+      <div>
+        <div class="inv-section-label">Project / Engagement</div>
+        <div class="inv-proj-box">
+          <strong>${$('project-name') || 'Project Name'}</strong><br>
+          <span style="color:#4A5568;">Type: ${$('eng-type')}</span><br>
+          <span style="color:#4A5568;">Service Period: ${period}</span><br>
+          <span style="color:#4A5568;">Account Manager: Dan Driskell</span>
+        </div>
+      </div>
+    </div>
+
+    <table class="inv-table">
+      <thead>
+        <tr>
+          <th style="width:45%">Description of Services</th>
+          <th class="c" style="width:10%">Qty/Hrs</th>
+          <th class="c" style="width:10%">Unit</th>
+          <th class="r" style="width:15%">Rate</th>
+          <th class="r" style="width:15%">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${itemRows || '<tr><td colspan="5" style="text-align:center;color:#718096;padding:20px;">Add line items above</td></tr>'}
+      </tbody>
+    </table>
+
+    <div class="inv-totals">
+      <div class="inv-totals-inner">
+        <div class="inv-tot-row"><span>Subtotal</span><span>${sub}</span></div>
+        ${discount > 0 ? `<div class="inv-tot-row"><span>Discount</span><span>($${discount.toFixed(2)})</span></div>` : ''}
+        ${taxRate > 0 ? `<div class="inv-tot-row"><span>Tax (${taxRate}%)</span><span>${tax}</span></div>` : ''}
+        <div class="inv-tot-row grand"><span>TOTAL DUE</span><span>${total}</span></div>
+      </div>
+    </div>
+
+    <div class="inv-bottom">
+      <div>
+        <div class="inv-bottom-label">Payment Instructions</div>
+        <div style="line-height:1.9;color:#4A5568;">
+          <strong style="color:#1B3A6B;">Make checks payable to:</strong> North Point Advisory Group<br>
+          <strong style="color:#1B3A6B;">Mailing:</strong> Xenia, Ohio<br>
+          <strong style="color:#1B3A6B;">ACH / Wire:</strong> Contact for banking details<br>
+          <strong style="color:#1B3A6B;">Credit Card:</strong> Contact for secure link<br>
+          <strong style="color:#1B3A6B;">Remit to:</strong> ${$('remit-email') || 'dan@np-advisory.com'}
+        </div>
+      </div>
+      <div style="border-left:2px solid #D9DEE8;padding-left:20px;">
+        <div class="inv-bottom-label">Notes</div>
+        <div style="line-height:1.8;color:#4A5568;font-size:11px;">${($('inv-notes') || '').replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>
+
+    <div class="inv-footer">
+      Thank you for your business. &nbsp;|&nbsp; North Point Advisory Group &nbsp;|&nbsp; np-advisory.com &nbsp;|&nbsp; Insight-Driven. Purpose-Led.
+    </div>
+  `;
+}
+
+// ── PRINT ─────────────────────────────────────────────────────────
+function printInvoice() {
+  if (!isPreview) { isPreview = true; document.getElementById('form-section').style.display='none'; document.getElementById('preview-section').style.display='block'; renderPreview(); }
+  setTimeout(() => window.print(), 300);
+}
+
+// ── SAVE ──────────────────────────────────────────────────────────
+function saveInvoice() {
+  const data = {
+    invNum: document.getElementById('inv-num').value,
+    client: document.getElementById('client-org').value,
+    total: document.getElementById('total-display').textContent,
+    status: document.getElementById('status-sel').value,
+    date: new Date().toISOString()
+  };
+  localStorage.setItem('np_invoice_' + data.invNum, JSON.stringify(data));
+  showToast('Invoice saved locally ✓');
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  Object.assign(t.style, { position:'fixed', bottom:'24px', right:'24px', background:'#059669', color:'#fff', padding:'12px 20px', borderRadius:'8px', fontSize:'13px', fontWeight:'600', zIndex:'999', boxShadow:'0 4px 16px rgba(0,0,0,.2)' });
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// ── AI ────────────────────────────────────────────────────────────
+async function callAI(prompt) {
+  const out = document.getElementById('ai-output');
+  out.innerHTML = '<span class="ai-loading">✨ Thinking...</span>';
+  try {
+    const res = await fetch(AI_PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: 'You are the AI Business Advisor for North Point Advisory Group, a senior BD consulting firm in Xenia, Ohio run by Dan Driskell. You help write professional invoice descriptions, suggest consulting rates, draft client communications, and provide business development advice. Be concise, professional, and specific to consulting/nonprofit/higher ed context.',
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(b => b.text || '').join('') || 'No response.';
+    out.textContent = text;
+  } catch(e) {
+    out.textContent = 'AI unavailable. Check your Cloudflare Worker proxy connection.';
+  }
+}
+
+function gatherContext() {
+  const client = document.getElementById('client-org').value || 'the client';
+  const project = document.getElementById('project-name').value || 'the engagement';
+  const engType = document.getElementById('eng-type').value;
+  const rows = document.querySelectorAll('#line-items tr');
+  let services = [];
+  rows.forEach(tr => { const d = tr.querySelector('td:nth-child(1) input')?.value; if(d) services.push(d); });
+  return { client, project, engType, services: services.join(', ') };
+}
+
+function aiAssist(type) {
+  const ctx = gatherContext();
+  const prompts = {
+    write_description: `Write 3 professional consulting service line item descriptions for a ${ctx.engType} engagement with ${ctx.client} (project: "${ctx.project}"). Each should be 1 sentence, clear and specific. Format as a numbered list.`,
+    suggest_rate: `Suggest appropriate hourly and/or project rates for a ${ctx.engType} engagement in the Dayton, Ohio market. Dan Driskell has 25+ years of experience in corporate partnerships, higher ed workforce development, and nonprofit board service. Give specific dollar ranges with brief rationale.`,
+    write_notes: `Write a professional invoice notes section for a ${ctx.engType} invoice to ${ctx.client} for "${ctx.project}". Include payment terms reminder, contact info prompt, and a brief thank-you. Keep it under 4 sentences.`,
+    follow_up: `Draft a polite but firm follow-up email for an unpaid invoice from North Point Advisory Group to ${ctx.client} for "${ctx.project}". The email should be professional, reference the invoice number as [INV#], mention the total as [AMOUNT], and maintain the relationship. Keep it under 150 words.`
+  };
+  callAI(prompts[type]);
+}
+
+function aiCustom() {
+  const q = document.getElementById('ai-custom').value.trim();
+  if (!q) return;
+  const ctx = gatherContext();
+  callAI(`Context: Dan Driskell, North Point Advisory Group, ${ctx.engType} consulting, client: ${ctx.client}.\n\nRequest: ${q}`);
+}
+
+function openAI() {
+  document.getElementById('ai-modal').style.display = 'flex';
+}
+function closeAI() {
+  document.getElementById('ai-modal').style.display = 'none';
+}
+async function sendModalAI() {
+  const prompt = document.getElementById('modal-prompt').value.trim();
+  if (!prompt) return;
+  closeAI();
+  await callAI(prompt);
+}
+</script>
+</body>
+</html>
