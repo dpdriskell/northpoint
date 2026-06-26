@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NP Advisory">
+<title>NP Advisory — CRM</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --navy:#0D1B2A; --navy-mid:#1A2E42; --navy-light:#243B55;
+  --gold:#C9A84C; --gold-light:#E8C97A; --gold-pale:#F5EDD3;
+  --slate:#7A8FA6; --slate-light:#B0BEC5;
+  --cream:#F4F6F9; --white:#FFFFFF;
+  --success:#2E7D5E; --warn:#C17B2A; --danger:#8B2635;
+  --surface:#EEF1F5; --border:#E2E8F0;
+  --text-primary:#0D1B2A; --text-secondary:#4A6070; --text-muted:#7A8FA6;
+  --tab-h:68px;
+  --safe-top:env(safe-area-inset-top,44px);
+  --safe-bot:env(safe-area-inset-bottom,20px);
+  --personal:#7B2FBE; --work:#1A5276; --social:#C17B2A; --buffer:#2E7D5E;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;font-family:'Inter',-apple-system,sans-serif;background:var(--cream);color:var(--text-primary);overscroll-behavior:none;}
+#app{display:flex;flex-direction:column;height:100%;height:-webkit-fill-available;}
+
+/* TOPBAR */
+.topbar{background:var(--navy);padding:calc(var(--safe-top) + 8px) 16px 12px;display:flex;align-items:flex-end;justify-content:space-between;flex-shrink:0;position:relative;}
+.topbar-brand{font-family:'DM Serif Display',serif;font-size:12px;color:var(--gold);line-height:1.1;}
+.topbar-brand span{display:block;font-size:9px;font-family:'Inter',sans-serif;font-weight:400;color:var(--slate);letter-spacing:.1em;text-transform:uppercase;margin-top:1px;}
+.topbar-title{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);font-size:16px;font-weight:700;color:var(--white);white-space:nowrap;}
+.topbar-action{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.1);border:none;color:var(--white);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+/* SCROLL */
+.page-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
+
+/* BOTTOM TABS — 5 items */
+.bottom-tabs{display:flex;background:var(--white);border-top:1px solid var(--border);padding-bottom:var(--safe-bot);flex-shrink:0;box-shadow:0 -2px 12px rgba(0,0,0,.06);}
+.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 2px 5px;cursor:pointer;border:none;background:none;transition:all .12s;}
+.tab-icon{font-size:20px;line-height:1;}
+.tab-label{font-size:9px;font-weight:600;color:var(--text-muted);margin-top:3px;letter-spacing:.02em;}
+.tab-item.active .tab-label{color:var(--gold);}
+.tab-item.active .tab-icon{transform:translateY(-1px);}
+
+/* SCREENS */
+.screen{display:none;}
+.screen.active{display:block;padding:14px 14px 28px;}
+
+/* CARDS */
+.card{background:var(--white);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.card-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--navy);}
+.section-sub{font-size:12px;color:var(--text-muted);margin-top:1px;}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.kpi-tile{background:var(--white);border-radius:12px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.kpi-val{font-size:20px;font-weight:700;color:var(--navy);line-height:1;}
+.kpi-val.gold{color:var(--gold);} .kpi-val.green{color:var(--success);} .kpi-val.warn{color:var(--warn);} .kpi-val.red{color:var(--danger);}
+.kpi-label{font-size:11px;color:var(--text-muted);font-weight:500;margin-top:3px;}
+
+/* HOURS */
+.hours-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--surface);cursor:pointer;}
+.hours-item:last-child{border-bottom:none;}
+.hours-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.hours-name{font-size:14px;font-weight:600;flex:1;}
+.hours-bar-wrap{width:50px;height:5px;background:var(--surface);border-radius:3px;overflow:hidden;}
+.hours-bar{height:100%;border-radius:3px;}
+.hours-num{font-size:13px;font-weight:700;color:var(--text-secondary);min-width:26px;text-align:right;}
+.hours-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;flex-shrink:0;}
+.hb-active{background:#D6EFEA;color:#2E7D5E;} .hb-warn{background:#FCECD6;color:#C17B2A;} .hb-low{background:#EEF1F5;color:var(--slate);}
+
+/* ACTIVITY */
+.activity-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--surface);}
+.activity-item:last-child{border-bottom:none;}
+.act-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.act-body{flex:1;min-width:0;}
+.act-client{font-size:13px;font-weight:700;}
+.act-text{font-size:12px;color:var(--text-secondary);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.act-meta{font-size:11px;color:var(--text-muted);margin-top:2px;}
+
+/* CLIENT LIST */
+.client-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--surface);cursor:pointer;}
+.client-row:last-child{border-bottom:none;}
+.client-avatar{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:19px;color:var(--white);flex-shrink:0;}
+.client-info{flex:1;min-width:0;}
+.client-name{font-size:14px;font-weight:700;}
+.client-meta{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.client-arrow{color:var(--border);font-size:18px;}
+.client-hours-pill{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;background:var(--surface);color:var(--text-secondary);}
+
+/* CLIENT DETAIL */
+.client-detail-header{border-radius:14px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.cd-avatar{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);flex-shrink:0;}
+.cd-name{font-family:'DM Serif Display',serif;font-size:19px;color:var(--navy);}
+.cd-sub{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.cd-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
+.cd-stat{background:var(--white);border-radius:11px;padding:10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.cd-stat-val{font-size:17px;font-weight:700;color:var(--navy);}
+.cd-stat-label{font-size:9px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-top:2px;}
+
+/* SEG CONTROL */
+.seg-control{display:flex;background:var(--surface);border-radius:10px;padding:3px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:2px;flex-shrink:0;}
+.seg-item{flex:1;padding:7px 6px;border-radius:7px;text-align:center;font-size:11px;font-weight:600;color:var(--text-muted);cursor:pointer;white-space:nowrap;transition:all .15s;min-width:62px;}
+.seg-item.active{background:var(--white);color:var(--navy);box-shadow:0 1px 4px rgba(0,0,0,.1);}
+
+/* NOTES */
+.note-card{background:var(--white);border-radius:12px;padding:13px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.note-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+.note-pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;}
+.pill-call{background:#D6EFEA;color:#2E7D5E;} .pill-email{background:#D6E4F5;color:#1A5276;} .pill-meeting{background:#FCECD6;color:#C17B2A;} .pill-note{background:#EEF1F5;color:#4A6070;}
+.note-date{font-size:11px;color:var(--text-muted);}
+.note-body{font-size:14px;line-height:1.55;}
+.note-del{margin-top:8px;font-size:12px;color:var(--danger);cursor:pointer;font-weight:600;}
+
+/* PROSPECT */
+.prospect-card{background:var(--white);border-radius:12px;padding:13px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.prospect-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.prospect-name{font-size:14px;font-weight:700;}
+.prospect-contact{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.prospect-value{font-size:14px;font-weight:700;color:var(--success);}
+.prospect-notes{font-size:13px;color:var(--text-secondary);margin-top:7px;line-height:1.5;}
+.stage-pill{font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;text-transform:uppercase;white-space:nowrap;}
+.s-lead{background:#EEF1F5;color:#4A6070;} .s-contacted{background:#D6E4F5;color:#1A5276;} .s-proposal{background:#FCECD6;color:#C17B2A;} .s-negotiating{background:#F5E6FB;color:#7B1FA2;} .s-won{background:#D6EFEA;color:#2E7D5E;} .s-lost{background:#FDDEDE;color:#8B2635;}
+
+/* INVOICE */
+.invoice-card{background:var(--white);border-radius:12px;padding:13px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.inv-top{display:flex;align-items:flex-start;justify-content:space-between;}
+.inv-desc{font-size:14px;font-weight:600;}
+.inv-client-name{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.inv-amount{font-size:17px;font-weight:700;}
+.inv-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:9px;}
+.inv-date{font-size:12px;color:var(--text-muted);}
+.inv-status-pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;}
+.is-paid{background:#D6EFEA;color:#2E7D5E;} .is-pending{background:#FCECD6;color:#C17B2A;} .is-overdue{background:#FDDEDE;color:#8B2635;}
+.inv-status-change{font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:underline;margin-top:5px;}
+
+/* SOCIAL */
+.plat-btn{flex:1;min-width:76px;padding:11px 6px;border-radius:11px;border:2px solid var(--border);background:var(--white);cursor:pointer;text-align:center;transition:all .15s;font-size:11px;font-weight:700;}
+.plat-btn .plat-icon{font-size:22px;display:block;margin-bottom:3px;}
+.plat-btn.sel-ig{border-color:#E1306C;background:#FFF0F5;color:#E1306C;}
+.plat-btn.sel-fb{border-color:#1877F2;background:#EEF4FF;color:#1877F2;}
+.plat-btn.sel-li{border-color:#0A66C2;background:#E8F0FB;color:#0A66C2;}
+.social-textarea{width:100%;min-height:110px;padding:13px;border:1.5px solid var(--border);border-radius:11px;font-size:15px;font-family:'Inter',sans-serif;color:var(--text-primary);resize:none;line-height:1.5;background:var(--white);}
+.social-textarea:focus{outline:none;border-color:var(--gold);}
+.char-row{display:flex;justify-content:space-between;align-items:center;margin-top:5px;font-size:12px;color:var(--text-muted);}
+.char-row.warn{color:var(--warn);} .char-row.over{color:var(--danger);font-weight:700;}
+.pub-btn{flex:1;padding:12px;border-radius:11px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;}
+.pub-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;}
+.pub-fb{background:#1877F2;color:white;} .pub-li{background:#0A66C2;color:white;} .pub-all{background:var(--navy);color:white;}
+.pub-btn:active{transform:scale(.97);}
+.ai-gen-btn{width:100%;padding:12px;border-radius:11px;background:var(--navy);color:var(--gold);border:none;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:9px;display:flex;align-items:center;justify-content:center;gap:7px;}
+.tone-row{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:3px;margin-bottom:9px;}
+.tone-chip{padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--white);font-size:12px;font-weight:600;color:var(--text-secondary);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.tone-chip.active{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+.post-hist-card{background:var(--white);border-radius:11px;padding:12px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.post-hist-badges{display:flex;gap:4px;margin-bottom:7px;}
+.phb{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;}
+.phb-ig{background:#FFF0F5;color:#E1306C;} .phb-fb{background:#EEF4FF;color:#1877F2;} .phb-li{background:#E8F0FB;color:#0A66C2;}
+.post-hist-text{font-size:13px;line-height:1.5;}
+.post-hist-meta{font-size:11px;color:var(--text-muted);margin-top:5px;}
+
+/* ══ CALENDAR ══ */
+.cal-week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.cal-week-label{font-family:'DM Serif Display',serif;font-size:16px;color:var(--navy);}
+.cal-nav-btn{background:var(--surface);border:none;width:34px;height:34px;border-radius:9px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.cal-day-strip{display:flex;gap:5px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.cal-day{flex-shrink:0;width:42px;border-radius:11px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .15s;}
+.cal-day.today{background:var(--navy);}
+.cal-day.today .cal-day-num{color:var(--gold);}
+.cal-day.today .cal-day-name{color:var(--slate-light);}
+.cal-day.selected{background:var(--gold);}
+.cal-day.selected .cal-day-num,.cal-day.selected .cal-day-name{color:var(--navy);}
+.cal-day-name{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);}
+.cal-day-num{font-size:17px;font-weight:700;color:var(--text-primary);margin-top:2px;}
+.cal-day-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);margin:3px auto 0;display:none;}
+.cal-day-dot.show{display:block;}
+
+.time-grid{position:relative;}
+.time-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:2px;min-height:36px;}
+.time-label{font-size:10px;color:var(--text-muted);width:38px;flex-shrink:0;padding-top:4px;text-align:right;font-weight:500;}
+.time-col{flex:1;position:relative;min-height:36px;border-top:1px solid var(--surface);}
+.time-block{
+  border-radius:8px;
+  padding:5px 8px;
+  font-size:11px;
+  font-weight:600;
+  margin-bottom:2px;
+  cursor:pointer;
+  line-height:1.3;
+}
+.block-work{background:#D6E4F5;color:#1A5276;border-left:3px solid #1A5276;}
+.block-personal{background:#EDE0F7;color:#7B2FBE;border-left:3px solid #7B2FBE;}
+.block-social{background:#FCECD6;color:#C17B2A;border-left:3px solid #C17B2A;}
+.block-buffer{background:#D6EFEA;color:#2E7D5E;border-left:3px solid #2E7D5E;}
+.block-blocked{background:#F5F5F5;color:#aaa;border-left:3px solid #ddd;}
+
+.cal-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-secondary);font-weight:500;}
+.leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+
+.add-event-row{display:flex;gap:8px;margin-bottom:12px;}
+.event-type-pill{padding:7px 12px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;font-weight:700;cursor:pointer;background:var(--white);color:var(--text-secondary);flex-shrink:0;transition:all .12s;}
+.event-type-pill.sel-work{border-color:#1A5276;background:#D6E4F5;color:#1A5276;}
+.event-type-pill.sel-personal{border-color:#7B2FBE;background:#EDE0F7;color:#7B2FBE;}
+.event-type-pill.sel-social{border-color:#C17B2A;background:#FCECD6;color:#C17B2A;}
+
+.today-events-header{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin:12px 0 8px;}
+
+/* ══ PHONE SCRIPTS ══ */
+.script-context-row{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:12px;padding-bottom:2px;}
+.context-pill{padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;font-weight:700;cursor:pointer;background:var(--white);color:var(--text-secondary);white-space:nowrap;flex-shrink:0;transition:all .12s;}
+.context-pill.active{border-color:var(--navy);background:var(--navy);color:var(--gold);}
+
+.script-option-card{background:var(--white);border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.script-option-header{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;border-bottom:1px solid var(--surface);}
+.script-option-num{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
+.opt-1{background:#D6EFEA;color:#2E7D5E;}
+.opt-2{background:#D6E4F5;color:#1A5276;}
+.opt-3{background:#FCECD6;color:#C17B2A;}
+.script-option-label{font-size:14px;font-weight:700;flex:1;}
+.script-option-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.tag-direct{background:#D6EFEA;color:#2E7D5E;}
+.tag-warm{background:#D6E4F5;color:#1A5276;}
+.tag-soft{background:#FCECD6;color:#C17B2A;}
+.script-body{padding:14px;font-size:14px;line-height:1.65;color:var(--text-primary);display:none;}
+.script-body.open{display:block;}
+.script-line{margin-bottom:10px;}
+.script-line strong{color:var(--navy);}
+.script-hint{font-size:12px;color:var(--text-muted);font-style:italic;margin-top:4px;}
+.script-action-row{display:flex;gap:7px;margin-top:12px;}
+.script-btn{flex:1;padding:10px;border-radius:10px;border:none;font-size:12px;font-weight:700;cursor:pointer;text-align:center;}
+.sbtn-copy{background:var(--navy);color:var(--white);}
+.sbtn-ai{background:var(--gold);color:var(--navy);}
+.script-btn:active{transform:scale(.96);}
+
+.ai-script-result{margin-top:10px;padding:12px;background:var(--surface);border-radius:10px;font-size:13px;line-height:1.65;color:var(--text-primary);display:none;}
+.ai-script-result.show{display:block;}
+
+.script-topic-bar{display:flex;gap:8px;margin-bottom:12px;}
+.script-topic-input{flex:1;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;background:var(--white);}
+.script-topic-input:focus{outline:none;border-color:var(--gold);}
+
+/* SHARED */
+.btn{padding:12px 18px;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .13s;display:flex;align-items:center;justify-content:center;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--navy);color:var(--white);flex:1;}
+.btn-ghost{background:var(--surface);color:var(--text-secondary);}
+.btn-danger{background:var(--danger);color:white;}
+.btn-full{width:100%;margin-bottom:9px;}
+.form-group{margin-bottom:13px;}
+.form-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);display:block;margin-bottom:5px;}
+.form-control{width:100%;padding:12px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;color:var(--text-primary);background:var(--white);-webkit-appearance:none;}
+.form-control:focus{outline:none;border-color:var(--gold);}
+textarea.form-control{resize:none;min-height:90px;line-height:1.5;}
+select.form-control{cursor:pointer;}
+
+/* AI PANEL */
+.ai-panel{background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:13px;padding:14px;margin-bottom:10px;}
+.ai-panel-title{font-family:'DM Serif Display',serif;font-size:15px;color:var(--gold);margin-bottom:5px;}
+.ai-sub{font-size:12px;color:var(--slate-light);margin-bottom:9px;}
+.ai-input{width:100%;padding:10px 13px;border-radius:9px;border:1px solid var(--navy-light);background:rgba(255,255,255,.08);color:var(--white);font-size:14px;font-family:'Inter',sans-serif;margin-bottom:8px;}
+.ai-input::placeholder{color:var(--slate);}
+.ai-input:focus{outline:none;border-color:var(--gold);}
+.ai-response{font-size:13px;line-height:1.6;color:var(--slate-light);min-height:16px;}
+.ai-thinking{color:var(--gold);font-style:italic;}
+
+/* BACK */
+.back-row{display:flex;align-items:center;gap:6px;padding:3px 0 12px;cursor:pointer;color:var(--gold);font-size:14px;font-weight:600;background:none;border:none;}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:28px 14px;color:var(--text-muted);}
+.es-icon{font-size:32px;margin-bottom:8px;}
+.es-text{font-size:14px;line-height:1.5;}
+
+/* SHEET */
+.sheet-overlay{display:none;position:fixed;inset:0;background:rgba(13,27,42,.55);z-index:200;align-items:flex-end;}
+.sheet-overlay.open{display:flex;}
+.sheet{background:var(--white);border-radius:20px 20px 0 0;width:100%;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 calc(var(--safe-bot) + 14px);animation:slideSheet .28s cubic-bezier(.32,.72,0,1);}
+@keyframes slideSheet{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.sheet-handle{width:36px;height:4px;border-radius:2px;background:var(--border);margin:11px auto 14px;}
+.sheet-title{font-family:'DM Serif Display',serif;font-size:19px;color:var(--navy);padding:0 16px 13px;border-bottom:1px solid var(--border);margin-bottom:14px;}
+.sheet-body{padding:0 16px;}
+.sheet-footer{padding:12px 16px 0;display:flex;gap:8px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:calc(var(--tab-h) + var(--safe-bot) + 10px);left:14px;right:14px;background:var(--navy);color:var(--white);padding:12px 16px;border-radius:11px;font-size:14px;font-weight:600;text-align:center;z-index:300;display:none;box-shadow:0 8px 24px rgba(0,0,0,.25);animation:toastIn .2s ease;}
+.toast.show{display:block;}
+@keyframes toastIn{from{transform:translateY(8px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+/* ══ FUNDRAISING ══ */
+:root{--mvhf:#8B1A2E;--gw:#1B5E3B;}
+.org-toggle{display:flex;gap:6px;margin-bottom:14px;}
+.org-btn{flex:1;padding:11px 8px;border-radius:12px;border:2px solid var(--border);background:var(--white);font-size:13px;font-weight:700;cursor:pointer;text-align:center;transition:all .15s;}
+.org-btn.active-mvhf{border-color:var(--mvhf);background:#FDF0F2;color:var(--mvhf);}
+.org-btn.active-gw{border-color:var(--gw);background:#EEF7F2;color:var(--gw);}
+.org-btn:not([class*="active"]){color:var(--text-muted);}
+
+.fund-kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.fund-kpi{background:var(--white);border-radius:12px;padding:12px 10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.fund-kpi-val{font-size:18px;font-weight:700;line-height:1;}
+.fund-kpi-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-top:3px;}
+
+.progress-wrap{background:var(--surface);border-radius:20px;height:10px;overflow:hidden;margin:8px 0 4px;}
+.progress-bar{height:100%;border-radius:20px;transition:width .4s ease;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);font-weight:500;}
+
+.donor-card{background:var(--white);border-radius:12px;padding:13px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.donor-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.donor-name{font-size:14px;font-weight:700;}
+.donor-meta{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.donor-amount{font-size:16px;font-weight:700;}
+.donor-bottom{display:flex;align-items:center;gap:8px;margin-top:9px;flex-wrap:wrap;}
+.donor-stage-pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;}
+.ds-identify{background:#EEF1F5;color:#4A6070;}
+.ds-qualify{background:#D6E4F5;color:#1A5276;}
+.ds-cultivate{background:#EDE0F7;color:#7B2FBE;}
+.ds-solicit{background:#FCECD6;color:#C17B2A;}
+.ds-steward{background:#D6EFEA;color:#2E7D5E;}
+.ds-lapsed{background:#FDDEDE;color:#8B2635;}
+.donor-note{font-size:12px;color:var(--text-secondary);margin-top:7px;line-height:1.5;}
+
+.event-card{background:var(--white);border-radius:12px;padding:13px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.ev-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.ev-name{font-size:14px;font-weight:700;}
+.ev-date-badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--gold-pale);color:var(--warn);white-space:nowrap;flex-shrink:0;}
+.ev-goal-row{margin-top:9px;}
+.ev-meta{font-size:12px;color:var(--text-muted);margin-top:5px;}
+
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--surface);}
+.task-item:last-child{border-bottom:none;}
+.task-check{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .12s;margin-top:1px;}
+.task-check.done{background:var(--success);border-color:var(--success);color:white;}
+.task-body{flex:1;}
+.task-title{font-size:14px;font-weight:600;line-height:1.3;}
+.task-title.done{text-decoration:line-through;color:var(--text-muted);}
+.task-due{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.task-due.overdue{color:var(--danger);font-weight:600;}
+.task-del{font-size:12px;color:var(--danger);cursor:pointer;margin-top:3px;}
+
+.fund-seg{display:flex;background:var(--surface);border-radius:10px;padding:3px;margin-bottom:12px;gap:2px;}
+.fund-seg-item{flex:1;padding:7px 4px;border-radius:7px;text-align:center;font-size:11px;font-weight:600;color:var(--text-muted);cursor:pointer;white-space:nowrap;transition:all .15s;}
+.fund-seg-item.active{background:var(--white);color:var(--navy);box-shadow:0 1px 4px rgba(0,0,0,.1);}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-brand">North Point<span>Advisory Group</span></div>
+  <div class="topbar-title" id="topbar-title">Dashboard</div>
+  <button class="topbar-action" onclick="handleFabAction()">＋</button>
+</div>
+
+<!-- PAGE SCROLL -->
+<div class="page-scroll" id="page-scroll">
+
+<!-- ══ DASHBOARD ══ -->
+<div class="screen active" id="screen-dashboard">
+  <div class="kpi-row">
+    <div class="kpi-tile"><div class="kpi-val gold" id="dash-billed">$0</div><div class="kpi-label">Total Billed</div></div>
+    <div class="kpi-tile"><div class="kpi-val green" id="dash-collected">$0</div><div class="kpi-label">Collected</div></div>
+    <div class="kpi-tile"><div class="kpi-val warn" id="dash-pending">$0</div><div class="kpi-label">Pending</div></div>
+    <div class="kpi-tile"><div class="kpi-val" id="dash-clients" style="color:var(--navy)">0</div><div class="kpi-label">Clients</div></div>
+  </div>
+  <div class="card"><div class="card-label">Weekly Hours</div><div id="dash-hours"></div></div>
+  <div class="card"><div class="card-label">Recent Activity</div><div id="dash-activity"></div></div>
+  <div class="ai-panel">
+    <div class="ai-panel-title">✦ AI Business Advisor</div>
+    <div class="ai-sub">Ask anything about your clients or pipeline.</div>
+    <input class="ai-input" id="ai-prompt" placeholder="Which client needs follow-up?" onkeydown="if(event.key==='Enter')askAI()">
+    <button class="btn btn-ghost btn-full" onclick="askAI()" style="background:var(--gold);color:var(--navy);padding:10px;">Ask AI</button>
+    <div class="ai-response" id="ai-response"></div>
+  </div>
+</div>
+
+<!-- ══ CLIENTS ══ -->
+<div class="screen" id="screen-clients">
+  <div class="section-header">
+    <div><div class="section-title">Clients</div><div class="section-sub" id="clients-sub">0 active</div></div>
+  </div>
+  <div class="card" style="padding:0 14px;"><div id="client-list"></div></div>
+</div>
+
+<!-- ══ CLIENT DETAIL ══ -->
+<div class="screen" id="screen-client-detail">
+  <button class="back-row" onclick="goBack()">← All Clients</button>
+  <div id="client-detail-header"></div>
+  <div class="cd-stats" id="cd-stats"></div>
+  <div class="seg-control" id="client-seg">
+    <div class="seg-item active" onclick="switchSeg('notes',this)">Notes</div>
+    <div class="seg-item" onclick="switchSeg('prospects',this)">Prospects</div>
+    <div class="seg-item" onclick="switchSeg('billing',this)">Billing</div>
+    <div class="seg-item" onclick="switchSeg('info',this)">Info</div>
+  </div>
+  <div id="seg-notes" class="seg-content"></div>
+  <div id="seg-prospects" class="seg-content" style="display:none"></div>
+  <div id="seg-billing" class="seg-content" style="display:none"></div>
+  <div id="seg-info" class="seg-content" style="display:none"></div>
+</div>
+
+<!-- ══ CALENDAR ══ -->
+<div class="screen" id="screen-calendar">
+  <div class="section-header">
+    <div class="section-title">My Calendar</div>
+    <button class="cal-nav-btn" onclick="openSheet('sheet-add-event')" style="background:var(--gold);color:var(--navy);font-size:14px;width:auto;padding:0 12px;font-weight:700;">+ Event</button>
+  </div>
+
+  <div class="cal-legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#1A5276"></div>Work</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#7B2FBE"></div>Personal</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#C17B2A"></div>Social</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#2E7D5E"></div>Buffer</div>
+  </div>
+
+  <div class="cal-week-nav">
+    <button class="cal-nav-btn" onclick="shiftWeek(-1)">‹</button>
+    <div class="cal-week-label" id="cal-week-label"></div>
+    <button class="cal-nav-btn" onclick="shiftWeek(1)">›</button>
+  </div>
+
+  <div class="cal-day-strip" id="cal-day-strip"></div>
+
+  <div class="card" style="padding:14px;">
+    <div class="today-events-header" id="cal-selected-label">Today's Schedule</div>
+    <div id="cal-time-grid"></div>
+  </div>
+</div>
+
+<!-- ══ PHONE SCRIPTS ══ -->
+<div class="screen" id="screen-scripts">
+  <div class="section-header">
+    <div class="section-title">Phone Scripts</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Business Context</div>
+    <div class="script-context-row" id="script-context-row">
+      <div class="context-pill active" onclick="selectContext(this,'chamber')">🏛 Chamber</div>
+      <div class="context-pill" onclick="selectContext(this,'nonprofit')">🤝 Nonprofit</div>
+      <div class="context-pill" onclick="selectContext(this,'corporate')">🏢 Corporate</div>
+      <div class="context-pill" onclick="selectContext(this,'university')">🎓 University</div>
+      <div class="context-pill" onclick="selectContext(this,'followup')">📞 Follow-Up</div>
+      <div class="context-pill" onclick="selectContext(this,'referral')">⭐ Referral</div>
+    </div>
+    <div class="card-label" style="margin-bottom:6px">Your Name / Their Name (optional)</div>
+    <div class="script-topic-bar">
+      <input class="script-topic-input" id="script-custom" placeholder="e.g. calling re: workforce partnership">
+    </div>
+  </div>
+
+  <div id="script-options-container"></div>
+
+  <div class="card" style="background:linear-gradient(135deg,var(--navy),var(--navy-mid));">
+    <div class="ai-panel-title">✦ AI Custom Script</div>
+    <div class="ai-sub" style="color:var(--slate-light);font-size:12px;margin-bottom:9px;">Describe the call and get a personalized script instantly.</div>
+    <input class="ai-input" id="ai-script-prompt" placeholder="e.g. Cold call to CFO about sponsoring a tech event…">
+    <button class="btn btn-full" onclick="generateScript()" style="background:var(--gold);color:var(--navy);padding:11px;margin-bottom:0;">✦ Generate Script</button>
+    <div class="ai-script-result" id="ai-script-result"></div>
+  </div>
+</div>
+
+<!-- ══ SOCIAL ══ -->
+<div class="screen" id="screen-social">
+  <div class="section-header"><div class="section-title">Social Media</div></div>
+  <div class="card">
+    <div class="card-label">Platforms</div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <div class="plat-btn" id="plat-ig" onclick="togglePlat('ig')"><span class="plat-icon">📸</span>Instagram</div>
+      <div class="plat-btn" id="plat-fb" onclick="togglePlat('fb')"><span class="plat-icon">📘</span>Facebook</div>
+      <div class="plat-btn" id="plat-li" onclick="togglePlat('li')"><span class="plat-icon">💼</span>LinkedIn</div>
+    </div>
+    <div class="card-label">Caption</div>
+    <textarea class="social-textarea" id="social-caption" placeholder="What's on your mind?" oninput="updateCharCount()"></textarea>
+    <div class="char-row" id="char-row"><span id="char-count">0 chars</span><span id="char-limits"></span></div>
+    <div style="display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;" id="pub-row"></div>
+  </div>
+  <div class="card">
+    <div style="font-family:'DM Serif Display',serif;font-size:15px;color:var(--navy);margin-bottom:9px;">✦ AI Caption Generator</div>
+    <input class="form-control" id="ai-social-topic" placeholder="e.g. New client win at Heidelberg University" style="margin-bottom:9px;">
+    <div class="tone-row">
+      <div class="tone-chip active" onclick="selectTone(this)">Professional</div>
+      <div class="tone-chip" onclick="selectTone(this)">Conversational</div>
+      <div class="tone-chip" onclick="selectTone(this)">Inspiring</div>
+      <div class="tone-chip" onclick="selectTone(this)">Concise</div>
+      <div class="tone-chip" onclick="selectTone(this)">Story-driven</div>
+    </div>
+    <button class="ai-gen-btn" onclick="generateCaption()">✦ Generate Caption</button>
+    <div id="ai-gen-status" style="font-size:12px;color:var(--text-muted);min-height:14px;"></div>
+  </div>
+  <div><div class="section-header" style="margin-top:4px;"><div class="card-label" style="margin:0">Post History</div></div><div id="social-history"></div></div>
+</div>
+
+<!-- ══ FUNDRAISING ══ -->
+<div class="screen" id="screen-fundraising">
+  <div class="section-header">
+    <div class="section-title">Fundraising</div>
+  </div>
+
+  <!-- Org Toggle -->
+  <div class="org-toggle">
+    <div class="org-btn active-mvhf" id="org-mvhf" onclick="switchOrg('mvhf',this)">🏥 MVH Foundation</div>
+    <div class="org-btn" id="org-gw" onclick="switchOrg('gw',this)">🌿 Graceworks</div>
+  </div>
+
+  <!-- Org Banner -->
+  <div id="fund-org-banner" class="card" style="padding:12px 14px;margin-bottom:10px;"></div>
+
+  <!-- KPIs -->
+  <div class="fund-kpi-row" id="fund-kpis"></div>
+
+  <!-- Campaign Progress -->
+  <div class="card" id="fund-campaign-card" style="margin-bottom:10px;">
+    <div class="card-label">Campaign Progress</div>
+    <div id="fund-campaign-progress"></div>
+  </div>
+
+  <!-- Seg Control -->
+  <div class="fund-seg" id="fund-seg">
+    <div class="fund-seg-item active" onclick="switchFundSeg('donors',this)">Donors</div>
+    <div class="fund-seg-item" onclick="switchFundSeg('events',this)">Events</div>
+    <div class="fund-seg-item" onclick="switchFundSeg('tasks',this)">Tasks</div>
+    <div class="fund-seg-item" onclick="switchFundSeg('notes',this)">Notes</div>
+  </div>
+
+  <div id="fund-seg-donors"></div>
+  <div id="fund-seg-events" style="display:none"></div>
+  <div id="fund-seg-tasks" style="display:none"></div>
+  <div id="fund-seg-notes" style="display:none"></div>
+</div>
+
+</div><!-- /page-scroll -->
+
+<!-- BOTTOM TABS — 6 items -->
+<div class="bottom-tabs">
+  <button class="tab-item active" onclick="switchTab('dashboard',this)" id="tab-dashboard"><span class="tab-icon">🏠</span><span class="tab-label">Home</span></button>
+  <button class="tab-item" onclick="switchTab('clients',this)" id="tab-clients"><span class="tab-icon">👥</span><span class="tab-label">Clients</span></button>
+  <button class="tab-item" onclick="switchTab('calendar',this)" id="tab-calendar"><span class="tab-icon">📅</span><span class="tab-label">Calendar</span></button>
+  <button class="tab-item" onclick="switchTab('fundraising',this)" id="tab-fundraising"><span class="tab-icon">❤️</span><span class="tab-label">Giving</span></button>
+  <button class="tab-item" onclick="switchTab('scripts',this)" id="tab-scripts"><span class="tab-icon">📞</span><span class="tab-label">Scripts</span></button>
+  <button class="tab-item" onclick="switchTab('social',this)" id="tab-social"><span class="tab-icon">📣</span><span class="tab-label">Social</span></button>
+</div>
+</div><!-- /app -->
+
+<!-- ══ BOTTOM SHEETS ══ -->
+
+<!-- Add Client -->
+<div class="sheet-overlay" id="sheet-add-client"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">New Client</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Organization Name *</label><input class="form-control" id="cl-name" placeholder="e.g. Technology First"></div>
+    <div class="form-group"><label class="form-label">Primary Contact</label><input class="form-control" id="cl-contact" placeholder="Name"></div>
+    <div class="form-group"><label class="form-label">Title</label><input class="form-control" id="cl-title" placeholder="e.g. Executive Director"></div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-control" id="cl-email" type="email" placeholder="email@org.com"></div>
+    <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="cl-phone" type="tel" placeholder="(555) 000-0000"></div>
+    <div class="form-group"><label class="form-label">Weekly Hours</label><input class="form-control" id="cl-hours" type="number" placeholder="10"></div>
+    <div class="form-group"><label class="form-label">Hourly Rate ($)</label><input class="form-control" id="cl-rate" type="number" placeholder="150"></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control" id="cl-notes" placeholder="Context, goals…"></textarea></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-client')">Cancel</button><button class="btn btn-primary" onclick="addClient()">Add Client</button></div>
+</div></div>
+
+<!-- Log Activity Global -->
+<div class="sheet-overlay" id="sheet-log-activity"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Log Activity</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Client *</label><select class="form-control" id="gnote-client"><option value="">— Select —</option></select></div>
+    <div class="form-group"><label class="form-label">Type</label><select class="form-control" id="gnote-type"><option value="note">Note</option><option value="call">Phone Call</option><option value="email">Email</option><option value="meeting">Meeting</option></select></div>
+    <div class="form-group"><label class="form-label">Date</label><input class="form-control" id="gnote-date" type="date"></div>
+    <div class="form-group"><label class="form-label">Details *</label><textarea class="form-control" id="gnote-body" placeholder="Key points, next steps…"></textarea></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-log-activity')">Cancel</button><button class="btn btn-primary" onclick="addGlobalNote()">Save</button></div>
+</div></div>
+
+<!-- Log Activity Client -->
+<div class="sheet-overlay" id="sheet-log-client-activity"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Log Activity</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Type</label><select class="form-control" id="note-type"><option value="note">Note</option><option value="call">Phone Call</option><option value="email">Email</option><option value="meeting">Meeting</option></select></div>
+    <div class="form-group"><label class="form-label">Date</label><input class="form-control" id="note-date" type="date"></div>
+    <div class="form-group"><label class="form-label">Details *</label><textarea class="form-control" id="note-body" placeholder="Key points, next steps…"></textarea></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-log-client-activity')">Cancel</button><button class="btn btn-primary" onclick="addNote()">Save</button></div>
+</div></div>
+
+<!-- Add Prospect -->
+<div class="sheet-overlay" id="sheet-add-prospect"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Add Prospect</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Prospect Name *</label><input class="form-control" id="p-name" placeholder="Company or individual"></div>
+    <div class="form-group"><label class="form-label">Contact Person</label><input class="form-control" id="p-contact" placeholder="Name"></div>
+    <div class="form-group"><label class="form-label">Stage</label><select class="form-control" id="p-stage"><option value="lead">Lead</option><option value="contacted">Contacted</option><option value="proposal">Proposal Sent</option><option value="negotiating">Negotiating</option><option value="won">Won 🎉</option><option value="lost">Lost</option></select></div>
+    <div class="form-group"><label class="form-label">Estimated Value ($)</label><input class="form-control" id="p-value" type="number" placeholder="0"></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control" id="p-notes" placeholder="Context, next steps…"></textarea></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-prospect')">Cancel</button><button class="btn btn-primary" onclick="addProspect()">Add</button></div>
+</div></div>
+
+<!-- Add Invoice -->
+<div class="sheet-overlay" id="sheet-add-invoice"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">New Invoice</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Client *</label><select class="form-control" id="inv-client"><option value="">— Select —</option></select></div>
+    <div class="form-group"><label class="form-label">Description *</label><input class="form-control" id="inv-desc" placeholder="BD services — June 2026"></div>
+    <div class="form-group"><label class="form-label">Amount ($) *</label><input class="form-control" id="inv-amount" type="number" placeholder="0.00"></div>
+    <div class="form-group"><label class="form-label">Date</label><input class="form-control" id="inv-date" type="date"></div>
+    <div class="form-group"><label class="form-label">Status</label><select class="form-control" id="inv-status"><option value="pending">Pending</option><option value="paid">Paid</option><option value="overdue">Overdue</option></select></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-invoice')">Cancel</button><button class="btn btn-primary" onclick="addInvoice()">Create</button></div>
+</div></div>
+
+<!-- Edit Client -->
+<div class="sheet-overlay" id="sheet-edit-client"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Edit Client</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Name</label><input class="form-control" id="ecl-name"></div>
+    <div class="form-group"><label class="form-label">Contact</label><input class="form-control" id="ecl-contact"></div>
+    <div class="form-group"><label class="form-label">Title</label><input class="form-control" id="ecl-title"></div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-control" id="ecl-email" type="email"></div>
+    <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="ecl-phone" type="tel"></div>
+    <div class="form-group"><label class="form-label">Weekly Hours</label><input class="form-control" id="ecl-hours" type="number"></div>
+    <div class="form-group"><label class="form-label">Rate ($)</label><input class="form-control" id="ecl-rate" type="number"></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control" id="ecl-notes"></textarea></div>
+    <button class="btn btn-danger btn-full" onclick="deleteClient()">Delete Client</button>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-edit-client')">Cancel</button><button class="btn btn-primary" onclick="saveClientEdit()">Save</button></div>
+</div></div>
+
+<!-- Invoice Status -->
+<div class="sheet-overlay" id="sheet-inv-status"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Update Invoice</div>
+  <input type="hidden" id="inv-status-id">
+  <div class="sheet-body" style="padding-bottom:8px;">
+    <button class="btn btn-full" style="background:#D6EFEA;color:#2E7D5E;margin-bottom:9px;" onclick="setInvStatus('paid')">✓ Mark Paid</button>
+    <button class="btn btn-full" style="background:#FCECD6;color:#C17B2A;margin-bottom:9px;" onclick="setInvStatus('pending')">⏳ Mark Pending</button>
+    <button class="btn btn-full" style="background:#FDDEDE;color:#8B2635;" onclick="setInvStatus('overdue')">⚠ Mark Overdue</button>
+  </div>
+</div></div>
+
+<!-- Prospect Stage -->
+<div class="sheet-overlay" id="sheet-prospect-stage"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Move Stage</div>
+  <input type="hidden" id="ps-client-id"><input type="hidden" id="ps-prospect-id">
+  <div class="sheet-body" style="padding-bottom:8px;">
+    <button class="btn btn-full" style="background:#EEF1F5;color:#4A6070;margin-bottom:7px;" onclick="setProspectStage('lead')">Lead</button>
+    <button class="btn btn-full" style="background:#D6E4F5;color:#1A5276;margin-bottom:7px;" onclick="setProspectStage('contacted')">Contacted</button>
+    <button class="btn btn-full" style="background:#FCECD6;color:#C17B2A;margin-bottom:7px;" onclick="setProspectStage('proposal')">Proposal Sent</button>
+    <button class="btn btn-full" style="background:#F5E6FB;color:#7B1FA2;margin-bottom:7px;" onclick="setProspectStage('negotiating')">Negotiating</button>
+    <button class="btn btn-full" style="background:#D6EFEA;color:#2E7D5E;margin-bottom:7px;" onclick="setProspectStage('won')">Won 🎉</button>
+    <button class="btn btn-full" style="background:#FDDEDE;color:#8B2635;" onclick="setProspectStage('lost')">Lost</button>
+  </div>
+</div></div>
+
+<!-- Add Event -->
+<div class="sheet-overlay" id="sheet-add-event"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Add Event</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Title *</label><input class="form-control" id="ev-title" placeholder="e.g. Call with Shannon"></div>
+    <div class="form-group"><label class="form-label">Type</label>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:4px;">
+        <div class="event-type-pill active" id="evtype-work" onclick="selectEvType('work',this)">💼 Work</div>
+        <div class="event-type-pill" id="evtype-personal" onclick="selectEvType('personal',this)">👤 Personal</div>
+        <div class="event-type-pill" id="evtype-social" onclick="selectEvType('social',this)">🥂 Social</div>
+        <div class="event-type-pill" id="evtype-buffer" onclick="selectEvType('buffer',this)">🧘 Buffer</div>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Date</label><input class="form-control" id="ev-date" type="date"></div>
+    <div style="display:flex;gap:8px;">
+      <div class="form-group" style="flex:1"><label class="form-label">Start</label><input class="form-control" id="ev-start" type="time"></div>
+      <div class="form-group" style="flex:1"><label class="form-label">End</label><input class="form-control" id="ev-end" type="time"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Notes</label><input class="form-control" id="ev-notes" placeholder="Optional details"></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-event')">Cancel</button><button class="btn btn-primary" onclick="addEvent()">Add Event</button></div>
+</div></div>
+
+<!-- Event Detail -->
+<div class="sheet-overlay" id="sheet-event-detail"><div class="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title" id="ev-detail-title"></div>
+  <div class="sheet-body">
+    <div id="ev-detail-body" style="font-size:14px;line-height:1.7;color:var(--text-secondary);"></div>
+  </div>
+  <div class="sheet-footer">
+    <button class="btn btn-danger" onclick="deleteEvent()">Delete</button>
+    <button class="btn btn-ghost" onclick="closeSheet('sheet-event-detail')" style="flex:1">Close</button>
+  </div>
+</div></div>
+
+<!-- Add Donor -->
+<div class="sheet-overlay" id="sheet-add-donor"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Add Donor / Prospect</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Name *</label><input class="form-control" id="dn-name" placeholder="Full name or organization"></div>
+    <div class="form-group"><label class="form-label">Type</label>
+      <select class="form-control" id="dn-type">
+        <option value="individual">Individual</option>
+        <option value="corporate">Corporate</option>
+        <option value="foundation">Foundation</option>
+        <option value="board">Board Member Give</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Stage</label>
+      <select class="form-control" id="dn-stage">
+        <option value="identify">Identify</option>
+        <option value="qualify">Qualify</option>
+        <option value="cultivate">Cultivate</option>
+        <option value="solicit">Solicit</option>
+        <option value="steward">Steward</option>
+        <option value="lapsed">Lapsed</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Ask Amount ($)</label><input class="form-control" id="dn-ask" type="number" placeholder="0"></div>
+    <div class="form-group"><label class="form-label">Pledge / Gift Amount ($)</label><input class="form-control" id="dn-gift" type="number" placeholder="0"></div>
+    <div class="form-group"><label class="form-label">Connection / Notes</label><textarea class="form-control" id="dn-notes" placeholder="How you know them, their interests, last contact…"></textarea></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-donor')">Cancel</button><button class="btn btn-primary" onclick="addDonor()">Add</button></div>
+</div></div>
+
+<!-- Add Fundraising Event -->
+<div class="sheet-overlay" id="sheet-add-fund-event"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Add Event</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Event Name *</label><input class="form-control" id="fe-name" placeholder="e.g. Gala, Golf Outing, Grateful Patient"></div>
+    <div class="form-group"><label class="form-label">Date</label><input class="form-control" id="fe-date" type="date"></div>
+    <div class="form-group"><label class="form-label">Revenue Goal ($)</label><input class="form-control" id="fe-goal" type="number" placeholder="0"></div>
+    <div class="form-group"><label class="form-label">Raised So Far ($)</label><input class="form-control" id="fe-raised" type="number" placeholder="0"></div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control" id="fe-notes" placeholder="Venue, committee chair, sponsorship tiers…"></textarea></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-fund-event')">Cancel</button><button class="btn btn-primary" onclick="addFundEvent()">Add Event</button></div>
+</div></div>
+
+<!-- Add Task -->
+<div class="sheet-overlay" id="sheet-add-task"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Add Task</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Task *</label><input class="form-control" id="tk-title" placeholder="e.g. Send stewardship letter to Johnson family"></div>
+    <div class="form-group"><label class="form-label">Due Date</label><input class="form-control" id="tk-due" type="date"></div>
+    <div class="form-group"><label class="form-label">Priority</label>
+      <select class="form-control" id="tk-priority">
+        <option value="high">🔴 High</option>
+        <option value="medium">🟡 Medium</option>
+        <option value="low">🟢 Low</option>
+      </select>
+    </div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-task')">Cancel</button><button class="btn btn-primary" onclick="addFundTask()">Add Task</button></div>
+</div></div>
+
+<!-- Add Fund Note -->
+<div class="sheet-overlay" id="sheet-add-fund-note"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Log Note</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Date</label><input class="form-control" id="fn-date" type="date"></div>
+    <div class="form-group"><label class="form-label">Note *</label><textarea class="form-control" id="fn-body" placeholder="Board meeting recap, donor conversation, event debrief…"></textarea></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-fund-note')">Cancel</button><button class="btn btn-primary" onclick="addFundNote()">Save</button></div>
+</div></div>
+
+<!-- Donor Stage Change -->
+<div class="sheet-overlay" id="sheet-donor-stage"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Update Stage</div>
+  <input type="hidden" id="ds-org"><input type="hidden" id="ds-id">
+  <div class="sheet-body" style="padding-bottom:8px;">
+    <button class="btn btn-full" style="background:#EEF1F5;color:#4A6070;margin-bottom:7px;" onclick="setDonorStage('identify')">Identify</button>
+    <button class="btn btn-full" style="background:#D6E4F5;color:#1A5276;margin-bottom:7px;" onclick="setDonorStage('qualify')">Qualify</button>
+    <button class="btn btn-full" style="background:#EDE0F7;color:#7B2FBE;margin-bottom:7px;" onclick="setDonorStage('cultivate')">Cultivate</button>
+    <button class="btn btn-full" style="background:#FCECD6;color:#C17B2A;margin-bottom:7px;" onclick="setDonorStage('solicit')">Solicit</button>
+    <button class="btn btn-full" style="background:#D6EFEA;color:#2E7D5E;margin-bottom:7px;" onclick="setDonorStage('steward')">Steward ✓</button>
+    <button class="btn btn-full" style="background:#FDDEDE;color:#8B2635;" onclick="setDonorStage('lapsed')">Lapsed</button>
+  </div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════
+//  SUPABASE CONFIG
+// ═══════════════════════════
+
+const SB_URL='https://lyncsryahchressxtxwm.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5bmNzcnlhaGNocmVzc3h0eHdtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzNjg4ODIsImV4cCI6MjA5Nzk0NDg4Mn0.CW2IoNztNR1RU-_eytxmOqhPYG7F12BtcWwNHWwyjiQ';
+const SB_HEADERS={'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Prefer':'return=representation'};
+
+async function sbGet(table,params=''){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/${table}?${params}`,{headers:SB_HEADERS});
+    if(!r.ok)return[];
+    return await r.json();
+  }catch(e){console.error('sbGet',table,e);return[];}
+}
+async function sbUpsert(table,data){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/${table}`,{
+      method:'POST',headers:{...SB_HEADERS,'Prefer':'resolution=merge-duplicates,return=representation'},
+      body:JSON.stringify(Array.isArray(data)?data:[data])
+    });
+    return r.ok;
+  }catch(e){console.error('sbUpsert',table,e);return false;}
+}
+async function sbUpdate(table,id,data){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`,{
+      method:'PATCH',headers:SB_HEADERS,body:JSON.stringify(data)
+    });
+    return r.ok;
+  }catch(e){console.error('sbUpdate',table,e);return false;}
+}
+async function sbDelete(table,id){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/${table}?id=eq.${id}`,{
+      method:'DELETE',headers:SB_HEADERS
+    });
+    return r.ok;
+  }catch(e){console.error('sbDelete',table,e);return false;}
+}
+
+// ═══════════════════════════
+//  STATE
+// ═══════════════════════════
+const COLORS=['#2E7D5E','#1A5276','#C17B2A','#7B1FA2','#8B2635','#0D47A1','#4A148C','#BF360C'];
+let state={clients:[],invoices:[],activity:[],socialPosts:[],events:[]};
+let currentClientId=null, currentTab='dashboard', currentSeg='notes';
+let activePlatforms=new Set(), selectedTone='Professional';
+let calWeekStart=null, calSelectedDate=null, selectedEvType='work', viewingEventId=null;
+let scriptContext='chamber';
+let syncStatus='idle';
+
+// ═══════════════════════════
+//  PERSIST — Supabase + localStorage fallback
+// ═══════════════════════════
+function saveLocal(){try{localStorage.setItem('np_crm_v2',JSON.stringify(state));}catch(e){}}
+
+async function load(){
+  showSyncBadge('⟳ Syncing…','var(--slate)');
+  // Always load from localStorage first for instant render
+  try{const r=localStorage.getItem('np_crm_v2');if(r){const d=JSON.parse(r);state={...state,...d};}}catch(e){}
+  initCalendar();render();
+  // Then fetch fresh from Supabase
+  try{
+    const [clients,activity,invoices,events,posts,fund]=await Promise.all([
+      sbGet('clients','order=ts.asc'),
+      sbGet('activity','order=ts.desc'),
+      sbGet('invoices','order=ts.desc'),
+      sbGet('events','order=ts.asc'),
+      sbGet('social_posts','order=ts.desc'),
+      sbGet('fundraising','order=ts.asc')
+    ]);
+    // Map snake_case DB columns back to camelCase state
+    state.clients=clients.map(c=>({
+      id:c.id,name:c.name,contact:c.contact,contactTitle:c.contact_title,
+      email:c.email,phone:c.phone,hours:c.hours,rate:c.rate,
+      notes:c.notes,color:c.color,prospects:c.prospects||[],ts:c.ts
+    }));
+    state.activity=activity.map(a=>({
+      id:a.id,clientId:a.client_id,type:a.type,date:a.date,body:a.body,ts:a.ts
+    }));
+    state.invoices=invoices.map(i=>({
+      id:i.id,clientId:i.client_id,desc:i.description,amount:i.amount,
+      date:i.date,status:i.status,ts:i.ts
+    }));
+    state.events=events.map(e=>({
+      id:e.id,title:e.title,type:e.type,date:e.date,
+      start:e.start_time,end:e.end_time,notes:e.notes,ts:e.ts
+    }));
+    state.socialPosts=posts.map(p=>({
+      id:p.id,platforms:p.platforms||[],text:p.body,date:p.date,ts:p.ts
+    }));
+    // Rebuild fundraising from rows
+    if(!state.fundraising){state.fundraising={
+      mvhf:{donors:[],events:[],tasks:[],notes:[],campaignGoal:250000,campaignName:'Annual Fund 2026'},
+      gw:{donors:[],events:[],tasks:[],notes:[],campaignGoal:150000,campaignName:'Community Care Campaign 2026'}
+    };}
+    fund.forEach(row=>{
+      if(state.fundraising[row.org]&&state.fundraising[row.org][row.category]!==undefined){
+        state.fundraising[row.org][row.category]=row.data;
+      }
+    });
+    saveLocal();
+    render();
+    showSyncBadge('✓ Synced','var(--success)');
+    setTimeout(()=>hideSyncBadge(),2000);
+  }catch(e){
+    console.error('Supabase load error',e);
+    showSyncBadge('Offline','var(--warn)');
+  }
+}
+
+async function save(table,payload){
+  saveLocal();// Always save locally first
+  if(table==='clients'){
+    const c=payload;
+    await sbUpsert('clients',{
+      id:c.id,name:c.name,contact:c.contact,contact_title:c.contactTitle,
+      email:c.email,phone:c.phone,hours:c.hours,rate:c.rate,
+      notes:c.notes,color:c.color,prospects:c.prospects||[],ts:c.ts
+    });
+  }else if(table==='client_delete'){
+    await sbDelete('clients',payload);
+  }else if(table==='activity'){
+    const a=payload;
+    await sbUpsert('activity',{id:a.id,client_id:a.clientId,type:a.type,date:a.date,body:a.body,ts:a.ts});
+  }else if(table==='activity_delete'){
+    await sbDelete('activity',payload);
+  }else if(table==='invoices'){
+    const i=payload;
+    await sbUpsert('invoices',{id:i.id,client_id:i.clientId,description:i.desc,amount:i.amount,date:i.date,status:i.status,ts:i.ts});
+  }else if(table==='invoice_status'){
+    await sbUpdate('invoices',payload.id,{status:payload.status});
+  }else if(table==='events'){
+    const e=payload;
+    await sbUpsert('events',{id:e.id,title:e.title,type:e.type,date:e.date,start_time:e.start,end_time:e.end,notes:e.notes,ts:e.ts});
+  }else if(table==='event_delete'){
+    await sbDelete('events',payload);
+  }else if(table==='social_posts'){
+    const p=payload;
+    await sbUpsert('social_posts',{id:p.id,platforms:p.platforms,body:p.text,date:p.date,ts:p.ts});
+  }else if(table==='social_delete'){
+    await sbDelete('social_posts',payload);
+  }else if(table==='fundraising'){
+    // payload = {org, category, data}
+    const existing=await sbGet('fundraising',`org=eq.${payload.org}&category=eq.${payload.category}`);
+    if(existing.length){
+      await sbUpdate('fundraising',existing[0].id,{data:payload.data,ts:Date.now()});
+    }else{
+      await sbUpsert('fundraising',{org:payload.org,category:payload.category,data:payload.data,ts:Date.now()});
+    }
+  }
+}
+
+function showSyncBadge(msg,color){
+  let b=document.getElementById('sync-badge');
+  if(!b){b=document.createElement('div');b.id='sync-badge';
+    b.style.cssText='position:fixed;top:calc(var(--safe-top) + 4px);right:56px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;background:var(--navy-mid);z-index:500;transition:all .2s;';
+    document.body.appendChild(b);}
+  b.textContent=msg;b.style.color=color;b.style.opacity='1';
+}
+function hideSyncBadge(){
+  const b=document.getElementById('sync-badge');
+  if(b)b.style.opacity='0';
+}
+function fmt(n){'use strict';return'$'+(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function today(){return new Date().toISOString().split('T')[0];}
+function uid(){return Math.random().toString(36).substr(2,9);}
+function clearFields(ids){ids.forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
+
+// ═══════════════════════════
+//  RENDER ALL
+// ═══════════════════════════
+function render(){
+  renderDashboard();renderClientList();renderFinancesInline();
+  renderSocialHistory();populateDropdowns();renderScripts();renderCalendar();
+}
+
+// ═══════════════════════════
+//  DASHBOARD
+// ═══════════════════════════
+function renderDashboard(){
+  const total=state.invoices.reduce((s,i)=>s+(i.amount||0),0);
+  const paid=state.invoices.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
+  const pend=state.invoices.filter(i=>i.status==='pending').reduce((s,i)=>s+i.amount,0);
+  document.getElementById('dash-billed').textContent=fmt(total);
+  document.getElementById('dash-collected').textContent=fmt(paid);
+  document.getElementById('dash-pending').textContent=fmt(pend);
+  document.getElementById('dash-clients').textContent=state.clients.length;
+  const maxH=Math.max(...state.clients.map(c=>c.hours||0),1);
+  document.getElementById('dash-hours').innerHTML=state.clients.length
+    ?state.clients.map(c=>{const h=c.hours||0,pct=(h/maxH)*100,cls=h>=15?'hb-warn':h>=5?'hb-active':'hb-low',lbl=h>=15?'Heavy':h>=5?'Active':'Low';
+      return`<div class="hours-item" onclick="openClient('${c.id}')"><div class="hours-dot" style="background:${c.color}"></div><div class="hours-name">${c.name}</div><div class="hours-bar-wrap"><div class="hours-bar" style="width:${pct}%;background:${c.color}"></div></div><div class="hours-num">${h}h</div><div class="hours-badge ${cls}">${lbl}</div></div>`;
+    }).join('')
+    :'<div class="empty-state" style="padding:14px 0"><div class="es-icon">⏱</div><div class="es-text">Add your first client</div></div>';
+  const sorted=[...state.activity].sort((a,b)=>b.ts-a.ts).slice(0,7);
+  const icons={call:'📞',email:'📧',meeting:'🤝',note:'📝'},bgMap={call:'#D6EFEA',email:'#D6E4F5',meeting:'#FCECD6',note:'#EEF1F5'};
+  document.getElementById('dash-activity').innerHTML=sorted.length
+    ?sorted.map(a=>{const c=state.clients.find(x=>x.id===a.clientId);return`<div class="activity-item"><div class="act-icon" style="background:${bgMap[a.type]}">${icons[a.type]}</div><div class="act-body"><div class="act-client">${c?.name||'?'}</div><div class="act-text">${a.body.substring(0,65)}${a.body.length>65?'…':''}</div><div class="act-meta">${a.type.toUpperCase()} · ${a.date}</div></div></div>`;}).join('')
+    :'<div class="empty-state" style="padding:14px 0"><div class="es-icon">📋</div><div class="es-text">No activity yet</div></div>';
+}
+
+// ═══════════════════════════
+//  CLIENT LIST
+// ═══════════════════════════
+function renderClientList(){
+  document.getElementById('clients-sub').textContent=state.clients.length+' active';
+  const el=document.getElementById('client-list');
+  el.innerHTML=state.clients.length
+    ?state.clients.map(c=>`<div class="client-row" onclick="openClient('${c.id}')"><div class="client-avatar" style="background:${c.color}">${c.name.charAt(0)}</div><div class="client-info"><div class="client-name">${c.name}</div><div class="client-meta">${c.contact||'No contact'} · ${state.activity.filter(a=>a.clientId===c.id).length} notes</div></div><div class="client-hours-pill">${c.hours||0}h/wk</div><div class="client-arrow">›</div></div>`).join('')
+    :'<div class="empty-state"><div class="es-icon">👥</div><div class="es-text">No clients yet.<br>Tap + to add one.</div></div>';
+}
+
+// ═══════════════════════════
+//  CLIENT DETAIL
+// ═══════════════════════════
+function openClient(cid){
+  currentClientId=cid;
+  const c=state.clients.find(x=>x.id===cid);if(!c)return;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-client-detail').classList.add('active');
+  document.getElementById('topbar-title').textContent=c.name;
+  document.getElementById('client-detail-header').innerHTML=`<div class="client-detail-header" style="background:${c.color}18;border:2px solid ${c.color}30;"><div class="cd-avatar" style="background:${c.color}">${c.name.charAt(0)}</div><div><div class="cd-name">${c.name}</div>${c.contact?`<div class="cd-sub">${c.contact}${c.contactTitle?' · '+c.contactTitle:''}</div>`:''}${c.email?`<div class="cd-sub">${c.email}</div>`:''}</div></div>`;
+  const invs=state.invoices.filter(i=>i.clientId===cid);
+  document.getElementById('cd-stats').innerHTML=`<div class="cd-stat"><div class="cd-stat-val">${c.hours||0}h</div><div class="cd-stat-label">Hrs/Wk</div></div><div class="cd-stat"><div class="cd-stat-val">${fmt(invs.reduce((s,i)=>s+i.amount,0)).replace('.00','')}</div><div class="cd-stat-label">Billed</div></div><div class="cd-stat"><div class="cd-stat-val">${state.activity.filter(a=>a.clientId===cid).length}</div><div class="cd-stat-label">Notes</div></div>`;
+  document.querySelectorAll('#client-seg .seg-item').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('#client-seg .seg-item')[0].classList.add('active');
+  currentSeg='notes';renderClientSeg();
+}
+function renderClientSeg(){
+  document.querySelectorAll('.seg-content').forEach(s=>s.style.display='none');
+  document.getElementById('seg-'+currentSeg).style.display='block';
+  if(currentSeg==='notes')renderSegNotes(currentClientId);
+  if(currentSeg==='prospects')renderSegProspects(currentClientId);
+  if(currentSeg==='billing')renderSegBilling(currentClientId);
+  if(currentSeg==='info')renderSegInfo(currentClientId);
+}
+function switchSeg(name,el){document.querySelectorAll('#client-seg .seg-item').forEach(s=>s.classList.remove('active'));el.classList.add('active');currentSeg=name;renderClientSeg();}
+function renderSegNotes(cid){
+  const notes=state.activity.filter(a=>a.clientId===cid).sort((a,b)=>b.ts-a.ts);
+  const pCls={call:'pill-call',email:'pill-email',meeting:'pill-meeting',note:'pill-note'};
+  const icons={call:'📞',email:'📧',meeting:'🤝',note:'📝'};
+  document.getElementById('seg-notes').innerHTML=`<button class="btn btn-primary btn-full" style="margin-bottom:10px;" onclick="openLogClientActivity()">+ Log Activity</button>`+(notes.length?notes.map(n=>`<div class="note-card"><div class="note-top"><span class="note-pill ${pCls[n.type]}">${icons[n.type]} ${n.type}</span><span class="note-date">${n.date}</span></div><div class="note-body">${n.body.replace(/\n/g,'<br>')}</div><div class="note-del" onclick="deleteNote('${n.id}','${cid}')">Delete</div></div>`).join(''):'<div class="empty-state"><div class="es-icon">📝</div><div class="es-text">No activity yet.</div></div>');
+}
+function renderSegProspects(cid){
+  const c=state.clients.find(x=>x.id===cid);
+  const prospects=(c?.prospects||[]).sort((a,b)=>b.ts-a.ts);
+  const sp={lead:'s-lead',contacted:'s-contacted',proposal:'s-proposal',negotiating:'s-negotiating',won:'s-won',lost:'s-lost'};
+  const sl={lead:'Lead',contacted:'Contacted',proposal:'Proposal',negotiating:'Negotiating',won:'Won 🎉',lost:'Lost'};
+  document.getElementById('seg-prospects').innerHTML=`<button class="btn btn-primary btn-full" style="margin-bottom:10px;" onclick="openAddProspect('${cid}')">+ Add Prospect</button>`+(prospects.length?prospects.map(p=>`<div class="prospect-card"><div class="prospect-top"><div><div class="prospect-name">${p.name}</div>${p.contact?`<div class="prospect-contact">${p.contact}</div>`:''}</div><div style="text-align:right"><span class="stage-pill ${sp[p.stage]}">${sl[p.stage]}</span>${p.value?`<div class="prospect-value" style="margin-top:3px">${fmt(p.value)}</div>`:''}</div></div>${p.notes?`<div class="prospect-notes">${p.notes}</div>`:''}<button class="btn btn-ghost" style="width:100%;margin-top:9px;padding:8px;font-size:12px;" onclick="openProspectStage('${cid}','${p.id}')">Move Stage ›</button></div>`).join(''):'<div class="empty-state"><div class="es-icon">🎯</div><div class="es-text">No prospects yet.</div></div>');
+}
+function renderSegBilling(cid){
+  const invs=state.invoices.filter(i=>i.clientId===cid).sort((a,b)=>b.ts-a.ts);
+  const paid=invs.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0);
+  const pend=invs.filter(i=>i.status==='pending').reduce((s,i)=>s+i.amount,0);
+  const sc={paid:'is-paid',pending:'is-pending',overdue:'is-overdue'};
+  document.getElementById('seg-billing').innerHTML=`<div class="kpi-row" style="margin-bottom:10px;"><div class="kpi-tile"><div class="kpi-val green">${fmt(paid)}</div><div class="kpi-label">Collected</div></div><div class="kpi-tile"><div class="kpi-val warn">${fmt(pend)}</div><div class="kpi-label">Pending</div></div></div><button class="btn btn-primary btn-full" style="margin-bottom:10px;" onclick="openAddInvoiceForClient('${cid}')">+ New Invoice</button>`+(invs.length?invs.map(i=>`<div class="invoice-card"><div class="inv-top"><div><div class="inv-desc">${i.desc}</div></div><div class="inv-amount">${fmt(i.amount)}</div></div><div class="inv-bottom"><span class="inv-date">${i.date}</span><span class="inv-status-pill ${sc[i.status]}">${i.status}</span></div><div class="inv-status-change" onclick="openInvStatus('${i.id}')">Change status</div></div>`).join(''):'<div class="empty-state"><div class="es-icon">💳</div><div class="es-text">No invoices yet.</div></div>');
+}
+function renderSegInfo(cid){
+  const c=state.clients.find(x=>x.id===cid);
+  const r=(l,v)=>`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--surface);font-size:13px;"><span style="color:var(--text-muted)">${l}</span><span style="font-weight:600;text-align:right;max-width:60%">${v}</span></div>`;
+  document.getElementById('seg-info').innerHTML=`<div class="card">${r('Organization',c.name)}${r('Contact',c.contact||'—')}${r('Title',c.contactTitle||'—')}${r('Email',c.email||'—')}${r('Phone',c.phone||'—')}${r('Hrs/Week',(c.hours||0)+'h')}${r('Rate',c.rate?'$'+c.rate+'/hr':'—')}${c.notes?r('Notes',c.notes):''}</div><button class="btn btn-ghost btn-full" onclick="openEditClient('${cid}')">Edit Client</button>`;
+}
+
+// ═══════════════════════════
+//  FINANCES (inline in dashboard / client billing only now — no separate tab)
+// ═══════════════════════════
+function renderFinancesInline(){}
+
+// ═══════════════════════════
+//  CALENDAR
+// ═══════════════════════════
+function initCalendar(){
+  const now=new Date();
+  calSelectedDate=today();
+  const day=now.getDay();
+  const mon=new Date(now);mon.setDate(now.getDate()-day+1);
+  calWeekStart=mon.toISOString().split('T')[0];
+  seedDefaultEvents();
+}
+
+function seedDefaultEvents(){
+  if(state.events&&state.events.length>0)return;
+  // Pre-load Dan's smart schedule for the current week
+  const base=new Date();
+  const getDay=(offset,h,m)=>{const d=new Date(base);d.setDate(base.getDate()+offset);d.setHours(0,0,0,0);const ds=d.toISOString().split('T')[0];return ds;};
+  const off=(base.getDay()===0)?1:(base.getDay()===6)?2:0;
+  const days=[0,1,2,3,4].map(i=>getDay(i-base.getDay()+1+off,0,0));
+  const evts=[
+    {title:'Morning Focus Block',type:'buffer',start:'07:30',end:'08:30'},
+    {title:'BD Outreach & Calls',type:'work',start:'08:30',end:'11:00'},
+    {title:'Client Work Block',type:'work',start:'11:00',end:'12:30'},
+    {title:'Lunch',type:'personal',start:'12:30',end:'13:30'},
+    {title:'Client Meetings / Calls',type:'work',start:'13:30',end:'15:00'},
+    {title:'✦ No Meetings After 3pm',type:'blocked',start:'15:00',end:'17:00'},
+    {title:'Late Afternoon Social',type:'social',start:'15:00',end:'17:00'},
+    {title:'Wind Down / Family',type:'personal',start:'17:00',end:'19:00'},
+  ];
+  days.forEach(date=>{
+    evts.forEach(e=>{
+      if(e.type==='blocked')return;
+      state.events.push({id:uid(),title:e.title,type:e.type,date,start:e.start,end:e.end,notes:'',ts:Date.now()});
+    });
+  });
+  saveLocal();
+}
+
+function renderCalendar(){
+  renderWeekStrip();renderDayGrid();
+}
+
+function renderWeekStrip(){
+  const ws=new Date(calWeekStart+'T12:00:00');
+  const we=new Date(ws);we.setDate(ws.getDate()+6);
+  const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('cal-week-label').textContent=`${mo[ws.getMonth()]} ${ws.getDate()} – ${mo[we.getMonth()]} ${we.getDate()}`;
+  const strip=document.getElementById('cal-day-strip');
+  const days=['M','T','W','T','F','S','S'];
+  strip.innerHTML='';
+  const now=today();
+  for(let i=0;i<7;i++){
+    const d=new Date(calWeekStart+'T12:00:00');d.setDate(d.getDate()+i);
+    const ds=d.toISOString().split('T')[0];
+    const hasEvt=state.events.some(e=>e.date===ds);
+    const isToday=ds===now,isSel=ds===calSelectedDate;
+    const div=document.createElement('div');
+    div.className='cal-day'+(isToday?' today':'')+(isSel&&!isToday?' selected':'');
+    div.innerHTML=`<div class="cal-day-name">${days[i]}</div><div class="cal-day-num">${d.getDate()}</div><div class="cal-day-dot${hasEvt?' show':''}"></div>`;
+    div.onclick=()=>{calSelectedDate=ds;renderCalendar();};
+    strip.appendChild(div);
+  }
+}
+
+function renderDayGrid(){
+  const selDate=new Date(calSelectedDate+'T12:00:00');
+  const dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const mo=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-selected-label').textContent=`${dayNames[selDate.getDay()]}, ${mo[selDate.getMonth()]} ${selDate.getDate()}`;
+  const dayEvts=state.events.filter(e=>e.date===calSelectedDate).sort((a,b)=>a.start.localeCompare(b.start));
+  const grid=document.getElementById('cal-time-grid');
+
+  if(!dayEvts.length){
+    grid.innerHTML=`<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:14px;">No events. Tap "+ Event" to add one.</div>
+    ${calSelectedDate>=today()?`<div style="background:var(--gold-pale);border-radius:10px;padding:12px;font-size:12px;color:var(--warn);text-align:center;margin-top:8px;">📋 Dan's Rule: No meetings after 3:00 PM · Late afternoon is social & recovery time</div>`:''}`;
+    return;
+  }
+
+  const blockCls={work:'block-work',personal:'block-personal',social:'block-social',buffer:'block-buffer',blocked:'block-blocked'};
+  const typeLabel={work:'💼 Work',personal:'👤 Personal',social:'🥂 Social',buffer:'🧘 Buffer'};
+
+  // Build hour slots 7am–8pm
+  let html='';
+  const hours=[];for(let h=7;h<=20;h++)hours.push(h);
+  hours.forEach(h=>{
+    const hStr=h<10?'0'+h:String(h);
+    const label=h===12?'12p':h>12?`${h-12}p`:`${h}a`;
+    const slotEvts=dayEvts.filter(e=>{
+      const eh=parseInt(e.start.split(':')[0]);
+      return eh===h;
+    });
+    // No-meeting zone indicator
+    const noMtg=h>=15&&h<17;
+    html+=`<div class="time-row">
+      <div class="time-label">${label}</div>
+      <div class="time-col">
+        ${noMtg&&!slotEvts.length?`<div style="font-size:10px;color:var(--warn);font-weight:600;padding:4px 6px;background:#FCECD6;border-radius:6px;border-left:3px solid var(--warn);">🚫 No-Meeting Zone</div>`:''}
+        ${slotEvts.map(e=>`<div class="time-block ${blockCls[e.type]||'block-work'}" onclick="viewEvent('${e.id}')">
+          <div>${e.title}</div>
+          <div style="opacity:.7;font-size:10px;margin-top:1px;">${e.start}–${e.end}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  });
+  // Rules reminder
+  html+=`<div style="margin-top:10px;padding:10px;background:var(--surface);border-radius:9px;font-size:11px;color:var(--text-muted);text-align:center;">🚫 No client meetings after 3pm &nbsp;·&nbsp; 🥂 3–5pm = Social & buffer time</div>`;
+  grid.innerHTML=html;
+}
+
+function shiftWeek(dir){
+  const d=new Date(calWeekStart+'T12:00:00');
+  d.setDate(d.getDate()+(dir*7));
+  calWeekStart=d.toISOString().split('T')[0];
+  renderCalendar();
+}
+
+function addEvent(){
+  const title=document.getElementById('ev-title').value.trim();
+  const date=document.getElementById('ev-date').value;
+  const start=document.getElementById('ev-start').value;
+  const end=document.getElementById('ev-end').value;
+  if(!title||!date||!start){toast('Title, date & start time required.');return;}
+  if(selectedEvType==='work'&&start>='15:00'){toast('⚠ No work meetings after 3pm! Try buffer or social instead.');return;}
+  const ev={id:uid(),title,type:selectedEvType,date,start,end:end||start,notes:document.getElementById('ev-notes').value.trim(),ts:Date.now()};
+  state.events.push(ev);
+  save('events',ev);
+  closeSheet('sheet-add-event');
+  calSelectedDate=date;renderCalendar();
+  toast('✓ Event added');
+}
+
+function deleteEvent(){
+  save('event_delete',viewingEventId);
+  state.events=state.events.filter(e=>e.id!==viewingEventId);
+  saveLocal();closeSheet('sheet-event-detail');renderCalendar();toast('Event removed.');
+}
+
+function viewEvent(id){
+  const e=state.events.find(x=>x.id===id);if(!e)return;
+  viewingEventId=id;
+  const typeLabel={work:'💼 Work',personal:'👤 Personal',social:'🥂 Social',buffer:'🧘 Buffer'};
+  document.getElementById('ev-detail-title').textContent=e.title;
+  document.getElementById('ev-detail-body').innerHTML=`<b>Type:</b> ${typeLabel[e.type]||e.type}<br><b>Date:</b> ${e.date}<br><b>Time:</b> ${e.start}–${e.end}${e.notes?`<br><b>Notes:</b> ${e.notes}`:''}`;
+  openSheet('sheet-event-detail');
+}
+
+function selectEvType(type,el){
+  selectedEvType=type;
+  document.querySelectorAll('.event-type-pill').forEach(p=>p.className='event-type-pill');
+  el.classList.add('sel-'+type);
+}
+
+// ═══════════════════════════
+//  PHONE SCRIPTS
+// ═══════════════════════════
+const SCRIPTS={
+  chamber:{
+    label:'Chamber / Community Org',
+    options:[
+      {label:'Direct Value Ask',tag:'direct',tagCls:'tag-direct',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], this is Dan Driskell with North Point Advisory Group. I work with organizations across the Dayton region on business development and partnership strategy. Do you have 90 seconds?"</div><div class="script-line"><strong>Hook:</strong> "We've been helping [type of org] develop corporate partnerships and revenue-generating relationships that they couldn't build on their own. I'd love to learn more about what your chamber is working on."</div><div class="script-line"><strong>Ask:</strong> "Could we set up a 20-minute call this week to explore if there's a fit?"</div><div class="script-hint">💡 Tip: Lead with curiosity, not a pitch. Let them talk first.</div>`},
+      {label:'Warm Relationship Build',tag:'warm',tagCls:'tag-warm',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], Dan Driskell here. I've been following what [Organization] has been doing with [recent initiative] — really impressive work."</div><div class="script-line"><strong>Bridge:</strong> "I work with a handful of consulting clients in the area and your organization came up as someone I should be talking to. I'm not calling to sell anything — just want to learn more about your priorities and share a few things we're working on."</div><div class="script-line"><strong>Ask:</strong> "Any chance you'd be open to a coffee or quick call?"</div><div class="script-hint">💡 Tip: Reference something real — their newsletter, an event, a mutual contact.</div>`},
+      {label:'Referral Bridge',tag:'soft',tagCls:'tag-soft',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], I'm Dan Driskell. [Mutual Contact] suggested I reach out to you directly — said you'd be a great person to talk to about partnership development."</div><div class="script-line"><strong>Context:</strong> "I run North Point Advisory Group and work with organizations like yours on building strategic relationships and revenue pipelines."</div><div class="script-line"><strong>Ask:</strong> "I'd love to grab 15 minutes to introduce myself. When's a good time this week or next?"</div><div class="script-hint">💡 Tip: Always use the referrer's name in the first sentence. It changes everything.</div>`}
+    ]
+  },
+  nonprofit:{
+    label:'Nonprofit / Foundation',
+    options:[
+      {label:'Mission-Aligned Pitch',tag:'direct',tagCls:'tag-direct',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], this is Dan Driskell at North Point Advisory Group. I specialize in helping nonprofits like yours develop corporate partnerships and earned revenue strategies. Quick question — do you have 90 seconds?"</div><div class="script-line"><strong>Value:</strong> "We've worked with several organizations in your space to build sustainable funding relationships with local and regional employers. It's not grant-dependent — it's relationship-driven."</div><div class="script-line"><strong>Ask:</strong> "I'd love to schedule a 20-minute call to hear about your current funding mix and share what we've been doing. Does Thursday or Friday work?"</div><div class="script-hint">💡 Tip: Avoid the word 'fundraising.' Say 'partnership revenue' instead.</div>`},
+      {label:'Peer Story Lead',tag:'warm',tagCls:'tag-warm',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], I'm Dan Driskell. I've been doing some work with [Similar Org] on their corporate partnership strategy — and they suggested I connect with you."</div><div class="script-line"><strong>Bridge:</strong> "What we've built for them is a pipeline of employer relationships that generate both funding and programmatic value. I think there might be a natural fit for what you're doing."</div><div class="script-line"><strong>Ask:</strong> "Would you be open to a brief call to explore? I promise I'll keep it focused and useful."</div><div class="script-hint">💡 Tip: Nonprofits respond to peer validation more than anything else. Use it.</div>`},
+      {label:'Board Connection',tag:'soft',tagCls:'tag-soft',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], Dan Driskell here. I serve on a few boards in the region and your name keeps coming up as someone doing great work."</div><div class="script-line"><strong>Context:</strong> "I'm not calling with an agenda — I just try to stay connected to the organizations doing meaningful work in the community, and I thought it would be worth an introduction."</div><div class="script-line"><strong>Ask:</strong> "Could we grab coffee or a quick call sometime? I'd genuinely enjoy hearing more about what you're building."</div><div class="script-hint">💡 Tip: This is a long-game call. Don't pitch. Just connect.</div>`}
+    ]
+  },
+  corporate:{
+    label:'Corporate / Business',
+    options:[
+      {label:'ROI-Focused Open',tag:'direct',tagCls:'tag-direct',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], Dan Driskell with North Point Advisory Group. I help companies in the region grow their B2B relationships and strategic partnerships. Do you have 60 seconds?"</div><div class="script-line"><strong>Hook:</strong> "We've helped [type of company] open doors that their internal BD teams didn't have time to pursue — specifically [sector] relationships that turned into meaningful revenue."</div><div class="script-line"><strong>Ask:</strong> "I'd love 20 minutes to understand your current partnership strategy and show you a few specific things we've done. Are you free Thursday afternoon?"</div><div class="script-hint">💡 Tip: Mention a specific outcome, not a process. They care about results.</div>`},
+      {label:'Warm Intro',tag:'warm',tagCls:'tag-warm',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], this is Dan Driskell. [Mutual Contact] thought it would be worth us connecting — said you're working on some interesting expansion right now."</div><div class="script-line"><strong>Bridge:</strong> "I run a small advisory firm focused on BD strategy and partnership development. We tend to work best with companies that are growing but don't have the bandwidth to pursue every relationship they know they should."</div><div class="script-line"><strong>Ask:</strong> "Would a brief call make sense to see if there's a fit? I'll keep it to 15 minutes."</div><div class="script-hint">💡 Tip: Position yourself as a bandwidth solution, not a consultant.</div>`},
+      {label:'Event / News Hook',tag:'soft',tagCls:'tag-soft',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], Dan Driskell here. I saw [company news / event sponsorship / announcement] last week — congratulations, that's a significant move."</div><div class="script-line"><strong>Bridge:</strong> "It actually reminded me to reach out. I've been doing work in [related sector] and think there might be some interesting overlap between what your team is doing and a few relationships I've been building."</div><div class="script-line"><strong>Ask:</strong> "Would you be open to a quick call this week? I have something specific I'd want to run by you."</div><div class="script-hint">💡 Tip: A specific, recent news hook dramatically improves answer rates.</div>`}
+    ]
+  },
+  university:{
+    label:'University / Higher Ed',
+    options:[
+      {label:'Workforce Partnership',tag:'direct',tagCls:'tag-direct',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], this is Dan Driskell with North Point Advisory Group. I specialize in workforce development partnerships between employers and higher education institutions. Do you have a moment?"</div><div class="script-line"><strong>Hook:</strong> "I've been building a pipeline of regional employers who are actively looking for degree and certificate partnerships, internship pipelines, and professional development contracts. I'd love to connect you with a few of them."</div><div class="script-line"><strong>Ask:</strong> "Could we schedule 20 minutes to discuss your current employer engagement priorities and see where we might align?"</div><div class="script-hint">💡 Tip: Frame yourself as someone who brings employers to them — not a vendor.</div>`},
+      {label:'Alumni / Donor Bridge',tag:'warm',tagCls:'tag-warm',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], Dan Driskell here. I'm an alum and I've stayed pretty active in the region's education and workforce ecosystem over the years."</div><div class="script-line"><strong>Bridge:</strong> "I've been doing some consulting work that intersects with higher education partnership development and I'd genuinely enjoy learning more about what [Institution] is prioritizing in terms of external relationships."</div><div class="script-line"><strong>Ask:</strong> "Would you be open to a brief conversation? I'm not coming with an ask — just want to explore how I might be useful."</div><div class="script-hint">💡 Tip: The alumni angle opens doors most cold calls never reach.</div>`},
+      {label:'Sponsored Project Lead',tag:'soft',tagCls:'tag-soft',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], I'm Dan Driskell. I've been working on a project with [Company/Organization] that has a natural connection to [Department/Program] and I wanted to reach out directly."</div><div class="script-line"><strong>Bridge:</strong> "There may be an opportunity for a sponsored project, applied research engagement, or student pipeline that would benefit both sides. I'd like to bring the right people to the table."</div><div class="script-line"><strong>Ask:</strong> "Could we get on a call this week so I can share a few details and get your read on the fit?"</div><div class="script-hint">💡 Tip: Universities love sponsored work. Use that framing early.</div>`}
+    ]
+  },
+  followup:{
+    label:'Follow-Up Call',
+    options:[
+      {label:'Warm Follow-Up',tag:'warm',tagCls:'tag-warm',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], Dan Driskell here. We connected a few weeks back about [topic] — I just wanted to circle back and see where things stood."</div><div class="script-line"><strong>Bridge:</strong> "Since we last spoke, [brief update or new development]. I thought it might be timely to reconnect."</div><div class="script-line"><strong>Ask:</strong> "Do you have 10 minutes this week to pick up where we left off?"</div><div class="script-hint">💡 Tip: Always reference something specific from your last conversation. Shows you were listening.</div>`},
+      {label:'Post-Meeting Nudge',tag:'direct',tagCls:'tag-direct',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], Dan Driskell. We had a great meeting on [date] and I wanted to follow up on the next steps we discussed."</div><div class="script-line"><strong>Bridge:</strong> "I've [drafted the proposal / made the introduction / pulled together the information] we talked about. I want to make sure we keep the momentum going."</div><div class="script-line"><strong>Ask:</strong> "Are you still the right person to move this forward, or has anything changed on your end?"</div><div class="script-hint">💡 Tip: Always confirm they're still the decision-maker. Things change fast.</div>`},
+      {label:'Long-Gap Reconnect',tag:'soft',tagCls:'tag-soft',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], it's Dan Driskell — it's been a while since we've connected and I wanted to reach out."</div><div class="script-line"><strong>Bridge:</strong> "I've been doing some interesting work lately in [relevant area] and your name came up when I was thinking about who I should be talking to."</div><div class="script-line"><strong>Ask:</strong> "I'd love to grab coffee or a quick call to catch up and share a few things I'm working on. No agenda beyond reconnecting."</div><div class="script-hint">💡 Tip: Keep it casual. A long-gap reconnect that feels like a pitch kills the relationship.</div>`}
+    ]
+  },
+  referral:{
+    label:'Referral Intro Call',
+    options:[
+      {label:'Warm Referral Open',tag:'warm',tagCls:'tag-warm',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], this is Dan Driskell. [Referrer's Name] suggested I reach out to you directly — said you're the right person to talk to about [topic]."</div><div class="script-line"><strong>Bridge:</strong> "I run North Point Advisory Group and we focus on business development strategy and partnership development. [Referrer] thought there might be a natural fit between what we do and what you're working on."</div><div class="script-line"><strong>Ask:</strong> "Would you be open to a 15-minute call this week? I'll keep it focused and useful."</div><div class="script-hint">💡 Tip: Send a quick email or text before the call mentioning the referral. Warm them up first.</div>`},
+      {label:'Peer-to-Peer Referral',tag:'direct',tagCls:'tag-direct',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], Dan Driskell here. I was just with [Mutual Contact] yesterday and they specifically said I needed to connect with you."</div><div class="script-line"><strong>Bridge:</strong> "They mentioned you're working on [specific thing] and that it aligns with some work I've been doing in [area]."</div><div class="script-line"><strong>Ask:</strong> "I don't want to let too much time pass — do you have 20 minutes this week to connect?"</div><div class="script-hint">💡 Tip: The phrase "they specifically said" signals urgency without pressure.</div>`},
+      {label:'Thank-You Referral Loop',tag:'soft',tagCls:'tag-soft',body:`<div class="script-line"><strong>Opening:</strong> "Hi [Name], Dan Driskell. [Referrer] was kind enough to make an introduction between us — I'm looking forward to connecting."</div><div class="script-line"><strong>Bridge:</strong> "I've done a little homework on [Organization] since [Referrer] mentioned you and I'm genuinely impressed by what you're building."</div><div class="script-line"><strong>Ask:</strong> "I'd love to learn more. Is there a good time this week or next that works for you?"</div><div class="script-hint">💡 Tip: Mention you did homework. People remember that you took it seriously.</div>`}
+    ]
+  }
+};
+
+let openScriptIdx=null;
+
+function selectContext(el,ctx){
+  document.querySelectorAll('.context-pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');scriptContext=ctx;openScriptIdx=null;renderScripts();
+}
+
+function renderScripts(){
+  const data=SCRIPTS[scriptContext];if(!data)return;
+  const nums=['opt-1','opt-2','opt-3'];
+  document.getElementById('script-options-container').innerHTML=data.options.map((opt,i)=>`
+    <div class="script-option-card">
+      <div class="script-option-header" onclick="toggleScript(${i})">
+        <div class="script-option-num ${nums[i]}">0${i+1}</div>
+        <div class="script-option-label">${opt.label}</div>
+        <span class="script-option-tag ${opt.tagCls}">${opt.tag}</span>
+        <div style="color:var(--text-muted);font-size:16px;">${openScriptIdx===i?'▲':'▼'}</div>
+      </div>
+      <div class="script-body${openScriptIdx===i?' open':''}" id="script-body-${i}">
+        ${opt.body}
+        <div class="script-action-row">
+          <button class="script-btn sbtn-copy" onclick="copyScript(${i})">📋 Copy Script</button>
+          <button class="script-btn sbtn-ai" onclick="aiTailorScript(${i})">✦ AI Tailor</button>
+        </div>
+        <div class="ai-script-result" id="ai-tailor-${i}"></div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleScript(i){
+  openScriptIdx=openScriptIdx===i?null:i;renderScripts();
+}
+
+function copyScript(i){
+  const el=document.getElementById('script-body-'+i);
+  const txt=el?el.innerText.replace(/Copy Script|AI Tailor/g,'').trim():'';
+  navigator.clipboard.writeText(txt).then(()=>toast('✓ Script copied!')).catch(()=>toast('Select text above to copy manually'));
+}
+
+async function aiTailorScript(i){
+  const data=SCRIPTS[scriptContext];
+  const custom=document.getElementById('script-custom').value.trim();
+  const opt=data.options[i];
+  const resultEl=document.getElementById('ai-tailor-'+i);
+  resultEl.textContent='✦ Tailoring…';resultEl.classList.add('show');
+  const prompt=`Rewrite this phone script for Dan Driskell, a senior BD consultant at North Point Advisory Group based in Dayton, Ohio. 
+Context: ${data.label}. Script style: ${opt.label}. ${custom?'Additional context: '+custom:''}
+Here is the base script:
+${document.getElementById('script-body-'+i).innerText}
+Make it natural, conversational, and specific to Dan's background in higher education workforce development, corporate partnerships, and the Dayton/southwest Ohio market. Keep it concise — under 150 words. Return only the rewritten script.`;
+  try{
+    const resp=await fetch('https://orange-unit-d4c5.dan-29e.workers.dev',{method:'POST',headers:{'Content-Type':'application/json',},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data2=await resp.json();
+    resultEl.textContent=data2.content?.find(b=>b.type==='text')?.text||'No response.';
+  }catch(e){resultEl.textContent='AI unavailable. Try again.';}
+}
+
+async function generateScript(){
+  const prompt=document.getElementById('ai-script-prompt').value.trim();
+  if(!prompt){toast('Describe the call first.');return;}
+  const resultEl=document.getElementById('ai-script-result');
+  resultEl.textContent='✦ Writing your script…';resultEl.classList.add('show');
+  const fullPrompt=`Write a professional phone script for Dan Driskell, senior BD consultant at North Point Advisory Group in Dayton, Ohio. Dan has 25+ years of experience in corporate partnerships, higher education workforce development, and the Dayton/southwest Ohio business community.
+Call scenario: ${prompt}
+Write a natural, confident opening, a value bridge, and a clear ask. Under 150 words. No preamble — just the script.`;
+  try{
+    const resp=await fetch('https://orange-unit-d4c5.dan-29e.workers.dev',{method:'POST',headers:{'Content-Type':'application/json',},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:fullPrompt}]})});
+    const data=await resp.json();
+    resultEl.textContent=data.content?.find(b=>b.type==='text')?.text||'No response.';
+  }catch(e){resultEl.textContent='AI unavailable. Try again.';}
+}
+
+// ═══════════════════════════
+//  SOCIAL
+// ═══════════════════════════
+function togglePlat(p){const el=document.getElementById('plat-'+p);const cm={ig:'sel-ig',fb:'sel-fb',li:'sel-li'};if(activePlatforms.has(p)){activePlatforms.delete(p);el.classList.remove(cm[p]);}else{activePlatforms.add(p);el.classList.add(cm[p]);}renderPubButtons();}
+function renderPubButtons(){const row=document.getElementById('pub-row');if(!activePlatforms.size){row.innerHTML='<div style="font-size:12px;color:var(--text-muted);padding:4px 0">Select a platform above</div>';return;}const btns=[];if(activePlatforms.has('ig'))btns.push(`<button class="pub-btn pub-ig" onclick="publish('ig')">📸 Copy for IG</button>`);if(activePlatforms.has('fb'))btns.push(`<button class="pub-btn pub-fb" onclick="publish('fb')">📘 Copy for FB</button>`);if(activePlatforms.has('li'))btns.push(`<button class="pub-btn pub-li" onclick="publish('li')">💼 Copy for LI</button>`);if(activePlatforms.size>1)btns.push(`<button class="pub-btn pub-all" onclick="publishAll()" style="width:100%;margin-top:4px;">📋 Copy All & Save</button>`);row.innerHTML=btns.join('');}
+function updateCharCount(){const len=document.getElementById('social-caption').value.length;const el=document.getElementById('char-row');document.getElementById('char-count').textContent=len+' chars';const lims=[];if(activePlatforms.has('ig'))lims.push('IG:'+(2200-len));if(activePlatforms.has('fb'))lims.push('FB:'+(63206-len));if(activePlatforms.has('li'))lims.push('LI:'+(3000-len));document.getElementById('char-limits').textContent=lims.join(' · ');el.className='char-row'+(len>2200?' over':len>1800?' warn':'');}
+function publish(p){const txt=document.getElementById('social-caption').value.trim();if(!txt){toast('Write a caption first.');return;}navigator.clipboard.writeText(txt).then(()=>{toast('✓ Copied for '+{ig:'Instagram',fb:'Facebook',li:'LinkedIn'}[p]+' — paste in the app!');savePost([p],txt);}).catch(()=>toast('Caption ready — copy manually.'));}
+function publishAll(){const txt=document.getElementById('social-caption').value.trim();if(!txt){toast('Write a caption first.');return;}navigator.clipboard.writeText(txt).then(()=>{toast('✓ Copied! Paste in each app.');savePost([...activePlatforms],txt);document.getElementById('social-caption').value='';updateCharCount();}).catch(()=>toast('Select all and copy manually.'));}
+function savePost(platforms,text){state.socialPosts=state.socialPosts||[];const p={id:uid(),platforms,text,date:today(),ts:Date.now()};state.socialPosts.unshift(p);if(state.socialPosts.length>50)state.socialPosts=state.socialPosts.slice(0,50);save('social_posts',p);renderSocialHistory();}
+function renderSocialHistory(){const el=document.getElementById('social-history');const posts=(state.socialPosts||[]).slice(0,15);if(!posts.length){el.innerHTML='<div class="empty-state" style="padding:12px 0"><div class="es-icon">📅</div><div class="es-text">Posts you copy appear here.</div></div>';return;}const pm={ig:'phb-ig',fb:'phb-fb',li:'phb-li'},nm={ig:'IG',fb:'FB',li:'LI'};el.innerHTML=posts.map(p=>`<div class="post-hist-card"><div class="post-hist-badges">${p.platforms.map(pl=>`<span class="phb ${pm[pl]}">${nm[pl]}</span>`).join('')}</div><div class="post-hist-text">${p.text.substring(0,110)}${p.text.length>110?'…':''}</div><div class="post-hist-meta">${p.date} · <span style="cursor:pointer;text-decoration:underline" onclick="reusePost('${p.id}')">Reuse</span> · <span style="cursor:pointer;color:var(--danger)" onclick="deletePost('${p.id}')">Delete</span></div></div>`).join('');}
+function reusePost(id){const p=(state.socialPosts||[]).find(x=>x.id===id);if(!p)return;document.getElementById('social-caption').value=p.text;updateCharCount();document.getElementById('page-scroll').scrollTo({top:0,behavior:'smooth'});toast('Caption loaded.');}
+function deletePost(id){state.socialPosts=(state.socialPosts||[]).filter(p=>p.id!==id);save('social_delete',id);renderSocialHistory();}
+function selectTone(el){document.querySelectorAll('.tone-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');selectedTone=el.textContent;}
+async function generateCaption(){
+  const topic=document.getElementById('ai-social-topic').value.trim();if(!topic){toast('Enter a topic first.');return;}
+  const statusEl=document.getElementById('ai-gen-status');statusEl.textContent='✦ Generating…';
+  const platNames=[...activePlatforms].map(p=>({ig:'Instagram',fb:'Facebook',li:'LinkedIn'}[p]));
+  try{const resp=await fetch('https://orange-unit-d4c5.dan-29e.workers.dev',{method:'POST',headers:{'Content-Type':'application/json',},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:`Write a ${selectedTone.toLowerCase()} social media caption${platNames.length?' for '+platNames.join(', '):''} for Dan Driskell, BD consultant at North Point Advisory Group in Dayton, Ohio. Topic: "${topic}". Include hashtags if appropriate. Return only the caption.`}]})});
+  const data=await resp.json();const text=data.content?.find(b=>b.type==='text')?.text||'';
+  document.getElementById('social-caption').value=text;updateCharCount();statusEl.textContent='✓ Generated!';setTimeout(()=>statusEl.textContent='',3000);
+  }catch(e){statusEl.textContent='AI unavailable.';}
+}
+
+// ═══════════════════════════
+//  AI ADVISOR
+// ═══════════════════════════
+async function askAI(){
+  const prompt=document.getElementById('ai-prompt').value.trim();if(!prompt)return;
+  const resEl=document.getElementById('ai-response');resEl.innerHTML='<span class="ai-thinking">Thinking…</span>';
+  const ctx=`You are a business advisor for Dan Driskell at North Point Advisory Group, Dayton OH. Clients: ${JSON.stringify(state.clients.map(c=>({name:c.name,hours:c.hours})))}. Financials: Billed $${state.invoices.reduce((s,i)=>s+i.amount,0).toFixed(0)}. Respond in 2-3 concise, direct sentences.`;
+  try{const resp=await fetch('https://orange-unit-d4c5.dan-29e.workers.dev',{method:'POST',headers:{'Content-Type':'application/json',},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:ctx,messages:[{role:'user',content:prompt}]})});const data=await resp.json();resEl.textContent=data.content?.find(b=>b.type==='text')?.text||'No response.';}catch(e){resEl.textContent='AI unavailable.';}
+}
+
+// ═══════════════════════════
+//  NAVIGATION
+// ═══════════════════════════
+const TAB_TITLES={dashboard:'Dashboard',clients:'Clients',calendar:'Calendar',fundraising:'Fundraising',scripts:'Phone Scripts',social:'Social Media'};
+function switchTab(tab,el){
+  document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));el.classList.add('active');
+  currentTab=tab;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+tab).classList.add('active');
+  document.getElementById('topbar-title').textContent=TAB_TITLES[tab]||tab;
+  document.getElementById('page-scroll').scrollTo({top:0,behavior:'instant'});
+  if(tab==='calendar')renderCalendar();
+  if(tab==='scripts')renderScripts();
+  if(tab==='fundraising'){initFundState();renderFundraising();}
+}
+function goBack(){switchTab('clients',document.getElementById('tab-clients'));}
+function handleFabAction(){
+  const isDetail=document.getElementById('screen-client-detail').classList.contains('active');
+  if(isDetail){if(currentSeg==='notes')openLogClientActivity();else if(currentSeg==='prospects')openAddProspect(currentClientId);else if(currentSeg==='billing')openAddInvoiceForClient(currentClientId);else openSheet('sheet-edit-client');return;}
+  const actions={dashboard:'sheet-log-activity',clients:'sheet-add-client',calendar:'sheet-add-event',scripts:null,social:null};
+  if(currentTab==='fundraising'){
+    const sheetMap={donors:'sheet-add-donor',events:'sheet-add-fund-event',tasks:'sheet-add-task',notes:'sheet-add-fund-note'};
+    const s=sheetMap[fundSeg];if(s)openSheet(s);return;
+  }
+  const a=actions[currentTab];if(a)openSheet(a);
+}
+
+// ═══════════════════════════
+//  ACTIONS
+// ═══════════════════════════
+function addClient(){const name=document.getElementById('cl-name').value.trim();if(!name){toast('Name required.');return;}const c={id:uid(),name,contact:document.getElementById('cl-contact').value.trim(),contactTitle:document.getElementById('cl-title').value.trim(),email:document.getElementById('cl-email').value.trim(),phone:document.getElementById('cl-phone').value.trim(),hours:parseFloat(document.getElementById('cl-hours').value)||0,rate:parseFloat(document.getElementById('cl-rate').value)||0,notes:document.getElementById('cl-notes').value.trim(),color:COLORS[state.clients.length%COLORS.length],prospects:[],ts:Date.now()};state.clients.push(c);save('clients',c);render();closeSheet('sheet-add-client');clearFields(['cl-name','cl-contact','cl-title','cl-email','cl-phone','cl-hours','cl-rate','cl-notes']);toast('✓ Client added');}
+function openEditClient(cid){const c=state.clients.find(x=>x.id===cid);if(!c)return;document.getElementById('ecl-name').value=c.name;document.getElementById('ecl-contact').value=c.contact||'';document.getElementById('ecl-title').value=c.contactTitle||'';document.getElementById('ecl-email').value=c.email||'';document.getElementById('ecl-phone').value=c.phone||'';document.getElementById('ecl-hours').value=c.hours||'';document.getElementById('ecl-rate').value=c.rate||'';document.getElementById('ecl-notes').value=c.notes||'';openSheet('sheet-edit-client');}
+function saveClientEdit(){const c=state.clients.find(x=>x.id===currentClientId);if(!c)return;c.name=document.getElementById('ecl-name').value.trim()||c.name;c.contact=document.getElementById('ecl-contact').value.trim();c.contactTitle=document.getElementById('ecl-title').value.trim();c.email=document.getElementById('ecl-email').value.trim();c.phone=document.getElementById('ecl-phone').value.trim();c.hours=parseFloat(document.getElementById('ecl-hours').value)||0;c.rate=parseFloat(document.getElementById('ecl-rate').value)||0;c.notes=document.getElementById('ecl-notes').value.trim();save('clients',c);closeSheet('sheet-edit-client');openClient(currentClientId);render();toast('✓ Saved');}
+function deleteClient(){if(!confirm('Delete this client?'))return;save('client_delete',currentClientId);state.clients=state.clients.filter(c=>c.id!==currentClientId);state.invoices=state.invoices.filter(i=>i.clientId!==currentClientId);state.activity=state.activity.filter(a=>a.clientId!==currentClientId);saveLocal();render();closeSheet('sheet-edit-client');switchTab('clients',document.getElementById('tab-clients'));toast('Deleted.');}
+function openLogClientActivity(){document.getElementById('note-date').value=today();openSheet('sheet-log-client-activity');}
+function addNote(){const body=document.getElementById('note-body').value.trim();if(!body){toast('Enter details.');return;}const n={id:uid(),clientId:currentClientId,type:document.getElementById('note-type').value,date:document.getElementById('note-date').value||today(),body,ts:Date.now()};state.activity.unshift(n);save('activity',n);closeSheet('sheet-log-client-activity');document.getElementById('note-body').value='';renderSegNotes(currentClientId);renderDashboard();toast('✓ Logged');}
+function addGlobalNote(){const cid=document.getElementById('gnote-client').value,body=document.getElementById('gnote-body').value.trim();if(!cid){toast('Select a client.');return;}if(!body){toast('Enter details.');return;}const n={id:uid(),clientId:cid,type:document.getElementById('gnote-type').value,date:document.getElementById('gnote-date').value||today(),body,ts:Date.now()};state.activity.unshift(n);save('activity',n);closeSheet('sheet-log-activity');document.getElementById('gnote-body').value='';renderDashboard();toast('✓ Logged');}
+function deleteNote(nid,cid){if(!confirm('Delete?'))return;save('activity_delete',nid);state.activity=state.activity.filter(a=>a.id!==nid);saveLocal();renderSegNotes(cid);renderDashboard();toast('Deleted.');}
+function openAddProspect(cid){currentClientId=cid;openSheet('sheet-add-prospect');}
+function addProspect(){const name=document.getElementById('p-name').value.trim();if(!name){toast('Name required.');return;}const c=state.clients.find(x=>x.id===currentClientId);if(!c)return;c.prospects=c.prospects||[];c.prospects.push({id:uid(),name,contact:document.getElementById('p-contact').value.trim(),stage:document.getElementById('p-stage').value,value:parseFloat(document.getElementById('p-value').value)||0,notes:document.getElementById('p-notes').value.trim(),ts:Date.now()});save('clients',c);closeSheet('sheet-add-prospect');clearFields(['p-name','p-contact','p-value','p-notes']);renderSegProspects(currentClientId);toast('✓ Prospect added');}
+function openProspectStage(cid,pid){document.getElementById('ps-client-id').value=cid;document.getElementById('ps-prospect-id').value=pid;openSheet('sheet-prospect-stage');}
+function setProspectStage(stage){const cid=document.getElementById('ps-client-id').value,pid=document.getElementById('ps-prospect-id').value;const c=state.clients.find(x=>x.id===cid);const p=(c?.prospects||[]).find(x=>x.id===pid);if(p){p.stage=stage;save('clients',c);renderSegProspects(cid);}closeSheet('sheet-prospect-stage');toast('Stage updated');}
+function openAddInvoiceForClient(cid){document.getElementById('inv-date').value=today();populateDropdowns();document.getElementById('inv-client').value=cid;openSheet('sheet-add-invoice');}
+function addInvoice(){const cid=document.getElementById('inv-client').value,desc=document.getElementById('inv-desc').value.trim(),amount=parseFloat(document.getElementById('inv-amount').value)||0;if(!cid||!desc||!amount){toast('Fill all fields.');return;}const inv={id:uid(),clientId:cid,desc,amount,date:document.getElementById('inv-date').value||today(),status:document.getElementById('inv-status').value,ts:Date.now()};state.invoices.unshift(inv);save('invoices',inv);if(currentClientId)renderSegBilling(currentClientId);renderDashboard();closeSheet('sheet-add-invoice');clearFields(['inv-desc','inv-amount']);toast('✓ Invoice created');}
+function openInvStatus(id){document.getElementById('inv-status-id').value=id;openSheet('sheet-inv-status');}
+function setInvStatus(status){const id=document.getElementById('inv-status-id').value,inv=state.invoices.find(i=>i.id===id);if(inv){inv.status=status;save('invoice_status',{id,status});if(currentClientId)renderSegBilling(currentClientId);renderDashboard();}closeSheet('sheet-inv-status');toast('Updated');}
+function savePost(platforms,text){state.socialPosts=state.socialPosts||[];const p={id:uid(),platforms,text,date:today(),ts:Date.now()};state.socialPosts.unshift(p);if(state.socialPosts.length>50)state.socialPosts=state.socialPosts.slice(0,50);save('social_posts',p);renderSocialHistory();}
+function deletePost(id){state.socialPosts=(state.socialPosts||[]).filter(p=>p.id!==id);save('social_delete',id);renderSocialHistory();}
+// ═══════════════════════════
+//  SHEETS
+// ═══════════════════════════
+function openSheet(id){document.getElementById(id).classList.add('open');}
+function closeSheet(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.sheet-overlay').forEach(o=>{o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});});
+function populateDropdowns(){['gnote-client','inv-client'].forEach(id=>{const el=document.getElementById(id);if(!el)return;const cur=el.value;el.innerHTML='<option value="">— Select —</option>'+state.clients.map(c=>`<option value="${c.id}" ${cur===c.id?'selected':''}>${c.name}</option>`).join('');});}
+
+// defaults
+document.getElementById('gnote-date').value=today();
+document.getElementById('note-date').value=today();
+document.getElementById('inv-date').value=today();
+document.getElementById('ev-date').value=today();
+document.getElementById('ev-start').value='09:00';
+document.getElementById('ev-end').value='10:00';
+document.getElementById('fn-date').value=today();
+document.getElementById('tk-due').value=today();
+renderPubButtons();
+
+// ═══════════════════════════
+//  FUNDRAISING
+// ═══════════════════════════
+const ORGS = {
+  mvhf: {
+    name: 'Miami Valley Hospital Foundation',
+    short: 'MVH Foundation',
+    color: '#8B1A2E',
+    bgLight: '#FDF0F2',
+    mission: 'Supporting patient care excellence and community health programs across the Miami Valley region.',
+    goal: 250000,
+    icon: '🏥'
+  },
+  gw: {
+    name: 'Graceworks Lutheran Services',
+    short: 'Graceworks',
+    color: '#1B5E3B',
+    bgLight: '#EEF7F2',
+    mission: 'Serving seniors and families across southwest Ohio through compassionate, faith-based care and housing.',
+    goal: 150000,
+    icon: '🌿'
+  }
+};
+
+let activeOrg = 'mvhf';
+let fundSeg = 'donors';
+
+function initFundState() {
+  if (!state.fundraising) {
+    state.fundraising = {
+      mvhf: { donors: [], events: [], tasks: [], notes: [], campaignGoal: 250000, campaignName: 'Annual Fund 2026' },
+      gw:   { donors: [], events: [], tasks: [], notes: [], campaignGoal: 150000, campaignName: 'Community Care Campaign 2026' }
+    };
+  }
+}
+
+function switchOrg(org, el) {
+  activeOrg = org;
+  document.getElementById('org-mvhf').className = 'org-btn' + (org === 'mvhf' ? ' active-mvhf' : '');
+  document.getElementById('org-gw').className = 'org-btn' + (org === 'gw' ? ' active-gw' : '');
+  fundSeg = 'donors';
+  document.querySelectorAll('.fund-seg-item').forEach((s, i) => { s.classList.toggle('active', i === 0); });
+  renderFundraising();
+}
+
+function switchFundSeg(seg, el) {
+  fundSeg = seg;
+  document.querySelectorAll('.fund-seg-item').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  ['donors','events','tasks','notes'].forEach(s => {
+    document.getElementById('fund-seg-' + s).style.display = s === seg ? 'block' : 'none';
+  });
+  renderFundSeg();
+}
+
+function renderFundraising() {
+  initFundState();
+  const org = ORGS[activeOrg];
+  const data = state.fundraising[activeOrg];
+
+  // Banner
+  document.getElementById('fund-org-banner').innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:44px;height:44px;border-radius:12px;background:${org.color};display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">${org.icon}</div>
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:16px;color:${org.color};">${org.name}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:2px;line-height:1.4;">${org.mission}</div>
+      </div>
+    </div>`;
+
+  // KPIs
+  const donors = data.donors || [];
+  const totalRaised = donors.reduce((s, d) => s + (d.gift || 0), 0);
+  const totalAsked = donors.reduce((s, d) => s + (d.ask || 0), 0);
+  const stewarded = donors.filter(d => d.stage === 'steward').length;
+  const inPipeline = donors.filter(d => ['qualify','cultivate','solicit'].includes(d.stage)).length;
+  document.getElementById('fund-kpis').innerHTML = `
+    <div class="fund-kpi"><div class="fund-kpi-val" style="color:${org.color};">${fmtK(totalRaised)}</div><div class="fund-kpi-label">Raised</div></div>
+    <div class="fund-kpi"><div class="fund-kpi-val" style="color:var(--warn);">${fmtK(totalAsked)}</div><div class="fund-kpi-label">Pipeline</div></div>
+    <div class="fund-kpi"><div class="fund-kpi-val" style="color:var(--success);">${stewarded}</div><div class="fund-kpi-label">Stewarded</div></div>`;
+
+  // Campaign progress
+  const goal = data.campaignGoal || org.goal;
+  const pct = Math.min((totalRaised / goal) * 100, 100).toFixed(1);
+  document.getElementById('fund-campaign-card').innerHTML = `
+    <div class="card-label">${data.campaignName || 'Annual Campaign'}</div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%;background:${org.color};"></div></div>
+    <div class="progress-label"><span>${fmtK(totalRaised)} raised</span><span>Goal: ${fmtK(goal)}</span></div>
+    <div style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:6px;">${pct}% of goal · ${donors.length} donors tracked</div>`;
+
+  renderFundSeg();
+}
+
+function renderFundSeg() {
+  initFundState();
+  if (fundSeg === 'donors') renderFundDonors();
+  if (fundSeg === 'events') renderFundEvents();
+  if (fundSeg === 'tasks') renderFundTasks();
+  if (fundSeg === 'notes') renderFundNotes();
+}
+
+function renderFundDonors() {
+  const org = ORGS[activeOrg];
+  const donors = (state.fundraising[activeOrg].donors || []).sort((a, b) => (b.gift || b.ask || 0) - (a.gift || a.ask || 0));
+  const stageCls = { identify:'ds-identify', qualify:'ds-qualify', cultivate:'ds-cultivate', solicit:'ds-solicit', steward:'ds-steward', lapsed:'ds-lapsed' };
+  const stageLbl = { identify:'Identify', qualify:'Qualify', cultivate:'Cultivate', solicit:'Solicit', steward:'Stewarded ✓', lapsed:'Lapsed' };
+  const typeIcon = { individual:'👤', corporate:'🏢', foundation:'🏛', board:'⭐' };
+
+  document.getElementById('fund-seg-donors').innerHTML =
+    `<button class="btn btn-primary btn-full" style="margin-bottom:10px;background:${org.color};" onclick="openSheet('sheet-add-donor')">+ Add Donor / Prospect</button>` +
+    (donors.length ? donors.map(d => `
+      <div class="donor-card">
+        <div class="donor-top">
+          <div>
+            <div class="donor-name">${typeIcon[d.type]||'👤'} ${d.name}</div>
+            <div class="donor-meta">${d.type.charAt(0).toUpperCase()+d.type.slice(1)}</div>
+          </div>
+          <div style="text-align:right;">
+            ${d.gift ? `<div class="donor-amount" style="color:var(--success);">${fmt(d.gift)}</div><div style="font-size:10px;color:var(--text-muted);">gift</div>` : d.ask ? `<div class="donor-amount" style="color:var(--warn);">${fmt(d.ask)}</div><div style="font-size:10px;color:var(--text-muted);">ask</div>` : ''}
+          </div>
+        </div>
+        <div class="donor-bottom">
+          <span class="donor-stage-pill ${stageCls[d.stage]}">${stageLbl[d.stage]}</span>
+          <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px;flex:none;" onclick="openDonorStage('${d.id}')">Move ›</button>
+          <button class="btn" style="padding:4px 10px;font-size:11px;flex:none;background:#FDDEDE;color:var(--danger);" onclick="deleteDonor('${d.id}')">✕</button>
+        </div>
+        ${d.notes ? `<div class="donor-note">${d.notes}</div>` : ''}
+      </div>`).join('')
+    : `<div class="empty-state"><div class="es-icon">🤝</div><div class="es-text">No donors tracked yet.<br>Add your first prospect above.</div></div>`);
+}
+
+function renderFundEvents() {
+  const org = ORGS[activeOrg];
+  const events = (state.fundraising[activeOrg].events || []).sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+  document.getElementById('fund-seg-events').innerHTML =
+    `<button class="btn btn-primary btn-full" style="margin-bottom:10px;background:${org.color};" onclick="openSheet('sheet-add-fund-event')">+ Add Event</button>` +
+    (events.length ? events.map(e => {
+      const goal = e.goal || 0, raised = e.raised || 0;
+      const pct = goal ? Math.min((raised / goal) * 100, 100).toFixed(0) : 0;
+      return `<div class="event-card">
+        <div class="ev-top">
+          <div class="ev-name">${e.name}</div>
+          ${e.date ? `<div class="ev-date-badge">${e.date}</div>` : ''}
+        </div>
+        ${goal ? `<div class="ev-goal-row">
+          <div class="progress-wrap" style="height:7px;"><div class="progress-bar" style="width:${pct}%;background:${org.color};"></div></div>
+          <div class="progress-label"><span>${fmtK(raised)} raised</span><span>Goal: ${fmtK(goal)}</span></div>
+        </div>` : ''}
+        ${e.notes ? `<div class="ev-meta">${e.notes}</div>` : ''}
+        <div style="margin-top:8px;"><button class="btn" style="padding:5px 12px;font-size:11px;background:#FDDEDE;color:var(--danger);" onclick="deleteFundEvent('${e.id}')">Remove</button></div>
+      </div>`;
+    }).join('') : `<div class="empty-state"><div class="es-icon">🎟</div><div class="es-text">No events yet. Add a gala, golf outing, or campaign.</div></div>`);
+}
+
+function renderFundTasks() {
+  const org = ORGS[activeOrg];
+  const tasks = (state.fundraising[activeOrg].tasks || []).sort((a, b) => {
+    if (a.done !== b.done) return a.done ? 1 : -1;
+    return (a.due || '').localeCompare(b.due || '');
+  });
+  const todayStr = today();
+  document.getElementById('fund-seg-tasks').innerHTML =
+    `<button class="btn btn-primary btn-full" style="margin-bottom:10px;background:${org.color};" onclick="openSheet('sheet-add-task')">+ Add Task</button>` +
+    `<div class="card" style="padding:0 14px;">` +
+    (tasks.length ? tasks.map(t => {
+      const overdue = t.due && t.due < todayStr && !t.done;
+      const priColor = { high: 'var(--danger)', medium: 'var(--warn)', low: 'var(--success)' }[t.priority] || 'var(--text-muted)';
+      return `<div class="task-item">
+        <div class="task-check ${t.done ? 'done' : ''}" onclick="toggleTask('${t.id}')">✓</div>
+        <div class="task-body">
+          <div class="task-title ${t.done ? 'done' : ''}">${t.title}</div>
+          ${t.due ? `<div class="task-due ${overdue ? 'overdue' : ''}">Due ${t.due}${overdue ? ' ⚠ Overdue' : ''}</div>` : ''}
+          <div class="task-del" onclick="deleteFundTask('${t.id}')">Delete</div>
+        </div>
+        <div style="width:8px;height:8px;border-radius:50%;background:${priColor};flex-shrink:0;margin-top:5px;"></div>
+      </div>`;
+    }).join('') : `<div class="empty-state" style="padding:20px 0"><div class="es-icon">✅</div><div class="es-text">No tasks yet.</div></div>`) +
+    `</div>`;
+}
+
+function renderFundNotes() {
+  const org = ORGS[activeOrg];
+  const notes = (state.fundraising[activeOrg].notes || []).sort((a, b) => b.ts - a.ts);
+  document.getElementById('fund-seg-notes').innerHTML =
+    `<button class="btn btn-primary btn-full" style="margin-bottom:10px;background:${org.color};" onclick="openSheet('sheet-add-fund-note')">+ Log Note</button>` +
+    (notes.length ? notes.map(n => `
+      <div class="note-card">
+        <div class="note-top"><span class="note-pill pill-note">📝 Note</span><span class="note-date">${n.date}</span></div>
+        <div class="note-body">${n.body.replace(/\n/g,'<br>')}</div>
+        <div class="note-del" onclick="deleteFundNote('${n.id}')">Delete</div>
+      </div>`).join('')
+    : `<div class="empty-state"><div class="es-icon">📋</div><div class="es-text">No notes yet. Log board meetings, donor conversations, and event debriefs here.</div></div>`);
+}
+
+function fmtK(n) {
+  if (!n) return '$0';
+  if (n >= 1000) return '$' + (n / 1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'K';
+  return '$' + n.toLocaleString();
+}
+
+function saveFund(category){
+  save('fundraising',{org:activeOrg,category,data:state.fundraising[activeOrg][category]});
+  saveLocal();
+}
+
+function addDonor() {
+  const name = document.getElementById('dn-name').value.trim();
+  if (!name) { toast('Name required.'); return; }
+  initFundState();
+  state.fundraising[activeOrg].donors.push({
+    id: uid(), name,
+    type: document.getElementById('dn-type').value,
+    stage: document.getElementById('dn-stage').value,
+    ask: parseFloat(document.getElementById('dn-ask').value) || 0,
+    gift: parseFloat(document.getElementById('dn-gift').value) || 0,
+    notes: document.getElementById('dn-notes').value.trim(),
+    ts: Date.now()
+  });
+  saveFund('donors'); closeSheet('sheet-add-donor');
+  clearFields(['dn-name','dn-ask','dn-gift','dn-notes']);
+  renderFundraising(); toast('✓ Donor added');
+}
+
+function openDonorStage(id) {
+  document.getElementById('ds-org').value = activeOrg;
+  document.getElementById('ds-id').value = id;
+  openSheet('sheet-donor-stage');
+}
+
+function setDonorStage(stage) {
+  initFundState();
+  const id = document.getElementById('ds-id').value;
+  const org = document.getElementById('ds-org').value;
+  const d = (state.fundraising[org].donors || []).find(x => x.id === id);
+  if (d) { d.stage = stage; save('fundraising',{org,category:'donors',data:state.fundraising[org].donors}); saveLocal(); renderFundraising(); }
+  closeSheet('sheet-donor-stage'); toast('Stage updated');
+}
+
+function deleteDonor(id) {
+  if (!confirm('Remove this donor?')) return;
+  initFundState();
+  state.fundraising[activeOrg].donors = state.fundraising[activeOrg].donors.filter(d => d.id !== id);
+  saveFund('donors'); renderFundraising(); toast('Removed.');
+}
+
+function addFundEvent() {
+  const name = document.getElementById('fe-name').value.trim();
+  if (!name) { toast('Event name required.'); return; }
+  initFundState();
+  state.fundraising[activeOrg].events.push({
+    id: uid(), name,
+    date: document.getElementById('fe-date').value,
+    goal: parseFloat(document.getElementById('fe-goal').value) || 0,
+    raised: parseFloat(document.getElementById('fe-raised').value) || 0,
+    notes: document.getElementById('fe-notes').value.trim(),
+    ts: Date.now()
+  });
+  saveFund('events'); closeSheet('sheet-add-fund-event');
+  clearFields(['fe-name','fe-date','fe-goal','fe-raised','fe-notes']);
+  renderFundraising(); toast('✓ Event added');
+}
+
+function deleteFundEvent(id) {
+  if (!confirm('Remove event?')) return;
+  state.fundraising[activeOrg].events = state.fundraising[activeOrg].events.filter(e => e.id !== id);
+  saveFund('events'); renderFundraising(); toast('Removed.');
+}
+
+function addFundTask() {
+  const title = document.getElementById('tk-title').value.trim();
+  if (!title) { toast('Task required.'); return; }
+  initFundState();
+  state.fundraising[activeOrg].tasks.push({
+    id: uid(), title,
+    due: document.getElementById('tk-due').value,
+    priority: document.getElementById('tk-priority').value,
+    done: false, ts: Date.now()
+  });
+  saveFund('tasks'); closeSheet('sheet-add-task');
+  clearFields(['tk-title','tk-due']);
+  renderFundraising(); toast('✓ Task added');
+}
+
+function toggleTask(id) {
+  initFundState();
+  const t = (state.fundraising[activeOrg].tasks || []).find(x => x.id === id);
+  if (t) { t.done = !t.done; saveFund('tasks'); renderFundTasks(); }
+}
+
+function deleteFundTask(id) {
+  state.fundraising[activeOrg].tasks = state.fundraising[activeOrg].tasks.filter(t => t.id !== id);
+  saveFund('tasks'); renderFundTasks(); toast('Removed.');
+}
+
+function addFundNote() {
+  const body = document.getElementById('fn-body').value.trim();
+  if (!body) { toast('Enter a note.'); return; }
+  initFundState();
+  state.fundraising[activeOrg].notes.push({
+    id: uid(),
+    date: document.getElementById('fn-date').value || today(),
+    body, ts: Date.now()
+  });
+  saveFund('notes'); closeSheet('sheet-add-fund-note');
+  document.getElementById('fn-body').value = '';
+  renderFundNotes(); toast('✓ Note saved');
+}
+
+function deleteFundNote(id) {
+  state.fundraising[activeOrg].notes = state.fundraising[activeOrg].notes.filter(n => n.id !== id);
+  saveFund('notes'); renderFundNotes(); toast('Removed.');
+}
+
+load();
+</script>
+</body>
+</html>
