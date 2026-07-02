@@ -437,7 +437,79 @@ select.form-control{cursor:pointer;}
 .trip-notes{font-size:13px;color:var(--text-secondary);margin-top:8px;line-height:1.5;padding-top:8px;border-top:1px solid var(--surface);}
 .trip-del{font-size:12px;color:var(--danger);cursor:pointer;margin-top:8px;}
 
-/* ══ INVOICE BUILDER ══ */
+/* ══ OUTREACH ══ */
+.outreach-seg{display:flex;background:var(--surface);border-radius:10px;padding:3px;margin-bottom:12px;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.outreach-seg-item{flex:1;min-width:70px;padding:7px 4px;border-radius:7px;text-align:center;font-size:10px;font-weight:700;color:var(--text-muted);cursor:pointer;white-space:nowrap;transition:all .15s;text-transform:uppercase;letter-spacing:.04em;}
+.outreach-seg-item.active{background:var(--white);color:var(--navy);box-shadow:0 1px 4px rgba(0,0,0,.1);}
+
+.prospect-hub-card{background:var(--white);border-radius:12px;padding:13px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.ph-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.ph-avatar{width:38px;height:38px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:17px;color:var(--gold);flex-shrink:0;}
+.ph-name{font-size:14px;font-weight:700;}
+.ph-title{font-size:12px;color:var(--text-muted);margin-top:1px;}
+.ph-company{font-size:12px;color:var(--navy);font-weight:600;margin-top:1px;}
+.ph-client-tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;background:var(--gold-pale);color:var(--warn);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
+.ph-score{display:flex;align-items:center;gap:4px;margin-top:6px;}
+.ph-score-dot{width:8px;height:8px;border-radius:50%;}
+.ph-score-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
+.score-hot{color:#C0392B;} .score-hot .ph-score-dot{background:#C0392B;}
+.score-warm{color:#C17B2A;} .score-warm .ph-score-dot{background:#C17B2A;}
+.score-cold{color:#7A8FA6;} .score-cold .ph-score-dot{background:#7A8FA6;}
+
+.ph-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;}
+.ph-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;}
+.tag-source-chamber{background:#EDE0F7;color:#7B1FA2;}
+.tag-source-linkedin{background:#D6E4F5;color:#1A5276;}
+.tag-source-referral{background:#D6EFEA;color:#2E7D5E;}
+.tag-source-csv{background:#FCECD6;color:#C17B2A;}
+.tag-source-manual{background:#EEF1F5;color:#4A6070;}
+.tag-source-web{background:#FDDEDE;color:#8B2635;}
+.tag-source-purchased{background:#F5E6FB;color:#7B1FA2;}
+
+.ph-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.ph-action-btn{padding:7px 12px;border-radius:9px;font-size:11px;font-weight:700;cursor:pointer;border:none;transition:all .12s;}
+.ph-action-btn:active{transform:scale(.96);}
+.pab-email{background:#D6E4F5;color:#1A5276;}
+.pab-linkedin{background:#E8F0FB;color:#0A66C2;}
+.pab-phone{background:#D6EFEA;color:#2E7D5E;}
+.pab-signal{background:#FCECD6;color:#C17B2A;}
+.pab-enrich{background:var(--navy);color:var(--gold);}
+
+.signal-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--surface);}
+.signal-item:last-child{border-bottom:none;}
+.signal-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.signal-body{flex:1;}
+.signal-type{font-size:12px;font-weight:700;}
+.signal-prospect{font-size:12px;color:var(--text-muted);}
+.signal-date{font-size:11px;color:var(--text-muted);margin-top:2px;}
+
+.pipeline-col{flex:1;min-width:140px;}
+.pipeline-col-header{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);padding:8px 10px;background:var(--surface);border-radius:9px;margin-bottom:8px;text-align:center;}
+.pipeline-item{background:var(--white);border-radius:10px;padding:10px;margin-bottom:7px;box-shadow:0 1px 3px rgba(0,0,0,.06);font-size:12px;}
+.pipeline-item-name{font-weight:700;color:var(--navy);}
+.pipeline-item-co{color:var(--text-muted);margin-top:2px;}
+.pipeline-item-client{font-size:10px;font-weight:700;color:var(--gold);margin-top:3px;}
+
+.outreach-card{background:var(--white);border-radius:12px;padding:13px;margin-bottom:9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.outreach-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.outreach-channel{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;}
+.ch-email{background:#D6E4F5;color:#1A5276;}
+.ch-linkedin{background:#E8F0FB;color:#0A66C2;}
+.ch-phone{background:#D6EFEA;color:#2E7D5E;}
+.outreach-prospect{font-size:14px;font-weight:700;}
+.outreach-subject{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.outreach-preview{font-size:13px;color:var(--text-secondary);margin-top:8px;line-height:1.5;max-height:60px;overflow:hidden;}
+.outreach-sent{font-size:11px;color:var(--success);margin-top:6px;font-weight:600;}
+
+.import-drop-zone{border:2px dashed var(--border);border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:all .15s;background:var(--white);margin-bottom:12px;}
+.import-drop-zone:hover{border-color:var(--gold);background:var(--gold-pale);}
+.import-drop-icon{font-size:32px;margin-bottom:8px;}
+.import-drop-label{font-size:14px;font-weight:700;color:var(--navy);}
+.import-drop-sub{font-size:12px;color:var(--text-muted);margin-top:4px;}
+
+.enrich-result{background:var(--surface);border-radius:10px;padding:13px;margin-top:10px;font-size:13px;line-height:1.6;display:none;}
+.enrich-result.show{display:block;}
+
 .line-item-add-row{display:flex;gap:8px;}
 .li-card{background:var(--surface);border-radius:10px;padding:11px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
 .li-card-left{flex:1;min-width:0;}
@@ -669,6 +741,30 @@ select.form-control{cursor:pointer;}
   <div id="fund-seg-notes" style="display:none"></div>
 </div>
 
+<!-- ══ OUTREACH ══ -->
+<div class="screen" id="screen-outreach">
+  <div class="section-header">
+    <div class="section-title">Outreach</div>
+  </div>
+
+  <!-- Seg Control -->
+  <div class="outreach-seg">
+    <div class="outreach-seg-item active" onclick="switchOutreachSeg('prospects',this)">Prospects</div>
+    <div class="outreach-seg-item" onclick="switchOutreachSeg('pipeline',this)">Pipeline</div>
+    <div class="outreach-seg-item" onclick="switchOutreachSeg('signals',this)">Signals</div>
+    <div class="outreach-seg-item" onclick="switchOutreachSeg('sequences',this)">Sequences</div>
+    <div class="outreach-seg-item" onclick="switchOutreachSeg('enrich',this)">Enrich</div>
+    <div class="outreach-seg-item" onclick="switchOutreachSeg('import',this)">Import</div>
+  </div>
+
+  <div id="or-seg-prospects"></div>
+  <div id="or-seg-pipeline" style="display:none"></div>
+  <div id="or-seg-signals" style="display:none"></div>
+  <div id="or-seg-sequences" style="display:none"></div>
+  <div id="or-seg-enrich" style="display:none"></div>
+  <div id="or-seg-import" style="display:none"></div>
+</div>
+
 <!-- ══ TRAVEL ══ -->
 <div class="screen" id="screen-travel">
   <div class="section-header">
@@ -729,10 +825,11 @@ select.form-control{cursor:pointer;}
 
 </div><!-- /page-scroll -->
 
-<!-- BOTTOM TABS — 8 items -->
+<!-- BOTTOM TABS — 9 items -->
 <div class="bottom-tabs">
   <button class="tab-item active" onclick="switchTab('dashboard',this)" id="tab-dashboard"><span class="tab-icon">🏠</span><span class="tab-label">Home</span></button>
   <button class="tab-item" onclick="switchTab('clients',this)" id="tab-clients"><span class="tab-icon">👥</span><span class="tab-label">Clients</span></button>
+  <button class="tab-item" onclick="switchTab('outreach',this)" id="tab-outreach"><span class="tab-icon">🎯</span><span class="tab-label">Outreach</span></button>
   <button class="tab-item" onclick="switchTab('calendar',this)" id="tab-calendar"><span class="tab-icon">📅</span><span class="tab-label">Calendar</span></button>
   <button class="tab-item" onclick="switchTab('travel',this)" id="tab-travel"><span class="tab-icon">✈️</span><span class="tab-label">Travel</span></button>
   <button class="tab-item" onclick="switchTab('accounting',this)" id="tab-accounting"><span class="tab-icon">💵</span><span class="tab-label">Money</span></button>
@@ -1055,6 +1152,105 @@ select.form-control{cursor:pointer;}
   <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-trip')">Cancel</button><button class="btn btn-primary" onclick="addTrip()">Save Trip</button></div>
 </div></div>
 
+<!-- Add Prospect -->
+<div class="sheet-overlay" id="sheet-add-prospect-outreach"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Add Prospect</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Client / Project *</label><select class="form-control" id="op-client"><option value="">— Assign to Client —</option></select></div>
+    <div class="form-group"><label class="form-label">Full Name *</label><input class="form-control" id="op-name" placeholder="First Last"></div>
+    <div class="form-group"><label class="form-label">Company</label><input class="form-control" id="op-company" placeholder="Organization name"></div>
+    <div class="form-group"><label class="form-label">Title</label><input class="form-control" id="op-title" placeholder="CEO, Executive Director…"></div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-control" id="op-email" type="email" placeholder="email@company.com"></div>
+    <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="op-phone" type="tel" placeholder="(555) 000-0000"></div>
+    <div class="form-group"><label class="form-label">LinkedIn URL</label><input class="form-control" id="op-linkedin" placeholder="linkedin.com/in/…"></div>
+    <div class="form-group"><label class="form-label">Lead Source</label>
+      <select class="form-control" id="op-source">
+        <option value="manual">Manual Entry</option>
+        <option value="linkedin">LinkedIn</option>
+        <option value="chamber">Chamber / Association</option>
+        <option value="referral">Referral</option>
+        <option value="csv">CSV Import</option>
+        <option value="web">Website Form</option>
+        <option value="purchased">Purchased List</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Stage</label>
+      <select class="form-control" id="op-stage">
+        <option value="lead">Lead</option>
+        <option value="contacted">Contacted</option>
+        <option value="engaged">Engaged</option>
+        <option value="proposal">Proposal</option>
+        <option value="negotiating">Negotiating</option>
+        <option value="won">Won 🎉</option>
+        <option value="lost">Lost</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control" id="op-notes" placeholder="Context, talking points, mutual connections…"></textarea></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-prospect-outreach')">Cancel</button><button class="btn btn-primary" onclick="addOutreachProspect()">Add Prospect</button></div>
+</div></div>
+
+<!-- Log Signal -->
+<div class="sheet-overlay" id="sheet-log-signal"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Log Signal</div>
+  <div class="sheet-body">
+    <input type="hidden" id="sig-prospect-id">
+    <div class="form-group"><label class="form-label">Signal Type</label>
+      <select class="form-control" id="sig-type">
+        <option value="email_open">📧 Email Opened</option>
+        <option value="email_click">🔗 Email Click</option>
+        <option value="linkedin_view">👁 LinkedIn Profile View</option>
+        <option value="linkedin_connect">🤝 LinkedIn Connected</option>
+        <option value="job_change">💼 Job Change / Promotion</option>
+        <option value="company_news">📰 Company News / Trigger</option>
+        <option value="call_answered">📞 Call Answered</option>
+        <option value="call_voicemail">📱 Left Voicemail</option>
+        <option value="call_noanswer">❌ No Answer</option>
+        <option value="replied">✉️ Replied to Outreach</option>
+        <option value="meeting_booked">📅 Meeting Booked</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control" id="sig-notes" placeholder="What happened, what was said, next step…"></textarea></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-log-signal')">Cancel</button><button class="btn btn-primary" onclick="saveSignal()">Log Signal</button></div>
+</div></div>
+
+<!-- Prospect Stage Change -->
+<div class="sheet-overlay" id="sheet-prospect-stage-outreach"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">Move Stage</div>
+  <input type="hidden" id="ops-id">
+  <div class="sheet-body" style="padding-bottom:8px;">
+    <button class="btn btn-full" style="background:#EEF1F5;color:#4A6070;margin-bottom:7px;" onclick="setOutreachStage('lead')">Lead</button>
+    <button class="btn btn-full" style="background:#D6E4F5;color:#1A5276;margin-bottom:7px;" onclick="setOutreachStage('contacted')">Contacted</button>
+    <button class="btn btn-full" style="background:#EDE0F7;color:#7B2FBE;margin-bottom:7px;" onclick="setOutreachStage('engaged')">Engaged</button>
+    <button class="btn btn-full" style="background:#FCECD6;color:#C17B2A;margin-bottom:7px;" onclick="setOutreachStage('proposal')">Proposal</button>
+    <button class="btn btn-full" style="background:#F5E6FB;color:#7B1FA2;margin-bottom:7px;" onclick="setOutreachStage('negotiating')">Negotiating</button>
+    <button class="btn btn-full" style="background:#D6EFEA;color:#2E7D5E;margin-bottom:7px;" onclick="setOutreachStage('won')">Won 🎉</button>
+    <button class="btn btn-full" style="background:#FDDEDE;color:#8B2635;" onclick="setOutreachStage('lost')">Lost</button>
+  </div>
+</div></div>
+
+<!-- Generate Outreach -->
+<div class="sheet-overlay" id="sheet-gen-outreach"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title" id="gen-outreach-title">Generate Message</div>
+  <div class="sheet-body">
+    <input type="hidden" id="gen-prospect-id">
+    <input type="hidden" id="gen-channel">
+    <div class="form-group"><label class="form-label">Tone / Approach</label>
+      <select class="form-control" id="gen-tone">
+        <option value="warm">Warm & Conversational</option>
+        <option value="professional">Professional & Direct</option>
+        <option value="followup">Follow-Up (we've spoken)</option>
+        <option value="referral">Referral Intro</option>
+        <option value="value">Lead with Value / Insight</option>
+      </select>
+    </div>
+    <div class="form-group"><label class="form-label">Context (optional)</label><input class="form-control" id="gen-context" placeholder="e.g. They just announced a new campus, referral from John Smith…"></div>
+    <button class="btn btn-primary btn-full" onclick="generateOutreachMessage()" style="margin-bottom:10px;">✦ Generate 3 Options</button>
+    <div id="gen-outreach-results"></div>
+  </div>
+</div></div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1162,6 +1358,7 @@ async function load(){
     });
     saveLocal();
     render();
+    await loadOutreachFromSupabase();
     showSyncBadge('✓ Synced','var(--success)');
     setTimeout(()=>hideSyncBadge(),2000);
   }catch(e){
@@ -1771,7 +1968,7 @@ async function askAI(){
 // ═══════════════════════════
 //  NAVIGATION
 // ═══════════════════════════
-const TAB_TITLES={dashboard:'Dashboard',clients:'Clients',calendar:'Calendar',travel:'Travel',accounting:'Accounting',fundraising:'Fundraising',scripts:'Phone Scripts',social:'Social Media'};
+const TAB_TITLES={dashboard:'Dashboard',clients:'Clients',outreach:'Outreach',calendar:'Calendar',travel:'Travel',accounting:'Accounting',fundraising:'Fundraising',scripts:'Phone Scripts',social:'Social Media'};
 function switchTab(tab,el){
   document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));el.classList.add('active');
   currentTab=tab;
@@ -1784,6 +1981,7 @@ function switchTab(tab,el){
   if(tab==='fundraising'){initFundState();renderFundraising();}
   if(tab==='accounting'){initAcctState();renderAccounting();}
   if(tab==='travel'){renderTravel();}
+  if(tab==='outreach'){initOutreachState();renderOutreach();}
 }
 function goBack(){switchTab('clients',document.getElementById('tab-clients'));}
 function handleFabAction(){
@@ -1796,6 +1994,7 @@ function handleFabAction(){
     const s=sheetMap[acctSeg];if(s)openSheet(s);return;
   }
   if(currentTab==='travel'){openSheet('sheet-add-trip');return;}
+  if(currentTab==='outreach'){openAddOutreachProspect();return;}
   const actions={dashboard:'sheet-log-activity',clients:'sheet-add-client',calendar:'sheet-add-event',scripts:null,social:null};
   const a=actions[currentTab];if(a)openSheet(a);
 }
@@ -2907,6 +3106,575 @@ function renderTravel() {
   renderAirportChips();
   renderQuickRoutes();
   renderSavedTrips();
+}
+
+// ═══════════════════════════
+//  OUTREACH ENGINE
+// ═══════════════════════════
+let outreachSeg = 'prospects';
+let outreachFilter = 'all';
+
+function initOutreachState() {
+  if (!state.outreachProspects) state.outreachProspects = [];
+  if (!state.signals) state.signals = [];
+  if (!state.outreachLog) state.outreachLog = [];
+}
+
+// ── SUPABASE SYNC ──
+async function loadOutreachFromSupabase() {
+  try {
+    const [prospects, signals, outreachLog] = await Promise.all([
+      sbGet('prospects', 'order=ts.desc'),
+      sbGet('signals', 'order=ts.desc'),
+      sbGet('outreach', 'order=ts.desc')
+    ]);
+    state.outreachProspects = prospects.map(p => ({
+      id:p.id, clientId:p.client_id, name:p.name, company:p.company||'',
+      title:p.title||'', email:p.email||'', phone:p.phone||'',
+      linkedinUrl:p.linkedin_url||'', leadSource:p.lead_source||'manual',
+      stage:p.stage||'lead', signalScore:p.signal_score||0,
+      notes:p.notes||'', ts:p.ts
+    }));
+    state.signals = signals.map(s => ({
+      id:s.id, prospectId:s.prospect_id, clientId:s.client_id,
+      type:s.type, notes:s.notes||'', ts:s.ts
+    }));
+    state.outreachLog = outreachLog.map(o => ({
+      id:o.id, prospectId:o.prospect_id, clientId:o.client_id,
+      channel:o.channel, subject:o.subject||'', body:o.body||'',
+      status:o.status||'draft', sentAt:o.sent_at||'', ts:o.ts
+    }));
+    saveLocal();
+  } catch(e) { console.error('Outreach load error', e); }
+}
+
+async function saveOutreachProspect(p) {
+  saveLocal();
+  await sbUpsert('prospects', {
+    id:p.id, client_id:p.clientId, name:p.name, company:p.company,
+    title:p.title, email:p.email, phone:p.phone, linkedin_url:p.linkedinUrl,
+    lead_source:p.leadSource, stage:p.stage, signal_score:p.signalScore,
+    notes:p.notes, ts:p.ts
+  });
+}
+
+async function saveSignalToSupabase(s) {
+  saveLocal();
+  await sbUpsert('signals', {
+    id:s.id, prospect_id:s.prospectId, client_id:s.clientId,
+    type:s.type, notes:s.notes, ts:s.ts
+  });
+}
+
+async function saveOutreachLogToSupabase(o) {
+  saveLocal();
+  await sbUpsert('outreach', {
+    id:o.id, prospect_id:o.prospectId, client_id:o.clientId,
+    channel:o.channel, subject:o.subject, body:o.body,
+    status:o.status, sent_at:o.sentAt, ts:o.ts
+  });
+}
+
+// ── NAV ──
+function switchOutreachSeg(seg, el) {
+  outreachSeg = seg;
+  document.querySelectorAll('.outreach-seg-item').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  ['prospects','pipeline','signals','sequences','enrich','import'].forEach(s => {
+    document.getElementById('or-seg-' + s).style.display = s === seg ? 'block' : 'none';
+  });
+  renderOutreachSeg();
+}
+
+function renderOutreach() {
+  initOutreachState();
+  renderOutreachSeg();
+}
+
+function renderOutreachSeg() {
+  initOutreachState();
+  if (outreachSeg === 'prospects') renderORProspects();
+  if (outreachSeg === 'pipeline') renderORPipeline();
+  if (outreachSeg === 'signals') renderORSignals();
+  if (outreachSeg === 'sequences') renderORSequences();
+  if (outreachSeg === 'enrich') renderOREnrich();
+  if (outreachSeg === 'import') renderORImport();
+}
+
+// ── PROSPECTS ──
+const STAGE_CLS = {lead:'s-lead',contacted:'s-contacted',engaged:'s-negotiating',proposal:'s-proposal',negotiating:'s-negotiating',won:'s-won',lost:'s-lost'};
+const STAGE_LBL = {lead:'Lead',contacted:'Contacted',engaged:'Engaged',proposal:'Proposal',negotiating:'Negotiating',won:'Won 🎉',lost:'Lost'};
+const SOURCE_CLS = {linkedin:'tag-source-linkedin',chamber:'tag-source-chamber',referral:'tag-source-referral',csv:'tag-source-csv',manual:'tag-source-manual',web:'tag-source-web',purchased:'tag-source-purchased'};
+const SOURCE_LBL = {linkedin:'LinkedIn',chamber:'Chamber',referral:'Referral',csv:'CSV',manual:'Manual',web:'Web Form',purchased:'Purchased'};
+const SIG_ICONS = {email_open:'📧',email_click:'🔗',linkedin_view:'👁',linkedin_connect:'🤝',job_change:'💼',company_news:'📰',call_answered:'📞',call_voicemail:'📱',call_noanswer:'❌',replied:'✉️',meeting_booked:'📅'};
+const SIG_BG = {email_open:'#D6E4F5',email_click:'#D6E4F5',linkedin_view:'#E8F0FB',linkedin_connect:'#E8F0FB',job_change:'#FCECD6',company_news:'#FCECD6',call_answered:'#D6EFEA',call_voicemail:'#EEF1F5',call_noanswer:'#FDDEDE',replied:'#D6EFEA',meeting_booked:'#D6EFEA'};
+
+function getSignalScore(prospectId) {
+  const sigs = (state.signals||[]).filter(s => s.prospectId === prospectId);
+  if (!sigs.length) return {score:0,label:'Cold',cls:'score-cold'};
+  const hotTypes = ['replied','meeting_booked','linkedin_connect','call_answered'];
+  const warmTypes = ['email_open','email_click','linkedin_view','job_change','company_news'];
+  const hot = sigs.some(s => hotTypes.includes(s.type));
+  const warm = sigs.some(s => warmTypes.includes(s.type));
+  if (hot) return {score:3,label:'Hot',cls:'score-hot'};
+  if (warm) return {score:2,label:'Warm',cls:'score-warm'};
+  return {score:1,label:'Cold',cls:'score-cold'};
+}
+
+function renderORProspects() {
+  const el = document.getElementById('or-seg-prospects');
+  const prospects = state.outreachProspects || [];
+
+  // Filter bar
+  let filterHtml = `<div style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <button class="btn btn-ghost" style="padding:6px 12px;font-size:11px;flex-shrink:0;${outreachFilter==='all'?'background:var(--navy);color:var(--white);':''}" onclick="setORFilter('all')">All (${prospects.length})</button>`;
+  state.clients.forEach(c => {
+    const count = prospects.filter(p => p.clientId === c.id).length;
+    filterHtml += `<button class="btn btn-ghost" style="padding:6px 12px;font-size:11px;flex-shrink:0;${outreachFilter===c.id?'background:'+c.color+';color:white;':''}" onclick="setORFilter('${c.id}')">${c.name} (${count})</button>`;
+  });
+  filterHtml += `</div>`;
+
+  const filtered = outreachFilter === 'all' ? prospects : prospects.filter(p => p.clientId === outreachFilter);
+  const sorted = [...filtered].sort((a,b) => {
+    const sa = getSignalScore(a.id).score, sb = getSignalScore(b.id).score;
+    return sb - sa || b.ts - a.ts;
+  });
+
+  el.innerHTML = `
+    <button class="btn btn-primary btn-full" style="margin-bottom:10px;" onclick="openAddOutreachProspect()">+ Add Prospect</button>
+    ${filterHtml}
+    ${sorted.length ? sorted.map(p => {
+      const c = state.clients.find(x => x.id === p.clientId);
+      const sig = getSignalScore(p.id);
+      const sigCount = (state.signals||[]).filter(s => s.prospectId === p.id).length;
+      return `<div class="prospect-hub-card">
+        <div class="ph-top">
+          <div style="display:flex;gap:10px;align-items:flex-start;flex:1;">
+            <div class="ph-avatar">${p.name.charAt(0)}</div>
+            <div style="flex:1;min-width:0;">
+              <div class="ph-name">${p.name}</div>
+              ${p.title ? `<div class="ph-title">${p.title}</div>` : ''}
+              ${p.company ? `<div class="ph-company">${p.company}</div>` : ''}
+            </div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            ${c ? `<div class="ph-client-tag">${c.name}</div>` : ''}
+            <span class="stage-pill ${STAGE_CLS[p.stage]||'s-lead'}" style="margin-top:5px;display:inline-block;">${STAGE_LBL[p.stage]||p.stage}</span>
+          </div>
+        </div>
+        <div class="ph-tags" style="margin-top:8px;">
+          <span class="ph-tag ${SOURCE_CLS[p.leadSource]||'tag-source-manual'}">${SOURCE_LBL[p.leadSource]||p.leadSource}</span>
+          <span class="ph-score ${sig.cls}"><span class="ph-score-dot"></span><span class="ph-score-label">${sig.label}</span></span>
+          ${sigCount ? `<span style="font-size:10px;color:var(--text-muted);">${sigCount} signal${sigCount>1?'s':''}</span>` : ''}
+        </div>
+        <div class="ph-actions">
+          ${p.email ? `<button class="ph-action-btn pab-email" onclick="openGenOutreach('${p.id}','email')">📧 Email</button>` : ''}
+          ${p.linkedinUrl ? `<button class="ph-action-btn pab-linkedin" onclick="openGenOutreach('${p.id}','linkedin')">💼 LinkedIn DM</button>` : ''}
+          ${p.phone ? `<button class="ph-action-btn pab-phone" onclick="openGenOutreach('${p.id}','phone')">📞 Script</button>` : ''}
+          <button class="ph-action-btn pab-signal" onclick="openLogSignal('${p.id}')">⚡ Signal</button>
+          <button class="ph-action-btn pab-enrich" onclick="enrichProspect('${p.id}')">✦ Enrich</button>
+          <button class="ph-action-btn" style="background:var(--surface);color:var(--text-secondary);" onclick="openProspectStageOutreach('${p.id}')">Move ›</button>
+        </div>
+        ${p.notes ? `<div style="font-size:12px;color:var(--text-muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--surface);">${p.notes}</div>` : ''}
+        <div style="margin-top:8px;display:flex;gap:10px;">
+          ${p.email ? `<a href="mailto:${p.email}" style="font-size:11px;color:var(--navy);">${p.email}</a>` : ''}
+          ${p.linkedinUrl ? `<a href="https://${p.linkedinUrl.replace('https://','')}" target="_blank" style="font-size:11px;color:#0A66C2;">LinkedIn ↗</a>` : ''}
+          <span style="font-size:11px;color:var(--danger);cursor:pointer;margin-left:auto;" onclick="deleteOutreachProspect('${p.id}')">Delete</span>
+        </div>
+      </div>`;
+    }).join('') : '<div class="empty-state"><div class="es-icon">🎯</div><div class="es-text">No prospects yet. Add your first one or import a list.</div></div>'}`;
+}
+
+function setORFilter(f) {
+  outreachFilter = f;
+  renderORProspects();
+}
+
+// ── PIPELINE ──
+function renderORPipeline() {
+  const el = document.getElementById('or-seg-pipeline');
+  const stages = ['lead','contacted','engaged','proposal','negotiating','won'];
+  const prospects = state.outreachProspects || [];
+
+  el.innerHTML = `<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;"><div style="display:flex;gap:10px;min-width:${stages.length * 150}px;padding-bottom:8px;">` +
+    stages.map(stage => {
+      const items = prospects.filter(p => p.stage === stage);
+      return `<div class="pipeline-col">
+        <div class="pipeline-col-header">${STAGE_LBL[stage]} <span style="opacity:.6;">(${items.length})</span></div>
+        ${items.map(p => {
+          const c = state.clients.find(x => x.id === p.clientId);
+          const sig = getSignalScore(p.id);
+          return `<div class="pipeline-item" onclick="">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span class="ph-score ${sig.cls}" style="display:flex;align-items:center;gap:3px;"><span class="ph-score-dot"></span><span style="font-size:9px;font-weight:700;">${sig.label}</span></span>
+              <span style="font-size:9px;color:var(--text-muted);">${SOURCE_LBL[p.leadSource]||''}</span>
+            </div>
+            <div class="pipeline-item-name">${p.name}</div>
+            <div class="pipeline-item-co">${p.company||''}</div>
+            ${c ? `<div class="pipeline-item-client">${c.name}</div>` : ''}
+          </div>`;
+        }).join('')}
+      </div>`;
+    }).join('') + '</div></div>';
+}
+
+// ── SIGNALS ──
+function renderORSignals() {
+  const el = document.getElementById('or-seg-signals');
+  const signals = [...(state.signals||[])].sort((a,b) => b.ts - a.ts).slice(0,30);
+  el.innerHTML = `<div class="card-label" style="margin-bottom:10px;">Recent Buying Signals</div>` +
+    (signals.length ? `<div class="card" style="padding:0 14px;">` + signals.map(s => {
+      const p = (state.outreachProspects||[]).find(x => x.id === s.prospectId);
+      const c = state.clients.find(x => x.id === s.clientId);
+      return `<div class="signal-item">
+        <div class="signal-icon" style="background:${SIG_BG[s.type]||'#EEF1F5'}">${SIG_ICONS[s.type]||'⚡'}</div>
+        <div class="signal-body">
+          <div class="signal-type">${s.type.replace(/_/g,' ').replace(/\b\w/g,l=>l.toUpperCase())}</div>
+          <div class="signal-prospect">${p?.name||'Unknown'} ${p?.company?'· '+p.company:''}</div>
+          ${c?`<div style="font-size:10px;font-weight:700;color:var(--gold);">${c.name}</div>`:''}
+          ${s.notes?`<div class="signal-date">${s.notes}</div>`:''}
+          <div class="signal-date">${new Date(s.ts).toLocaleDateString()}</div>
+        </div>
+      </div>`;
+    }).join('') + `</div>` : '<div class="empty-state"><div class="es-icon">⚡</div><div class="es-text">No signals logged yet. Track opens, calls, LinkedIn activity on each prospect.</div></div>');
+}
+
+// ── SEQUENCES ──
+function renderORSequences() {
+  const el = document.getElementById('or-seg-sequences');
+  const log = [...(state.outreachLog||[])].sort((a,b) => b.ts - a.ts);
+  const chCls = {email:'ch-email',linkedin:'ch-linkedin',phone:'ch-phone'};
+  el.innerHTML = `<div class="card-label" style="margin-bottom:10px;">Outreach Log</div>` +
+    (log.length ? log.map(o => {
+      const p = (state.outreachProspects||[]).find(x => x.id === o.prospectId);
+      const c = state.clients.find(x => x.id === o.clientId);
+      return `<div class="outreach-card">
+        <div class="outreach-top">
+          <div>
+            <span class="outreach-channel ${chCls[o.channel]||'ch-email'}">${o.channel}</span>
+            <div class="outreach-prospect">${p?.name||'?'}</div>
+            ${o.subject?`<div class="outreach-subject">${o.subject}</div>`:''}
+          </div>
+          ${c?`<div style="font-size:10px;font-weight:700;color:var(--gold);flex-shrink:0;">${c.name}</div>`:''}
+        </div>
+        ${o.body?`<div class="outreach-preview">${o.body.substring(0,120)}…</div>`:''}
+        ${o.sentAt?`<div class="outreach-sent">✓ Sent ${o.sentAt}</div>`:'<div style="font-size:11px;color:var(--warn);margin-top:6px;font-weight:600;">Draft</div>'}
+      </div>`;
+    }).join('') : '<div class="empty-state"><div class="es-icon">✉️</div><div class="es-text">No outreach logged. Generate a message from a prospect card and log it here.</div></div>');
+}
+
+// ── ENRICH ──
+function renderOREnrich() {
+  const el = document.getElementById('or-seg-enrich');
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-label">AI Prospect Enrichment</div>
+      <div class="form-group"><label class="form-label">Name *</label><input class="form-control" id="enrich-name" placeholder="Full name"></div>
+      <div class="form-group"><label class="form-label">Company *</label><input class="form-control" id="enrich-company" placeholder="Organization"></div>
+      <div class="form-group"><label class="form-label">Any other context</label><input class="form-control" id="enrich-context" placeholder="Title, city, industry…"></div>
+      <button class="btn btn-primary btn-full" onclick="runEnrichment()">✦ Enrich & Research</button>
+      <div class="enrich-result" id="enrich-result"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">CSV Cleaner</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">Paste messy CSV data — AI will clean, deduplicate, and normalize names, titles, and companies.</div>
+      <textarea class="form-control" id="csv-clean-input" placeholder="Paste raw CSV or list data here…" style="min-height:100px;margin-bottom:10px;"></textarea>
+      <button class="btn btn-primary btn-full" onclick="runCSVClean()">✦ Clean Data</button>
+      <div class="enrich-result" id="csv-clean-result"></div>
+    </div>`;
+}
+
+// ── IMPORT ──
+function renderORImport() {
+  const el = document.getElementById('or-seg-import');
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-label">Import Prospects from CSV</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Paste CSV data with columns: <b>Name, Company, Title, Email, Phone, LinkedIn</b>. First row should be headers.</div>
+      <div class="form-group"><label class="form-label">Assign to Client *</label><select class="form-control" id="import-client"><option value="">— Select Client —</option>${state.clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select></div>
+      <div class="form-group"><label class="form-label">Lead Source</label>
+        <select class="form-control" id="import-source">
+          <option value="csv">CSV Import</option>
+          <option value="linkedin">LinkedIn Export</option>
+          <option value="chamber">Chamber / Association</option>
+          <option value="purchased">Purchased List</option>
+        </select>
+      </div>
+      <textarea class="form-control" id="import-csv-data" placeholder="Name,Company,Title,Email,Phone,LinkedIn&#10;John Smith,Acme Corp,CEO,john@acme.com,555-1234,linkedin.com/in/johnsmith" style="min-height:140px;font-family:monospace;font-size:12px;margin-bottom:10px;"></textarea>
+      <button class="btn btn-primary btn-full" onclick="runCSVImport()">Import Prospects</button>
+      <div id="import-result" style="margin-top:10px;font-size:13px;"></div>
+    </div>`;
+}
+
+// ── ACTIONS ──
+function openAddOutreachProspect() {
+  populateDropdowns();
+  const sel = document.getElementById('op-client');
+  if (sel) { sel.innerHTML = '<option value="">— Assign to Client —</option>' + state.clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join(''); }
+  openSheet('sheet-add-prospect-outreach');
+}
+
+function addOutreachProspect() {
+  const name = document.getElementById('op-name').value.trim();
+  if (!name) { toast('Name required.'); return; }
+  initOutreachState();
+  const p = {
+    id: uid(), clientId: document.getElementById('op-client').value,
+    name, company: document.getElementById('op-company').value.trim(),
+    title: document.getElementById('op-title').value.trim(),
+    email: document.getElementById('op-email').value.trim(),
+    phone: document.getElementById('op-phone').value.trim(),
+    linkedinUrl: document.getElementById('op-linkedin').value.trim(),
+    leadSource: document.getElementById('op-source').value,
+    stage: document.getElementById('op-stage').value,
+    signalScore: 0,
+    notes: document.getElementById('op-notes').value.trim(),
+    ts: Date.now()
+  };
+  state.outreachProspects.unshift(p);
+  saveOutreachProspect(p);
+  closeSheet('sheet-add-prospect-outreach');
+  clearFields(['op-name','op-company','op-title','op-email','op-phone','op-linkedin','op-notes']);
+  renderORProspects();
+  toast('✓ Prospect added');
+}
+
+function deleteOutreachProspect(id) {
+  if (!confirm('Delete this prospect?')) return;
+  state.outreachProspects = state.outreachProspects.filter(p => p.id !== id);
+  state.signals = state.signals.filter(s => s.prospectId !== id);
+  saveLocal();
+  renderOutreachSeg();
+  toast('Deleted.');
+}
+
+function openProspectStageOutreach(id) {
+  document.getElementById('ops-id').value = id;
+  openSheet('sheet-prospect-stage-outreach');
+}
+
+function setOutreachStage(stage) {
+  const id = document.getElementById('ops-id').value;
+  const p = (state.outreachProspects||[]).find(x => x.id === id);
+  if (p) { p.stage = stage; saveOutreachProspect(p); renderOutreachSeg(); }
+  closeSheet('sheet-prospect-stage-outreach');
+  toast('Stage updated');
+}
+
+function openLogSignal(prospectId) {
+  document.getElementById('sig-prospect-id').value = prospectId;
+  document.getElementById('sig-notes').value = '';
+  openSheet('sheet-log-signal');
+}
+
+function saveSignal() {
+  const prospectId = document.getElementById('sig-prospect-id').value;
+  const type = document.getElementById('sig-type').value;
+  const notes = document.getElementById('sig-notes').value.trim();
+  const p = (state.outreachProspects||[]).find(x => x.id === prospectId);
+  initOutreachState();
+  const s = { id:uid(), prospectId, clientId:p?.clientId||'', type, notes, ts:Date.now() };
+  state.signals.unshift(s);
+  // Update signal score on prospect
+  if (p) { p.signalScore = getSignalScore(prospectId).score; saveOutreachProspect(p); }
+  saveSignalToSupabase(s);
+  closeSheet('sheet-log-signal');
+  renderOutreachSeg();
+  toast('⚡ Signal logged — ' + type.replace(/_/g,' '));
+}
+
+function openGenOutreach(prospectId, channel) {
+  document.getElementById('gen-prospect-id').value = prospectId;
+  document.getElementById('gen-channel').value = channel;
+  const chLabel = {email:'Email',linkedin:'LinkedIn DM',phone:'Phone Script'}[channel]||channel;
+  document.getElementById('gen-outreach-title').textContent = `Generate ${chLabel}`;
+  document.getElementById('gen-outreach-results').innerHTML = '';
+  document.getElementById('gen-context').value = '';
+  openSheet('sheet-gen-outreach');
+}
+
+async function generateOutreachMessage() {
+  const prospectId = document.getElementById('gen-prospect-id').value;
+  const channel = document.getElementById('gen-channel').value;
+  const tone = document.getElementById('gen-tone').value;
+  const context = document.getElementById('gen-context').value.trim();
+  const p = (state.outreachProspects||[]).find(x => x.id === prospectId);
+  const client = state.clients.find(x => x.id === p?.clientId);
+  const signals = (state.signals||[]).filter(s => s.prospectId === prospectId);
+
+  const resEl = document.getElementById('gen-outreach-results');
+  resEl.innerHTML = '<div style="color:var(--gold);font-style:italic;padding:12px 0;">✦ Generating 3 options…</div>';
+
+  const chLabel = {email:'cold email',linkedin:'LinkedIn direct message',phone:'phone call script'}[channel]||channel;
+  const sigContext = signals.length ? `Recent signals: ${signals.slice(0,3).map(s=>s.type.replace(/_/g,' ')).join(', ')}.` : '';
+
+  const prompt = `Write 3 distinct ${chLabel} options for Dan Driskell, senior BD consultant at North Point Advisory Group, Dayton Ohio.
+Prospect: ${p?.name||'Unknown'}, ${p?.title||''} at ${p?.company||''}.
+${client?'This prospect is part of BD work for client: '+client.name+'.':''}
+Tone: ${tone}. ${context?'Additional context: '+context+'.':''} ${sigContext}
+Dan's background: 25+ years BD, corporate partnerships, higher ed workforce development, Dayton/SW Ohio market.
+Format: Return ONLY a JSON array with 3 objects, each with: {"label":"Option 1 label","subject":"subject line if email, empty otherwise","body":"the message"}
+No preamble, no markdown, just the JSON array.`;
+
+  try {
+    const resp = await fetch('https://orange-unit-d4c5.dan-29e.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
+    });
+    const data = await resp.json();
+    const raw = data.content?.find(b => b.type === 'text')?.text || '[]';
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const options = JSON.parse(clean);
+
+    resEl.innerHTML = options.map((opt, i) => `
+      <div style="background:var(--surface);border-radius:10px;padding:12px;margin-bottom:10px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:6px;">Option ${i+1} — ${opt.label}</div>
+        ${opt.subject?`<div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px;">Subject: ${opt.subject}</div>`:''}
+        <div style="font-size:13px;line-height:1.6;white-space:pre-wrap;">${opt.body}</div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="btn btn-ghost" style="flex:1;padding:9px;font-size:12px;" onclick="copyOutreach(\`${opt.body.replace(/`/g,"'")}\`)">📋 Copy</button>
+          <button class="btn btn-primary" style="flex:1;padding:9px;font-size:12px;" onclick="logOutreach('${prospectId}','${channel}',\`${opt.subject||''}\`,\`${opt.body.replace(/`/g,"'")}\`)">✓ Log as Sent</button>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    resEl.innerHTML = '<div style="color:var(--danger);padding:12px 0;">AI unavailable. Try again.</div>';
+  }
+}
+
+function copyOutreach(text) {
+  navigator.clipboard.writeText(text).then(() => toast('✓ Copied — paste into your email or LinkedIn!')).catch(() => toast('Select text above to copy manually'));
+}
+
+function logOutreach(prospectId, channel, subject, body) {
+  const p = (state.outreachProspects||[]).find(x => x.id === prospectId);
+  initOutreachState();
+  const o = { id:uid(), prospectId, clientId:p?.clientId||'', channel, subject, body, status:'sent', sentAt:today(), ts:Date.now() };
+  state.outreachLog.unshift(o);
+  // Auto-advance stage if still lead
+  if (p && p.stage === 'lead') { p.stage = 'contacted'; saveOutreachProspect(p); }
+  saveOutreachLogToSupabase(o);
+  closeSheet('sheet-gen-outreach');
+  renderOutreachSeg();
+  toast('✓ Logged as sent · Prospect moved to Contacted');
+}
+
+// ── ENRICHMENT ──
+async function runEnrichment() {
+  const name = document.getElementById('enrich-name').value.trim();
+  const company = document.getElementById('enrich-company').value.trim();
+  const context = document.getElementById('enrich-context').value.trim();
+  if (!name || !company) { toast('Name and company required.'); return; }
+  const resultEl = document.getElementById('enrich-result');
+  resultEl.textContent = '✦ Researching…'; resultEl.classList.add('show');
+
+  const prompt = `You are a B2B sales intelligence tool. Research this person and return structured intelligence:
+Name: ${name}
+Company: ${company}
+${context?'Additional context: '+context:''}
+
+Return a JSON object (no markdown, just JSON) with:
+{
+  "likely_title": "most likely current title",
+  "company_type": "type of organization",
+  "company_size": "estimated size",
+  "industry": "industry",
+  "talking_points": ["3 specific talking points Dan Driskell (BD consultant, Dayton OH) should use"],
+  "outreach_angle": "best angle for initial outreach",
+  "potential_needs": ["2-3 likely BD/partnership needs"],
+  "risk_factors": "any reasons they may not be a fit",
+  "confidence": "high/medium/low"
+}`;
+
+  try {
+    const resp = await fetch('https://orange-unit-d4c5.dan-29e.workers.dev', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1000, messages: [{ role: 'user', content: prompt }] })
+    });
+    const data = await resp.json();
+    const raw = data.content?.find(b=>b.type==='text')?.text||'{}';
+    const d = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    resultEl.innerHTML = `
+      <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:8px;">${name} · ${company}</div>
+      ${d.likely_title?`<div style="margin-bottom:6px;"><b>Likely Title:</b> ${d.likely_title}</div>`:''}
+      ${d.company_type?`<div style="margin-bottom:6px;"><b>Org Type:</b> ${d.company_type} · ${d.company_size||''}</div>`:''}
+      ${d.industry?`<div style="margin-bottom:6px;"><b>Industry:</b> ${d.industry}</div>`:''}
+      ${d.outreach_angle?`<div style="margin-bottom:8px;padding:8px;background:var(--gold-pale);border-radius:8px;"><b>Best Angle:</b> ${d.outreach_angle}</div>`:''}
+      ${d.talking_points?.length?`<div style="margin-bottom:6px;"><b>Talking Points:</b><ul style="margin:4px 0 0 16px;">${d.talking_points.map(t=>`<li>${t}</li>`).join('')}</ul></div>`:''}
+      ${d.potential_needs?.length?`<div style="margin-bottom:6px;"><b>Likely Needs:</b> ${d.potential_needs.join(' · ')}</div>`:''}
+      ${d.risk_factors?`<div style="font-size:11px;color:var(--text-muted);"><b>Watch:</b> ${d.risk_factors}</div>`:''}
+      <div style="font-size:10px;color:var(--text-muted);margin-top:6px;">Confidence: ${d.confidence||'medium'}</div>`;
+  } catch(e) { resultEl.textContent = 'AI unavailable. Try again.'; }
+}
+
+async function enrichProspect(id) {
+  const p = (state.outreachProspects||[]).find(x=>x.id===id);
+  if (!p) return;
+  switchOutreachSeg('enrich', document.querySelectorAll('.outreach-seg-item')[4]);
+  setTimeout(() => {
+    document.getElementById('enrich-name').value = p.name;
+    document.getElementById('enrich-company').value = p.company||'';
+    document.getElementById('enrich-context').value = p.title||'';
+  }, 100);
+}
+
+async function runCSVClean() {
+  const raw = document.getElementById('csv-clean-input').value.trim();
+  if (!raw) { toast('Paste data first.'); return; }
+  const resultEl = document.getElementById('csv-clean-result');
+  resultEl.textContent = '✦ Cleaning…'; resultEl.classList.add('show');
+  const prompt = `Clean and normalize this prospect list data. Fix capitalization, standardize titles, remove duplicates, fill obvious blanks. Return clean CSV with headers: Name,Company,Title,Email,Phone,LinkedIn. Return ONLY the CSV, no preamble.\n\n${raw}`;
+  try {
+    const resp = await fetch('https://orange-unit-d4c5.dan-29e.workers.dev', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:prompt}]})
+    });
+    const data = await resp.json();
+    const text = data.content?.find(b=>b.type==='text')?.text||'';
+    resultEl.innerHTML = `<div style="font-size:11px;color:var(--success);font-weight:700;margin-bottom:8px;">✓ Cleaned</div><pre style="font-size:11px;overflow-x:auto;white-space:pre-wrap;">${text}</pre><button class="btn btn-ghost" style="margin-top:8px;width:100%;font-size:12px;padding:8px;" onclick="navigator.clipboard.writeText(\`${text.replace(/`/g,"'")}\`).then(()=>toast('Copied!'))">📋 Copy CSV</button>`;
+  } catch(e) { resultEl.textContent = 'AI unavailable.'; }
+}
+
+function runCSVImport() {
+  const raw = document.getElementById('import-csv-data').value.trim();
+  const clientId = document.getElementById('import-client').value;
+  const source = document.getElementById('import-source').value;
+  const resultEl = document.getElementById('import-result');
+
+  if (!raw) { toast('Paste CSV data first.'); return; }
+  if (!clientId) { toast('Select a client to assign these prospects to.'); return; }
+
+  const lines = raw.split('\n').filter(l => l.trim());
+  const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+  const rows = lines.slice(1);
+
+  let imported = 0, skipped = 0;
+  initOutreachState();
+
+  rows.forEach(row => {
+    const cols = row.split(',').map(c => c.trim().replace(/^"|"$/g,''));
+    if (!cols[0]) { skipped++; return; }
+    const get = (keys) => { for (const k of keys) { const i = headers.findIndex(h=>h.includes(k)); if(i>=0&&cols[i]) return cols[i]; } return ''; };
+    const p = {
+      id: uid(), clientId, leadSource: source, stage: 'lead', signalScore: 0,
+      name: get(['name','full']), company: get(['company','org','employer']),
+      title: get(['title','role','position']), email: get(['email']),
+      phone: get(['phone','mobile','cell']), linkedinUrl: get(['linkedin','url']),
+      notes: '', ts: Date.now()
+    };
+    if (!p.name) { skipped++; return; }
+    // Deduplicate by email or name+company
+    const exists = state.outreachProspects.some(x =>
+      (p.email && x.email === p.email) || (x.name === p.name && x.company === p.company)
+    );
+    if (exists) { skipped++; return; }
+    state.outreachProspects.unshift(p);
+    saveOutreachProspect(p);
+    imported++;
+  });
+
+  resultEl.innerHTML = `<div style="color:var(--success);font-weight:700;">✓ Imported ${imported} prospects</div>${skipped?`<div style="color:var(--text-muted);font-size:12px;">${skipped} skipped (duplicates or blank names)</div>`:''}`;
+  if (imported > 0) { renderORProspects(); toast(`✓ ${imported} prospects imported`); }
 }
 
 load();
