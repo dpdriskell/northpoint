@@ -1582,6 +1582,7 @@ select.form-control{cursor:pointer;}
       <div style="display:flex;gap:8px;margin-top:4px;">
         <div id="entity-np" onclick="selectInvEntity('np')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--navy);background:var(--navy);color:var(--cobalt);font-size:12px;font-weight:700;text-align:center;cursor:pointer;">North Point Advisory Group</div>
         <div id="entity-sdlg" onclick="selectInvEntity('sdlg')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--white);color:var(--text-muted);font-size:12px;font-weight:700;text-align:center;cursor:pointer;">SDLG, LLC</div>
+        <div id="entity-dan" onclick="selectInvEntity('dan')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--white);color:var(--text-muted);font-size:12px;font-weight:700;text-align:center;cursor:pointer;">Dan Driskell</div>
       </div>
       <input type="hidden" id="inv-entity" value="np">
     </div>
@@ -2548,8 +2549,10 @@ function printInvoice(invId) {
   const client = state.clients.find(c => c.id === inv.clientId);
   const invNum = 'INV-' + inv.ts.toString().slice(-6);
   const isSdlg = inv.entity === 'sdlg';
-  const entityName = isSdlg ? 'SDLG, LLC' : 'North Point Advisory Group';
+  const isDan = inv.entity === 'dan';
+  const entityName = isDan ? 'Dan Driskell' : (isSdlg ? 'SDLG, LLC' : 'North Point Advisory Group');
   const entitySub = isSdlg ? 'Business Development & Consulting Services' : 'Business Development Consulting';
+  const entityTitle = isDan ? 'Independent Consultant' : (isSdlg ? 'Dan Driskell, Principal' : 'Dan Driskell, Senior BD Consultant');
   const statusColor = { paid:'#059669', pending:'#D97706', overdue:'#DC2626' }[inv.status] || '#D97706';
   const lineItems = (inv.items && inv.items.length ? inv.items : [{desc:inv.desc||'Services', amount:inv.amount, type:'flat'}]);
 
@@ -2607,7 +2610,7 @@ td:last-child{text-align:right;font-weight:700;}
     <div>
       <div class="brand-name">${entityName}</div>
       <div class="brand-sub">${entitySub}</div>
-      <div class="brand-contact">Dan Driskell${isSdlg ? ', Principal' : ', Senior BD Consultant'}<br>dan@np-advisory.com · np-advisory.com<br>Xenia, Ohio</div>
+      <div class="brand-contact">${entityTitle}<br>dan@np-advisory.com · np-advisory.com<br>Xenia, Ohio</div>
     </div>
     <div style="text-align:right;">
       <div class="inv-word">INVOICE</div>
@@ -2620,7 +2623,7 @@ td:last-child{text-align:right;font-weight:700;}
     <div class="bill-block">
       <div class="bill-heading">Bill From</div>
       <div class="bill-name">${entityName}</div>
-      <div class="bill-detail">Dan Driskell<br>dan@np-advisory.com<br>Xenia, Ohio</div>
+      <div class="bill-detail">${isDan ? 'Independent Consultant' : 'Dan Driskell'}<br>dan@np-advisory.com<br>Xenia, Ohio</div>
     </div>
     <div class="bill-block">
       <div class="bill-heading">Bill To</div>
@@ -3039,15 +3042,12 @@ let invEditingId = null;
 
 function selectInvEntity(entity) {
   document.getElementById('inv-entity').value = entity;
-  const npEl = document.getElementById('entity-np');
-  const sdlgEl = document.getElementById('entity-sdlg');
-  if (entity === 'np') {
-    npEl.style.cssText = 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--navy);background:var(--navy);color:var(--cobalt);font-size:12px;font-weight:700;text-align:center;cursor:pointer;';
-    sdlgEl.style.cssText = 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--white);color:var(--text-muted);font-size:12px;font-weight:700;text-align:center;cursor:pointer;';
-  } else {
-    sdlgEl.style.cssText = 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--navy);background:var(--navy);color:var(--cobalt);font-size:12px;font-weight:700;text-align:center;cursor:pointer;';
-    npEl.style.cssText = 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--white);color:var(--text-muted);font-size:12px;font-weight:700;text-align:center;cursor:pointer;';
-  }
+  const on = 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--navy);background:var(--navy);color:var(--cobalt);font-size:12px;font-weight:700;text-align:center;cursor:pointer;';
+  const off = 'flex:1;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--white);color:var(--text-muted);font-size:12px;font-weight:700;text-align:center;cursor:pointer;';
+  ['np','sdlg','dan'].forEach(k => {
+    const el = document.getElementById('entity-' + k);
+    if (el) el.style.cssText = (k === entity) ? on : off;
+  });
 }
 
 function openAddInvoiceForClient(cid){
@@ -3313,13 +3313,37 @@ function renderOrgToggle() {
   const el = document.getElementById('fund-org-toggle');
   if (!el) return;
   if (!state.fundOrgs || !state.fundOrgs.length) {
-    el.innerHTML = `<div class="org-btn" style="border-color:var(--border);color:var(--text-muted);" onclick="openSheet('sheet-add-give-org')">＋ Add Org</div>`;
+    el.innerHTML = `<button class="org-btn" style="border-color:var(--cobalt);color:var(--cobalt);background:none;cursor:pointer;font-family:inherit;" onclick="openSheet('sheet-add-give-org')">＋ Add Org</button>`;
     return;
   }
   el.innerHTML = state.fundOrgs.map(o => {
     const isActive = activeOrg === o.id;
-    return `<div class="org-btn" style="border-color:${o.color};${isActive?'background:'+o.color+';color:white;':'color:'+o.color+';'}" onclick="switchOrg('${o.id}',this)">${o.emoji||'🤝'} ${o.name}</div>`;
+    const isBuiltIn = o.id === 'mvhf' || o.id === 'gw';
+    return `<div style="position:relative;display:inline-flex;align-items:center;">
+      <div class="org-btn" style="border-color:${o.color};${isActive?'background:'+o.color+';color:white;':'color:'+o.color+';'}padding-right:${isBuiltIn?'12px':'28px'};" onclick="switchOrg('${o.id}',this)">${o.emoji||'🤝'} ${o.name}</div>
+      ${!isBuiltIn?`<button onclick="deleteGiveOrg('${o.id}')" style="position:absolute;right:4px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:14px;color:${isActive?'rgba(255,255,255,.8)':'var(--danger)'};padding:2px;line-height:1;" title="Delete org">✕</button>`:''}
+    </div>`;
   }).join('') + `<button class="org-btn" style="border-color:var(--cobalt);color:var(--cobalt);background:none;cursor:pointer;font-family:inherit;" onclick="event.stopPropagation();openSheet('sheet-add-give-org')">＋ Add Org</button>`;
+}
+
+function deleteGiveOrg(id) {
+  const org = (state.fundOrgs||[]).find(o=>o.id===id);
+  if (!org) return;
+  const donorCount = (state.fundraising[id]?.donors||[]).length;
+  const msg = donorCount > 0
+    ? `Are you sure you want to delete "${org.name}"?\n\nThis will permanently remove ${donorCount} donor record${donorCount!==1?'s':''}, all events, tasks, and notes.\n\nThis cannot be undone.`
+    : `Are you sure you want to delete "${org.name}"?\n\nThis cannot be undone.`;
+  if (!confirm(msg)) return;
+  state.fundOrgs = state.fundOrgs.filter(o=>o.id!==id);
+  delete state.fundraising[id];
+  // Switch to first remaining org
+  if (activeOrg === id) {
+    activeOrg = state.fundOrgs[0]?.id || 'mvhf';
+  }
+  saveLocal();
+  renderOrgToggle();
+  renderFundraising();
+  toast('✓ ' + org.name + ' deleted');
 }
 
 function switchOrg(org, el) {
