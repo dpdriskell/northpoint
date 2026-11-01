@@ -616,6 +616,35 @@ select.form-control{cursor:pointer;}
 
 .eval-stars{color:#F59E0B;font-size:13px;letter-spacing:1px;}
 
+/* ══ DESIGN STUDIO ══ */
+.train-seg{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.train-seg-item{padding-left:10px;padding-right:10px;}
+.dz-intro{font-size:12px;color:var(--text-muted);margin:0 2px 12px;line-height:1.5;}
+.dz-mini{display:flex;gap:18px;margin-top:10px;align-items:center;}
+.dz-mini-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-right:6px;}
+.dz-dots{display:inline-flex;gap:3px;vertical-align:middle;}
+.dz-dot{width:14px;height:6px;border-radius:3px;background:var(--border);}
+.dz-dot.on{background:var(--cobalt);}
+.dz-back{font-size:13px;font-weight:700;color:var(--cobalt);cursor:pointer;margin-bottom:10px;}
+.dz-phase{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;}
+.dz-phase.dz-doing{border-left-color:#D97706;}
+.dz-phase.dz-done{border-left-color:#059669;}
+.dz-phase-top{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.dz-phase-name{font-size:14px;font-weight:700;color:var(--text-primary);}
+.dz-status{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:4px 9px;border-radius:20px;background:var(--surface);color:var(--text-muted);cursor:pointer;white-space:nowrap;}
+.dz-doing .dz-status{background:#FEF3C7;color:#B45309;}
+.dz-done .dz-status{background:#D1FAE5;color:#047857;}
+.dz-goal{font-size:12px;color:var(--text-muted);margin:4px 0 8px;line-height:1.4;}
+.dz-check{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:5px 0;color:var(--text-primary);}
+.dz-check input{margin-top:3px;flex-shrink:0;}
+.dz-cycle{display:flex;align-items:center;justify-content:space-between;gap:2px;margin-bottom:10px;}
+.dz-cycle-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px;border-radius:12px;background:var(--surface);font-size:18px;opacity:.55;}
+.dz-cycle-step span{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--text-muted);}
+.dz-cycle-step.on{opacity:1;background:var(--cobalt-pale);}
+.dz-arrow{color:var(--text-muted);font-size:12px;}
+.dz-note{font-size:12px;color:var(--text-secondary);background:var(--surface);border-radius:10px;padding:10px 12px;margin-bottom:10px;line-height:1.5;}
+.dark-mode .dz-phase,.dark-mode .dz-note{background:var(--white);}
+
 /* ══ FUNDRAISING ══ */
 :root{--mvhf:#1E3A5F;--gw:#0369A1;}
 .org-toggle{display:flex;gap:6px;margin-bottom:14px;}
@@ -865,7 +894,7 @@ select.form-control{cursor:pointer;}
 <div class="topbar">
   <div style="width:40px;"></div>
   <div style="flex:1;display:flex;justify-content:center;align-items:center;">
-    <img src="data:image/png;base64,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" alt="NP" style="height:42px;width:42px;border-radius:8px;object-fit:cover;">
+    <img src="data:image/png;base64,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" alt="NP" style="height:42px;width:42px;border-radius:8px;object-fit:cover;">
   </div>
   <div style="display:flex;gap:6px;align-items:center;">
     <button class="topbar-action" onclick="toggleDarkMode()" id="dark-toggle" title="Toggle dark mode" style="font-size:16px;">🌙</button>
@@ -1255,6 +1284,7 @@ select.form-control{cursor:pointer;}
 
   <div class="train-seg">
     <div class="train-seg-item active" onclick="switchTrainSeg('catalog',this)">Catalog</div>
+    <div class="train-seg-item" onclick="switchTrainSeg('design',this)">Design</div>
     <div class="train-seg-item" onclick="switchTrainSeg('orgs',this)">Orgs</div>
     <div class="train-seg-item" onclick="switchTrainSeg('sessions',this)">Sessions</div>
     <div class="train-seg-item" onclick="switchTrainSeg('participants',this)">People</div>
@@ -1262,6 +1292,7 @@ select.form-control{cursor:pointer;}
   </div>
 
   <div id="train-seg-catalog"></div>
+  <div id="train-seg-design" style="display:none"></div>
   <div id="train-seg-orgs" style="display:none"></div>
   <div id="train-seg-sessions" style="display:none"></div>
   <div id="train-seg-participants" style="display:none"></div>
@@ -1331,177 +1362,6 @@ select.form-control{cursor:pointer;}
   <div id="or-seg-import" style="display:none"></div>
 </div>
 
-<!-- ══ TRAVEL ══ -->
-<div class="screen" id="screen-travel">
-  <div class="section-header">
-    <div class="section-title">Travel</div>
-  </div>
-
-  <div class="card">
-    <div class="card-label">Find Flights</div>
-
-    <div class="trip-type-row">
-      <div class="trip-type-pill active" id="trip-roundtrip" onclick="setTripType('roundtrip')">Round Trip</div>
-      <div class="trip-type-pill" id="trip-oneway" onclick="setTripType('oneway')">One Way</div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">From (Departure)</label>
-      <select class="form-control" id="travel-from">
-        <option value="DAY">DAY — Dayton</option>
-        <option value="CMH">CMH — Columbus</option>
-        <option value="CVG">CVG — Cincinnati</option>
-        <option value="CAK">CAK — Akron-Canton</option>
-        <option value="SDF">SDF — Louisville</option>
-        <option value="LCK">LCK — Rickenbacker</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">To (Destination)</label>
-      <select class="form-control" id="travel-to">
-        <option value="SRQ">SRQ — Sarasota</option>
-        <option value="VPS">VPS — Destin / Ft Walton Beach</option>
-        <option value="GSP">GSP — Greenville-Spartanburg</option>
-        <option value="DCA">DCA — Washington DC Reagan</option>
-        <option value="BWI">BWI — Baltimore / Washington</option>
-        <option value="BNA">BNA — Nashville</option>
-      </select>
-    </div>
-
-    <div class="date-row">
-      <div class="date-box"><label class="form-label">Depart</label><input class="form-control" id="travel-depart" type="date"></div>
-      <div class="date-box" id="travel-return-box"><label class="form-label">Return</label><input class="form-control" id="travel-return" type="date"></div>
-    </div>
-
-    <a id="flight-link-google" href="#" target="_blank" rel="noopener noreferrer" class="search-flights-btn" onclick="return buildFlightLink('google')" style="display:flex;text-decoration:none;margin-bottom:10px;">✈️ Search Google Flights</a>
-
-    <div class="engine-row">
-      <a id="flight-link-kayak" href="#" target="_blank" rel="noopener noreferrer" class="engine-btn" onclick="return buildFlightLink('kayak')" style="text-decoration:none;text-align:center;">Kayak</a>
-      <a id="flight-link-skyscanner" href="#" target="_blank" rel="noopener noreferrer" class="engine-btn" onclick="return buildFlightLink('skyscanner')" style="text-decoration:none;text-align:center;">Skyscanner</a>
-      <a id="flight-link-southwest" href="#" target="_blank" rel="noopener noreferrer" class="engine-btn" onclick="return buildFlightLink('southwest')" style="text-decoration:none;text-align:center;">Southwest</a>
-    </div>
-
-    <div class="engine-row" style="margin-top:8px;">
-      <a href="https://www.flybreeze.com/booking/departing-flight?originCode=CVG&destinationCode=GSP" target="_blank" rel="noopener noreferrer" style="flex:1;padding:10px;border-radius:10px;border:2px solid #00B2A9;background:#00B2A9;color:white;font-size:12px;font-weight:700;text-align:center;text-decoration:none;display:block;">🌊 Breeze: CVG → GSP</a>
-    </div>
-  </div>
-
-  <div class="section-header" style="margin-top:4px;">
-    <div class="card-label" style="margin:0">Saved Trips</div>
-    <button class="btn btn-ghost" style="padding:6px 14px;font-size:12px;" onclick="openSheet('sheet-add-trip')">+ Add Trip</button>
-  </div>
-  <div id="saved-trips-list"></div>
-
-  <div class="section-header" style="margin-top:14px;">
-    <div style="font-size:15px;font-weight:800;color:var(--text-primary);">🏨 Hotels Near Due West, SC</div>
-    <div style="font-size:11px;color:var(--text-muted);">Within 30 miles</div>
-  </div>
-
-  <div class="card" style="margin-bottom:10px;">
-    <div class="card-label">Search Live Availability</div>
-    <div class="form-group"><label class="form-label">Check-in Date</label><input class="form-control" id="hotel-checkin" type="date"></div>
-    <div class="form-group" style="margin-bottom:10px;"><label class="form-label">Check-out Date</label><input class="form-control" id="hotel-checkout" type="date"></div>
-
-    <div class="card-label" style="margin-bottom:6px;">All Hotels</div>
-    <div class="engine-row" style="margin-bottom:8px;">
-      <a id="hotel-link-expedia" href="https://www.expedia.com/Hotel-Search?destination=Due+West%2C+South+Carolina&sort=distance" target="_blank" rel="noopener" onclick="buildHotelLinks()" style="text-decoration:none;text-align:center;display:block;flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:700;background:#FFD700;color:#003087;border:2px solid #003087;">✈️ Expedia</a>
-      <a id="hotel-link-hotels" href="https://www.hotels.com/search.do?q-destination=Due+West%2C+SC" target="_blank" rel="noopener" onclick="buildHotelLinks()" style="text-decoration:none;text-align:center;display:block;flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:700;background:#E31837;color:white;border:2px solid #E31837;">🏨 Hotels.com</a>
-      <a id="hotel-link-marriott" href="https://www.marriott.com/search/default.mi?address=Greenwood%2C+SC" target="_blank" rel="noopener" onclick="buildHotelLinks()" style="text-decoration:none;text-align:center;display:block;flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:700;background:#8B0000;color:white;border:2px solid #8B0000;">⭐ Marriott</a>
-    </div>
-
-    <div class="card-label" style="margin-bottom:6px;">Search by Brand</div>
-    <div class="engine-row">
-      <a id="hotel-link-hilton" href="https://www.hilton.com/en/locations/usa/south-carolina/greenwood/" target="_blank" rel="noopener" onclick="buildHotelLinks()" style="text-decoration:none;text-align:center;display:block;flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:700;background:#003087;color:white;border:2px solid #003087;">🔵 Hilton</a>
-      <a id="hotel-link-ihg" href="https://www.ihg.com/hotels/us/en/find-hotels/hotel/list?qDest=Greenwood%2C+SC%2C+United+States" target="_blank" rel="noopener" onclick="buildHotelLinks()" style="text-decoration:none;text-align:center;display:block;flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:700;background:#006039;color:white;border:2px solid #006039;">🟢 IHG</a>
-      <a id="hotel-link-hyatt" href="https://www.hyatt.com/search/results?location=Greenville%2C+SC" target="_blank" rel="noopener" onclick="buildHotelLinks()" style="text-decoration:none;text-align:center;display:block;flex:1;padding:10px;border-radius:10px;font-size:12px;font-weight:700;background:#96172E;color:white;border:2px solid #96172E;">🔴 Hyatt</a>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:10px;">
-    <div class="card-label" style="color:#003087;">🔵 Hilton Brands Near Due West</div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--surface);gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Hampton Inn Greenwood</div><div style="font-size:11px;color:var(--text-muted);">Greenwood, SC · Free Breakfast · Near University</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:#003087;">~15 mi</div><a href="https://www.hilton.com/en/locations/usa/south-carolina/greenwood/hampton-by-hilton/" target="_blank" style="font-size:10px;color:#003087;font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--surface);gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Home2 Suites by Hilton Greenwood</div><div style="font-size:11px;color:var(--text-muted);">Greenwood, SC · Suites · Pet Friendly</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:#003087;">~15 mi</div><a href="https://www.hilton.com/en/locations/usa/south-carolina/greenwood/home2-suites/" target="_blank" style="font-size:10px;color:#003087;font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--surface);gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Hilton Garden Inn Anderson</div><div style="font-size:11px;color:var(--text-muted);">Anderson, SC · Restaurant · Pool · I-85</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:#003087;">~26 mi</div><a href="https://www.hilton.com/en/hotels/andgigi-hilton-garden-inn-anderson/" target="_blank" style="font-size:10px;color:#003087;font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--surface);gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Hampton Inn Anderson</div><div style="font-size:11px;color:var(--text-muted);">Anderson, SC · Free Breakfast · Pool</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:#003087;">~26 mi</div><a href="https://www.hilton.com/en/locations/usa/south-carolina/anderson/hampton-by-hilton/" target="_blank" style="font-size:10px;color:#003087;font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Home2 Suites by Hilton Anderson Downtown</div><div style="font-size:11px;color:var(--text-muted);">Anderson, SC · Suites · Extended Stay · Kitchen</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:#003087;">~29 mi</div><a href="https://www.hilton.com/en/locations/usa/south-carolina/anderson/home2-suites/" target="_blank" style="font-size:10px;color:#003087;font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:10px;">
-    <div class="card-label" style="color:#006039;">🟢 IHG Brands Near Due West</div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--surface);gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Holiday Inn Express &amp; Suites Greenwood Mall</div><div style="font-size:11px;color:var(--text-muted);">Greenwood, SC · Pool · Breakfast · Business Center</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:#006039;">14.3 mi</div><a href="https://www.ihg.com/holidayinnexpress/hotels/us/en/greenwood/grdsi/hoteldetail" target="_blank" style="font-size:10px;color:#006039;font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--surface);gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Holiday Inn Anderson by IHG</div><div style="font-size:11px;color:var(--text-muted);">Anderson, SC · Full Service · Restaurant · Pool</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:#006039;">~26 mi</div><a href="https://www.ihg.com/holidayinn/hotels/us/en/anderson/andsc/hoteldetail" target="_blank" style="font-size:10px;color:#006039;font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Holiday Inn Express Anderson I-85</div><div style="font-size:11px;color:var(--text-muted);">Anderson, SC · Free Breakfast · Near I-85</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:#006039;">~26 mi</div><a href="https://www.ihg.com/holidayinnexpress/hotels/us/en/anderson/andsc/hoteldetail" target="_blank" style="font-size:10px;color:#006039;font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:10px;">
-    <div class="card-label" style="color:#96172E;">🔴 Hyatt Near Due West</div>
-    <div style="padding:10px 0;font-size:13px;color:var(--text-muted);line-height:1.6;">No Hyatt within 30 miles. Nearest options in <strong>Greenville, SC</strong> (~50 mi northeast).</div>
-    <a href="https://www.hyatt.com/search/results?location=Greenville%2C+SC" target="_blank" style="display:block;text-align:center;padding:10px;border-radius:10px;background:#96172E;color:white;font-size:13px;font-weight:700;text-decoration:none;">Search Hyatt in Greenville ↗</a>
-  </div>
-
-  <div class="card" style="margin-bottom:10px;">
-    <div class="card-label">Other Top Hotels Nearby</div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--surface);gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Comfort Inn &amp; Suites Greenwood near University</div><div style="font-size:11px;color:var(--text-muted);">Greenwood, SC · Pool · Breakfast · Free Parking</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:var(--cobalt);">14.8 mi</div><a href="https://www.choicehotels.com/south-carolina/greenwood/comfort-inn-hotels" target="_blank" style="font-size:10px;color:var(--cobalt);font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--surface);gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Inn on the Square, Ascend Hotel Collection</div><div style="font-size:11px;color:var(--text-muted);">Greenwood, SC · Historic Downtown · Restaurant</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:var(--cobalt);">16.4 mi</div><a href="https://www.choicehotels.com/south-carolina/greenwood/ascend-hotels" target="_blank" style="font-size:10px;color:var(--cobalt);font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--surface);gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Fairfield Inn &amp; Suites by Marriott Greenwood</div><div style="font-size:11px;color:var(--text-muted);">Greenwood, SC · WiFi · Suites Available</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:var(--cobalt);">24.3 mi</div><a href="https://www.marriott.com/hotels/travel/grdfi-fairfield-inn-and-suites-greenwood" target="_blank" style="font-size:10px;color:var(--cobalt);font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;gap:8px;">
-      <div style="flex:1;"><div style="font-size:13px;font-weight:700;">Days Inn by Wyndham Greenwood SC</div><div style="font-size:11px;color:var(--text-muted);">Greenwood, SC · Pet Friendly · Budget</div></div>
-      <div style="text-align:right;flex-shrink:0;"><div style="font-size:12px;font-weight:800;color:var(--cobalt);">14.8 mi</div><a href="https://www.wyndhamhotels.com/days-inn/greenwood-south-carolina" target="_blank" style="font-size:10px;color:var(--cobalt);font-weight:700;text-decoration:none;">Book ↗</a></div>
-    </div>
-  </div>
-
-  <div class="section-header" style="margin-top:14px;">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <span style="font-size:20px;">⚽</span>
-      <div>
-        <div style="font-size:15px;font-weight:800;color:var(--text-primary);">Erskine Men's Soccer</div>
-        <div style="font-size:11px;color:var(--text-muted);">2026 Schedule · <span class="soccer-count">Loading…</span></div>
-      </div>
-    </div>
-    <div style="display:flex;gap:6px;">
-      <div id="soc-filter-all" class="task-filter-pill active" onclick="setSocFilter('all')">All</div>
-      <div id="soc-filter-away" class="task-filter-pill" onclick="setSocFilter('away')">Away ✈️</div>
-    </div>
-  </div>
-  <div id="soccer-schedule-list"></div>
-</div>
-
-</div><!-- /page-scroll -->
-
 <!-- BOTTOM TABS — 10 items -->
 <div class="bottom-tabs">
   <button class="tab-item active" onclick="switchTab('dashboard',this)" id="tab-dashboard"><span class="tab-icon">🏠</span><span class="tab-label">Home</span></button>
@@ -1509,7 +1369,6 @@ select.form-control{cursor:pointer;}
   <button class="tab-item" onclick="switchTab('outreach',this)" id="tab-outreach"><span class="tab-icon">🎯</span><span class="tab-label">Outreach</span></button>
   <button class="tab-item" onclick="switchTab('training',this)" id="tab-training"><span class="tab-icon">📚</span><span class="tab-label">Training</span></button>
   <button class="tab-item" onclick="switchTab('calendar',this)" id="tab-calendar"><span class="tab-icon">📅</span><span class="tab-label">Calendar</span></button>
-  <button class="tab-item" onclick="switchTab('travel',this)" id="tab-travel"><span class="tab-icon">✈️</span><span class="tab-label">Travel</span></button>
   <button class="tab-item" onclick="switchTab('accounting',this)" id="tab-accounting"><span class="tab-icon">💵</span><span class="tab-label">Money</span></button>
   <button class="tab-item" onclick="switchTab('fundraising',this)" id="tab-fundraising"><span class="tab-icon">❤️</span><span class="tab-label">Giving</span></button>
   <button class="tab-item" onclick="switchTab('scripts',this)" id="tab-scripts"><span class="tab-icon">📞</span><span class="tab-label">Scripts</span></button>
@@ -1518,6 +1377,19 @@ select.form-control{cursor:pointer;}
 </div><!-- /app -->
 
 <!-- ══ BOTTOM SHEETS ══ -->
+<!-- Add Design Idea -->
+<div class="sheet-overlay" id="sheet-add-design"><div class="sheet">
+  <div class="sheet-handle"></div><div class="sheet-title">New Design Idea</div>
+  <div class="sheet-body">
+    <div class="form-group"><label class="form-label">Idea / Program Title *</label><input class="form-control" id="dz-title" placeholder="e.g. Make Plays Today youth leadership"></div>
+    <div class="form-group"><label class="form-label">The Idea</label><textarea class="form-control" id="dz-idea" placeholder="Who is it for, what problem does it solve, what should change afterward?"></textarea></div>
+    <div class="form-group"><label class="form-label">Link to Course (optional)</label><select class="form-control" id="dz-catalog"></select></div>
+    <div class="form-group"><label class="form-label">Link to Organization (optional)</label><select class="form-control" id="dz-org"></select></div>
+  </div>
+  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-design')">Cancel</button><button class="btn btn-primary" onclick="addDesign()">Save Idea</button></div>
+</div></div>
+
+
 
 <!-- Add Client -->
 <div class="sheet-overlay" id="sheet-add-client"><div class="sheet">
@@ -1817,28 +1689,6 @@ select.form-control{cursor:pointer;}
     <div style="background:var(--cobalt-pale);border-radius:10px;padding:10px;font-size:12px;color:var(--warn);text-align:center;">IRS Rate: $0.70/mile · <span id="mi-preview">0.0 miles = $0.00</span></div>
   </div>
   <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-mileage')">Cancel</button><button class="btn btn-primary" onclick="addMileage()">Log Trip</button></div>
-</div></div>
-
-<!-- Add Trip -->
-<div class="sheet-overlay" id="sheet-add-trip"><div class="sheet">
-  <div class="sheet-handle"></div><div class="sheet-title">Add Trip</div>
-  <div class="sheet-body">
-    <div class="form-group"><label class="form-label">Trip Name *</label><input class="form-control" id="trip-name" placeholder="e.g. Bourbon for Babies Gala, NACDA Conference"></div>
-    <div class="form-row" style="display:flex;gap:10px;">
-      <div class="form-group" style="flex:1"><label class="form-label">From</label>
-        <select class="form-control" id="trip-from"></select>
-      </div>
-      <div class="form-group" style="flex:1"><label class="form-label">To</label>
-        <select class="form-control" id="trip-to"></select>
-      </div>
-    </div>
-    <div class="form-row" style="display:flex;gap:10px;">
-      <div class="form-group" style="flex:1"><label class="form-label">Depart</label><input class="form-control" id="trip-depart" type="date"></div>
-      <div class="form-group" style="flex:1"><label class="form-label">Return</label><input class="form-control" id="trip-return" type="date"></div>
-    </div>
-    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control" id="trip-notes" placeholder="Hotel, confirmation #, purpose…"></textarea></div>
-  </div>
-  <div class="sheet-footer"><button class="btn btn-ghost" onclick="closeSheet('sheet-add-trip')">Cancel</button><button class="btn btn-primary" onclick="addTrip()">Save Trip</button></div>
 </div></div>
 
 <!-- Add Prospect -->
@@ -2487,7 +2337,7 @@ function openClient(cid){
   const c=state.clients.find(x=>x.id===cid);if(!c)return;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-client-detail').classList.add('active');
-  document.getElementById('topbar-title').textContent=c.name;
+  const _tt2=document.getElementById('topbar-title');if(_tt2)_tt2.textContent=c.name;
   document.getElementById('client-detail-header').innerHTML=`<div class="client-detail-header" style="background:${c.color}18;border:2px solid ${c.color}30;"><div class="cd-avatar" style="background:${c.color}">${c.name.charAt(0)}</div><div><div class="cd-name">${c.name}</div>${c.contact?`<div class="cd-sub">${c.contact}${c.contactTitle?' · '+c.contactTitle:''}</div>`:''}${c.email?`<div class="cd-sub">${c.email}</div>`:''}</div></div>`;
   const invs=state.invoices.filter(i=>i.clientId===cid);
   document.getElementById('cd-stats').innerHTML=`<div class="cd-stat"><div class="cd-stat-val">${c.hours||0}h</div><div class="cd-stat-label">Hrs/Wk</div></div><div class="cd-stat"><div class="cd-stat-val">${fmt(invs.reduce((s,i)=>s+i.amount,0)).replace('.00','')}</div><div class="cd-stat-label">Billed</div></div><div class="cd-stat"><div class="cd-stat-val">${state.activity.filter(a=>a.clientId===cid).length}</div><div class="cd-stat-label">Notes</div></div>`;
@@ -2977,19 +2827,18 @@ async function askAI(){
 // ═══════════════════════════
 //  NAVIGATION
 // ═══════════════════════════
-const TAB_TITLES={dashboard:'Dashboard',clients:'Clients',outreach:'Outreach',training:'Training & Dev',calendar:'Calendar',travel:'Travel',accounting:'Accounting',fundraising:'Fundraising',scripts:'Phone Scripts',social:'Social Media'};
+const TAB_TITLES={dashboard:'Dashboard',clients:'Clients',outreach:'Outreach',training:'Training & Dev',calendar:'Calendar',accounting:'Accounting',fundraising:'Fundraising',scripts:'Phone Scripts',social:'Social Media'};
 function switchTab(tab,el){
   document.querySelectorAll('.tab-item').forEach(t=>t.classList.remove('active'));el.classList.add('active');
   currentTab=tab;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-'+tab).classList.add('active');
-  document.getElementById('topbar-title').textContent=TAB_TITLES[tab]||tab;
+  const _tt=document.getElementById('topbar-title');if(_tt)_tt.textContent=TAB_TITLES[tab]||tab;
   document.getElementById('page-scroll').scrollTo({top:0,behavior:'instant'});
   if(tab==='calendar')renderCalendar();
   if(tab==='scripts')renderScripts();
   if(tab==='fundraising'){initFundState();fundSeg='donors';document.querySelectorAll('.fund-seg-item').forEach((s,i)=>s.classList.toggle('active',i===0));renderFundraising();}
   if(tab==='accounting'){initAcctState();renderAccounting();}
-  if(tab==='travel'){renderTravel();}
   if(tab==='outreach'){initOutreachState();renderOutreach();}
   if(tab==='training'){initTrainingState();renderTraining();}
 }
@@ -3251,13 +3100,6 @@ document.getElementById('fn-date').value=today();
 document.getElementById('tk-due').value=today();
 document.getElementById('ex-date').value=today();
 document.getElementById('mi-date').value=today();
-(function(){
-  const d=new Date();d.setDate(d.getDate()+14);
-  const r=new Date();r.setDate(r.getDate()+18);
-  const fmtD=x=>x.toISOString().split('T')[0];
-  const td=document.getElementById('travel-depart');if(td)td.value=fmtD(d);
-  const tr=document.getElementById('travel-return');if(tr)tr.value=fmtD(r);
-})();
 renderPubButtons();
 
 // ═══════════════════════════
@@ -3519,7 +3361,7 @@ function renderFundTasks() {
       const overdue = t.due && t.due < todayStr && !t.done;
       const priColor = { high: 'var(--danger)', medium: 'var(--warn)', low: 'var(--success)' }[t.priority] || 'var(--text-muted)';
       return `<div class="task-item">
-        <div class="task-check ${t.done ? 'done' : ''}" onclick="toggleTask('${t.id}')">✓</div>
+        <div class="task-check ${t.done ? 'done' : ''}" onclick="toggleFundTask('${t.id}')">✓</div>
         <div class="task-body">
           <div class="task-title ${t.done ? 'done' : ''}">${t.title}</div>
           ${t.due ? `<div class="task-due ${overdue ? 'overdue' : ''}">Due ${t.due}${overdue ? ' ⚠ Overdue' : ''}</div>` : ''}
@@ -3634,7 +3476,7 @@ function addFundTask() {
   renderFundraising(); toast('✓ Task added');
 }
 
-function toggleTask(id) {
+function toggleFundTask(id) {
   initFundState();
   const t = (state.fundraising[activeOrg].tasks || []).find(x => x.id === id);
   if (t) { t.done = !t.done; saveFund('tasks'); renderFundTasks(); }
@@ -4022,233 +3864,6 @@ function deleteMileage(id) {
   state.accounting.mileage = state.accounting.mileage.filter(m => m.id !== id);
   saveLocal(); renderAcctMileage(); renderAccounting();
   toast('Deleted.');
-}
-
-// ═══════════════════════════
-//  TRAVEL
-// ═══════════════════════════
-const DEP_AIRPORTS = [
-  { code: 'DAY', name: 'Dayton' },
-  { code: 'CMH', name: 'Columbus' },
-  { code: 'CVG', name: 'Cincinnati' },
-  { code: 'CAK', name: 'Akron-Canton' },
-  { code: 'SDF', name: 'Louisville' },
-  { code: 'LCK', name: 'Rickenbacker' }
-];
-const DEST_AIRPORTS = [
-  { code: 'SRQ', name: 'Sarasota' },
-  { code: 'VPS', name: 'Destin-Ft Walton' },
-  { code: 'GSP', name: 'Greenville-Spartanburg' },
-  { code: 'DCA', name: 'DC Reagan' },
-  { code: 'BWI', name: 'Baltimore/Washington' },
-  { code: 'BNA', name: 'Nashville' }
-];
-let tripType = 'roundtrip';
-let selDepChip = 'DAY';
-let selDestChip = 'VPS';
-
-function initAcctState_TRAVEL_NOOP(){} // placeholder marker (unused)
-
-function initTravelState() {
-  if (!state.travel) state.travel = { trips: [] };
-}
-
-function populateAirportSelects() {
-  const fromSel = document.getElementById('travel-from');
-  const toSel = document.getElementById('travel-to');
-  const tripFromSel = document.getElementById('trip-from');
-  const tripToSel = document.getElementById('trip-to');
-
-  const depOpts = DEP_AIRPORTS.map(a => `<option value="${a.code}">${a.code} — ${a.name}</option>`).join('');
-  const destOpts = DEST_AIRPORTS.map(a => `<option value="${a.code}">${a.code} — ${a.name}</option>`).join('');
-
-  if (fromSel) fromSel.innerHTML = depOpts;
-  if (toSel) toSel.innerHTML = destOpts;
-  if (tripFromSel) tripFromSel.innerHTML = depOpts;
-  if (tripToSel) tripToSel.innerHTML = destOpts;
-}
-
-function setTripType(type) {
-  tripType = type;
-  document.getElementById('trip-roundtrip').classList.toggle('active', type === 'roundtrip');
-  document.getElementById('trip-oneway').classList.toggle('active', type === 'oneway');
-  document.getElementById('travel-return-box').style.display = type === 'oneway' ? 'none' : 'block';
-}
-
-function swapAirports() {
-  // Swap only works visually between the two selects if same list; since lists differ (dep vs dest),
-  // we just flip the selected codes between the two dropdowns regardless of list membership.
-  const fromSel = document.getElementById('travel-from');
-  const toSel = document.getElementById('travel-to');
-  const allAirports = [...DEP_AIRPORTS, ...DEST_AIRPORTS];
-  const fromVal = fromSel.value, toVal = toSel.value;
-  // Rebuild both selects with full combined list so swap always works
-  const fullOpts = allAirports.map(a => `<option value="${a.code}">${a.code} — ${a.name}</option>`).join('');
-  fromSel.innerHTML = fullOpts;
-  toSel.innerHTML = fullOpts;
-  fromSel.value = toVal;
-  toSel.value = fromVal;
-}
-
-function selectDepChip(code) {
-  selDepChip = code;
-  document.getElementById('travel-from').value = code;
-  renderAirportChips();
-}
-function selectDestChip(code) {
-  selDestChip = code;
-  document.getElementById('travel-to').value = code;
-  renderAirportChips();
-}
-
-function renderAirportChips() {
-  const depGrid = document.getElementById('dep-airport-grid');
-  const destGrid = document.getElementById('dest-airport-grid');
-  if (depGrid) {
-    depGrid.innerHTML = DEP_AIRPORTS.map(a => `
-      <div class="airport-chip ${a.code === selDepChip ? 'dep-selected' : ''}" onclick="selectDepChip('${a.code}')">
-        <div class="airport-chip-code">${a.code}</div>
-        <div class="airport-chip-name">${a.name}</div>
-      </div>`).join('');
-  }
-  if (destGrid) {
-    destGrid.innerHTML = DEST_AIRPORTS.map(a => `
-      <div class="airport-chip ${a.code === selDestChip ? 'dest-selected' : ''}" onclick="selectDestChip('${a.code}')">
-        <div class="airport-chip-code">${a.code}</div>
-        <div class="airport-chip-name">${a.name}</div>
-      </div>`).join('');
-  }
-}
-
-function renderQuickRoutes() {
-  const el = document.getElementById('quick-routes-list');
-  if (!el) return;
-  // A curated set of common Dan routes — Dayton/Columbus area to Florida + DC/NYC corridor
-  const routes = [
-    { from: 'DAY', to: 'VPS', label: 'Dayton → Destin' },
-    { from: 'DAY', to: 'TPA', label: 'Dayton → Tampa' },
-    { from: 'CMH', to: 'RDU', label: 'Columbus → Raleigh' },
-    { from: 'CVG', to: 'DCA', label: 'Cincinnati → DC Reagan' },
-    { from: 'DAY', to: 'JFK', label: 'Dayton → NYC JFK' },
-    { from: 'CMH', to: 'SRQ', label: 'Columbus → Sarasota' }
-  ];
-  el.innerHTML = routes.map(r => `
-    <div class="quick-route-card" onclick="quickRouteSearch('${r.from}','${r.to}')">
-      <div>
-        <div class="qr-route"><span class="qr-airport">${r.from}</span><span class="qr-arrow">→</span><span class="qr-airport">${r.to}</span></div>
-        <div class="qr-meta">${r.label}</div>
-      </div>
-      <div class="qr-go">›</div>
-    </div>`).join('');
-}
-
-function quickRouteSearch(from, to) {
-  document.getElementById('travel-from').value = from;
-  document.getElementById('travel-to').value = to;
-  selDepChip = from; selDestChip = to;
-  renderAirportChips();
-  document.getElementById('page-scroll').scrollTo({ top: 0, behavior: 'smooth' });
-  toast(`✓ Route set: ${from} → ${to}`);
-}
-
-function buildFlightLink(engine) {
-  const from = document.getElementById('travel-from').value || 'DAY';
-  const to = document.getElementById('travel-to').value || 'TPA';
-  const depart = document.getElementById('travel-depart').value || '';
-  const ret = document.getElementById('travel-return').value || '';
-  const rt = tripType === 'roundtrip';
-
-  const urls = {
-    google: 'https://www.google.com/travel/flights?q=Flights%20from%20' + from + '%20to%20' + to + (depart ? '%20on%20' + depart : '') + (rt && ret ? '%20through%20' + ret : ''),
-    kayak: 'https://www.kayak.com/flights/' + from + '-' + to + '/' + (depart || '') + (rt && ret ? '/' + ret : ''),
-    skyscanner: 'https://www.skyscanner.com/transport/flights/' + from.toLowerCase() + '/' + to.toLowerCase() + '/' + (depart ? depart.replace(/-/g,'').slice(2) : '') + '/' + (rt && ret ? ret.replace(/-/g,'').slice(2) : '') + '/',
-    southwest: 'https://www.southwest.com/air/booking/select.html?originationAirportCode=' + from + '&destinationAirportCode=' + to + '&departureDate=' + (depart||'') + '&returnDate=' + (rt ? (ret||'') : '') + '&tripType=' + (rt ? 'roundtrip' : 'oneway')
-  };
-
-  const link = document.getElementById('flight-link-' + engine);
-  if (link) link.href = urls[engine];
-  return true;
-}
-
-function addTrip() {
-  const name = document.getElementById('trip-name').value.trim();
-  if (!name) { toast('Trip name required.'); return; }
-  initTravelState();
-  const trip = {
-    id: uid(), name,
-    from: document.getElementById('trip-from').value,
-    to: document.getElementById('trip-to').value,
-    depart: document.getElementById('trip-depart').value,
-    return: document.getElementById('trip-return').value,
-    notes: document.getElementById('trip-notes').value.trim(),
-    ts: Date.now()
-  };
-  state.travel.trips.unshift(trip);
-  saveLocal();
-  closeSheet('sheet-add-trip');
-  clearFields(['trip-name','trip-depart','trip-return','trip-notes']);
-  renderSavedTrips();
-  toast('✓ Trip saved');
-}
-
-function deleteTrip(id) {
-  if (!confirm('Delete this trip?')) return;
-  state.travel.trips = state.travel.trips.filter(t => t.id !== id);
-  saveLocal();
-  renderSavedTrips();
-  toast('Trip removed.');
-}
-
-function renderSavedTrips() {
-  initTravelState();
-  const el = document.getElementById('saved-trips-list');
-  if (!el) return;
-  const trips = (state.travel.trips || []).sort((a, b) => b.ts - a.ts);
-  el.innerHTML = trips.length ? trips.map(t => `
-    <div class="trip-card">
-      <div class="trip-top">
-        <div>
-          <div class="trip-name">${t.name}</div>
-          ${t.from && t.to ? `<div class="trip-route">${t.from} → ${t.to}</div>` : ''}
-          ${t.depart ? `<div class="trip-dates">${t.depart}${t.return ? ' – ' + t.return : ''}</div>` : ''}
-        </div>
-        <button class="btn btn-ghost" style="padding:6px 12px;font-size:11px;flex:none;" onclick="searchFlightsForTrip('${t.id}')">✈️ Search</button>
-      </div>
-      ${t.notes ? `<div class="trip-notes">${t.notes}</div>` : ''}
-      <div class="trip-del" onclick="deleteTrip('${t.id}')">Delete</div>
-    </div>`).join('') : '<div class="empty-state"><div class="es-icon">🧳</div><div class="es-text">No saved trips yet. Add one above.</div></div>';
-}
-
-function searchFlightsForTrip(id) {
-  const t = state.travel.trips.find(x => x.id === id);
-  if (!t || !t.from || !t.to) { toast('Trip needs from/to airports set.'); return; }
-  document.getElementById('travel-from').value = t.from;
-  document.getElementById('travel-to').value = t.to;
-  if (t.depart) document.getElementById('travel-depart').value = t.depart;
-  if (t.return) document.getElementById('travel-return').value = t.return;
-  if (t.return) setTripType('roundtrip'); else setTripType('oneway');
-  searchFlights('google');
-}
-
-function renderTravel() {
-  initTravelState();
-  const d = new Date(); d.setDate(d.getDate()+14);
-  const r = new Date(); r.setDate(r.getDate()+18);
-  const fmt2 = x => x.toISOString().split('T')[0];
-  const td = document.getElementById('travel-depart');
-  const tr = document.getElementById('travel-return');
-  if (td && !td.value) td.value = fmt2(d);
-  if (tr && !tr.value) tr.value = fmt2(r);
-  const hci = document.getElementById('hotel-checkin');
-  const hco = document.getElementById('hotel-checkout');
-  if (hci && !hci.value) hci.value = fmt2(d);
-  if (hco && !hco.value) hco.value = fmt2(r);
-  ['google','kayak','skyscanner','southwest'].forEach(e => buildFlightLink(e));
-  buildHotelLinks();
-  renderSavedTrips();
-  // Always reload soccer schedule live from Erskine
-  soccerLoaded = false;
-  loadErskineSoccer();
 }
 
 // ═══════════════════════════
@@ -5000,7 +4615,7 @@ function switchTrainSeg(seg, el) {
   trainSeg = seg;
   document.querySelectorAll('.train-seg-item').forEach(s => s.classList.remove('active'));
   el.classList.add('active');
-  ['catalog','orgs','sessions','participants','reports'].forEach(s => {
+  ['catalog','design','orgs','sessions','participants','reports'].forEach(s => {
     document.getElementById('train-seg-' + s).style.display = s === seg ? 'block' : 'none';
   });
   renderTrainSeg();
@@ -5014,6 +4629,7 @@ function renderTraining() {
 function renderTrainSeg() {
   initTrainingState();
   if (trainSeg === 'catalog') renderTrainCatalog();
+  if (trainSeg === 'design') renderTrainDesign();
   if (trainSeg === 'orgs') renderTrainOrgs();
   if (trainSeg === 'sessions') renderTrainSessions();
   if (trainSeg === 'participants') renderTrainParticipants();
@@ -5045,6 +4661,210 @@ function renderTrainCatalog() {
         <div style="margin-top:8px;"><span style="font-size:12px;color:var(--danger);cursor:pointer;" onclick="deleteCatalogItem('${c.id}')">Delete</span></div>
       </div>`).join('')
     : '<div class="empty-state"><div class="es-icon">📚</div><div class="es-text">No courses in catalog yet.<br>Add your first training offering.</div></div>');
+}
+
+// ── DESIGN STUDIO (ADDIE + KOLB) ──
+const ADDIE_PHASES = [
+  {k:'analyze', name:'Analyze', icon:'🔍', goal:'Define the performance gap and who the learners are.',
+   prompts:['Audience, size and prior knowledge identified','Business problem / performance gap stated','Desired on-the-job behaviors defined','Constraints noted (time, budget, tech, delivery)']},
+  {k:'design', name:'Design', icon:'📐', goal:'Write measurable objectives and map the learning path.',
+   prompts:['Measurable objectives written (Bloom verbs)','Content outline and sequence drafted','Activities and assessments chosen','Delivery method and timing set']},
+  {k:'develop', name:'Develop', icon:'🛠️', goal:'Build the materials and test them.',
+   prompts:['Facilitator guide and slides built','Participant workbook / handouts ready','Assessments and evaluation forms created','Pilot or peer review completed']},
+  {k:'implement', name:'Implement', icon:'🚀', goal:'Deliver the program and support learners.',
+   prompts:['Logistics confirmed (room, platform, invites)','Facilitator prepared / trained','Pre-work sent to participants','Program delivered']},
+  {k:'evaluate', name:'Evaluate', icon:'📊', goal:'Measure results and improve the next round.',
+   prompts:['Reaction (L1): post-session survey','Learning (L2): knowledge / skill check','Behavior (L3): 30-60-90 day follow-up','Results (L4): business impact tracked']}
+];
+const KOLB_STAGES = [
+  {k:'ce', name:'Concrete Experience', short:'Experience', icon:'🎯', tip:'Learners DO something real: simulation, case, role-play, challenge.'},
+  {k:'ro', name:'Reflective Observation', short:'Reflect', icon:'🪞', tip:'Step back and debrief: journaling, pair-share, "what happened?"'},
+  {k:'ac', name:'Abstract Conceptualization', short:'Conceptualize', icon:'💡', tip:'Connect to models and theory: mini-lecture, framework, reading.'},
+  {k:'ae', name:'Active Experimentation', short:'Apply', icon:'🧪', tip:'Try it: action plan, practice, on-the-job assignment.'}
+];
+const ADDIE_STATUS = {todo:'Not started', doing:'In progress', done:'Done'};
+let designOpenId = null;
+let designTab = 'addie';
+
+function initDesigns() { if (!state.trainingDesigns) state.trainingDesigns = []; }
+function dEsc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function getDesign(id) { initDesigns(); return state.trainingDesigns.find(d => d.id === id); }
+
+function designProgress(d) {
+  const addieDone = ADDIE_PHASES.filter(p => d.addie[p.k].status === 'done').length;
+  const kolbDone = KOLB_STAGES.filter(s => (d.kolb[s.k] || '').trim()).length;
+  return { addieDone, kolbDone };
+}
+
+function renderTrainDesign() {
+  initDesigns();
+  const el = document.getElementById('train-seg-design');
+  if (!el) return;
+  if (designOpenId && getDesign(designOpenId)) { renderDesignDetail(el); return; }
+  designOpenId = null;
+  const items = state.trainingDesigns;
+  let html = '<button class="btn btn-primary btn-full" style="margin-bottom:6px;" onclick="openAddDesign()">💡 New Design Idea</button>';
+  html += '<div class="dz-intro">Capture a training idea, then shape it with <b>ADDIE</b> (how to build it) and <b>Kolb</b> (how people learn it).</div>';
+  if (!items.length) {
+    html += '<div class="empty-state"><div class="es-icon">🧩</div><div class="es-text">No design ideas yet.<br>Add one to start mapping it to ADDIE and Kolb.</div></div>';
+  } else {
+    html += items.map(d => {
+      const pr = designProgress(d);
+      const cat = d.catalogId ? (state.trainingCatalog || []).find(c => c.id === d.catalogId) : null;
+      const org = d.orgId ? (state.trainingOrgs || []).find(o => o.id === d.orgId) : null;
+      const tags = (cat ? '<span class="catalog-tag">📚 ' + dEsc(cat.title) + '</span>' : '') + (org ? '<span class="catalog-tag green">🏢 ' + dEsc(org.name) + '</span>' : '');
+      return '<div class="catalog-card" onclick="openDesign(\'' + d.id + '\')" style="cursor:pointer;">'
+        + '<div class="catalog-title">' + dEsc(d.title) + '</div>'
+        + (d.idea ? '<div class="catalog-desc">' + dEsc(d.idea.length > 120 ? d.idea.slice(0,120) + '…' : d.idea) + '</div>' : '')
+        + (tags ? '<div class="catalog-meta">' + tags + '</div>' : '')
+        + '<div class="dz-mini"><div><span class="dz-mini-label">ADDIE</span>' + dzDots(pr.addieDone, 5) + '</div>'
+        + '<div><span class="dz-mini-label">Kolb</span>' + dzDots(pr.kolbDone, 4) + '</div></div>'
+        + '</div>';
+    }).join('');
+  }
+  el.innerHTML = html;
+}
+
+function dzDots(n, total) {
+  let s = '';
+  for (let i = 0; i < total; i++) s += '<span class="dz-dot' + (i < n ? ' on' : '') + '"></span>';
+  return '<span class="dz-dots">' + s + '</span>';
+}
+
+function openDesign(id) { designOpenId = id; designTab = 'addie'; renderTrainDesign(); document.getElementById('page-scroll').scrollTo({top:0,behavior:'instant'}); }
+function closeDesign() { designOpenId = null; renderTrainDesign(); }
+function switchDesignTab(t) { designTab = t; renderTrainDesign(); }
+
+function renderDesignDetail(el) {
+  const d = getDesign(designOpenId);
+  const pr = designProgress(d);
+  let h = '<div class="dz-back" onclick="closeDesign()">← All design ideas</div>';
+  h += '<div class="catalog-card"><div class="catalog-title">' + dEsc(d.title) + '</div>';
+  h += '<textarea class="form-control" style="margin-top:8px;min-height:60px;" placeholder="The idea: what problem does this solve, who is it for?" onchange="setDesignIdea(\'' + d.id + '\', this.value)">' + dEsc(d.idea) + '</textarea>';
+  h += '<div style="margin-top:8px;display:flex;gap:14px;font-size:12px;color:var(--text-muted);"><div>ADDIE ' + pr.addieDone + '/5 done</div><div>Kolb ' + pr.kolbDone + '/4 stages</div></div>';
+  h += '<div style="margin-top:8px;"><span style="font-size:12px;color:var(--danger);cursor:pointer;" onclick="deleteDesign(\'' + d.id + '\')">Delete idea</span></div></div>';
+  h += '<div class="train-seg" style="margin-top:4px;">'
+    + '<div class="train-seg-item' + (designTab === 'addie' ? ' active' : '') + '" onclick="switchDesignTab(\'addie\')">ADDIE</div>'
+    + '<div class="train-seg-item' + (designTab === 'kolb' ? ' active' : '') + '" onclick="switchDesignTab(\'kolb\')">Kolb Cycle</div></div>';
+  h += '<button class="btn btn-ghost btn-full" id="dz-ai-btn" style="margin-bottom:10px;" onclick="aiDraftDesign(\'' + d.id + '\')">✨ Draft ' + (designTab === 'addie' ? 'ADDIE notes' : 'Kolb activities') + ' with AI</button>';
+  h += designTab === 'addie' ? addieHTML(d) : kolbHTML(d);
+  el.innerHTML = h;
+}
+
+function addieHTML(d) {
+  return ADDIE_PHASES.map((p, idx) => {
+    const ph = d.addie[p.k];
+    const checks = p.prompts.map((t, i) =>
+      '<label class="dz-check"><input type="checkbox" ' + (ph.checks[i] ? 'checked ' : '') + 'onchange="toggleAddieCheck(\'' + d.id + '\',\'' + p.k + '\',' + i + ')"><span>' + dEsc(t) + '</span></label>'
+    ).join('');
+    return '<div class="dz-phase dz-' + ph.status + '">'
+      + '<div class="dz-phase-top"><div class="dz-phase-name">' + p.icon + ' ' + (idx + 1) + '. ' + p.name + '</div>'
+      + '<div class="dz-status" onclick="cycleAddieStatus(\'' + d.id + '\',\'' + p.k + '\')">' + ADDIE_STATUS[ph.status] + '</div></div>'
+      + '<div class="dz-goal">' + p.goal + '</div>'
+      + checks
+      + '<textarea class="form-control" style="margin-top:8px;min-height:70px;" placeholder="Notes, decisions, ideas for ' + p.name.toLowerCase() + '…" onchange="setAddieNote(\'' + d.id + '\',\'' + p.k + '\', this.value)">' + dEsc(ph.notes) + '</textarea>'
+      + '</div>';
+  }).join('');
+}
+
+function kolbHTML(d) {
+  const filled = KOLB_STAGES.filter(s => (d.kolb[s.k] || '').trim());
+  const missing = KOLB_STAGES.filter(s => !(d.kolb[s.k] || '').trim());
+  let h = '<div class="dz-cycle">' + KOLB_STAGES.map((s, i) =>
+    '<div class="dz-cycle-step' + ((d.kolb[s.k] || '').trim() ? ' on' : '') + '">' + s.icon + '<span>' + s.short + '</span></div>' + (i < 3 ? '<div class="dz-arrow">→</div>' : '')
+  ).join('') + '</div>';
+  h += '<div class="dz-note">' + (filled.length === 4
+    ? '✅ Full cycle covered. Learners experience, reflect, conceptualize and apply.'
+    : 'Missing: <b>' + missing.map(s => s.short).join(', ') + '</b>. Programs that skip stages tend to stall at lecture or activity only.') + '</div>';
+  h += KOLB_STAGES.map((s, i) =>
+    '<div class="dz-phase ' + ((d.kolb[s.k] || '').trim() ? 'dz-done' : 'dz-todo') + '">'
+    + '<div class="dz-phase-name">' + s.icon + ' ' + (i + 1) + '. ' + s.name + '</div>'
+    + '<div class="dz-goal">' + s.tip + '</div>'
+    + '<textarea class="form-control" style="margin-top:6px;min-height:70px;" placeholder="What will learners do in this stage?" onchange="setKolbText(\'' + d.id + '\',\'' + s.k + '\', this.value)">' + dEsc(d.kolb[s.k]) + '</textarea>'
+    + '</div>'
+  ).join('');
+  h += '<div class="dz-note" style="margin-top:10px;"><b>Learning styles:</b> Diverging (feel + watch), Assimilating (watch + think), Converging (think + do), Accommodating (do + feel). A balanced design serves all four.</div>';
+  return h;
+}
+
+function setDesignIdea(id, v) { const d = getDesign(id); if (!d) return; d.idea = v; saveLocal(); }
+function setAddieNote(id, k, v) { const d = getDesign(id); if (!d) return; d.addie[k].notes = v; saveLocal(); }
+function setKolbText(id, k, v) { const d = getDesign(id); if (!d) return; d.kolb[k] = v; saveLocal(); renderTrainDesign(); }
+function toggleAddieCheck(id, k, i) { const d = getDesign(id); if (!d) return; d.addie[k].checks[i] = !d.addie[k].checks[i]; saveLocal(); }
+function cycleAddieStatus(id, k) {
+  const d = getDesign(id); if (!d) return;
+  const order = ['todo','doing','done'];
+  const ph = d.addie[k];
+  ph.status = order[(order.indexOf(ph.status) + 1) % 3];
+  saveLocal(); renderTrainDesign();
+}
+
+function openAddDesign() {
+  initTrainingState();
+  const cs = document.getElementById('dz-catalog');
+  const os = document.getElementById('dz-org');
+  cs.innerHTML = '<option value="">None</option>' + (state.trainingCatalog || []).map(c => '<option value="' + c.id + '">' + dEsc(c.title) + '</option>').join('');
+  os.innerHTML = '<option value="">None</option>' + (state.trainingOrgs || []).map(o => '<option value="' + o.id + '">' + dEsc(o.name) + '</option>').join('');
+  openSheet('sheet-add-design');
+}
+
+function addDesign() {
+  const title = document.getElementById('dz-title').value.trim();
+  if (!title) { toast('Give the idea a title.'); return; }
+  initDesigns();
+  const addie = {};
+  ADDIE_PHASES.forEach(p => { addie[p.k] = { status:'todo', notes:'', checks: p.prompts.map(() => false) }; });
+  const d = {
+    id: uid(), title,
+    idea: document.getElementById('dz-idea').value.trim(),
+    catalogId: document.getElementById('dz-catalog').value,
+    orgId: document.getElementById('dz-org').value,
+    addie, kolb: { ce:'', ro:'', ac:'', ae:'' }, ts: Date.now()
+  };
+  state.trainingDesigns.unshift(d);
+  saveLocal(); closeSheet('sheet-add-design');
+  clearFields(['dz-title','dz-idea']);
+  openDesign(d.id); toast('✓ Idea saved');
+}
+
+function deleteDesign(id) {
+  if (!confirm('Delete this design idea?')) return;
+  state.trainingDesigns = state.trainingDesigns.filter(d => d.id !== id);
+  saveLocal(); closeDesign(); toast('Deleted.');
+}
+
+async function aiDraftDesign(id) {
+  const d = getDesign(id); if (!d) return;
+  const btn = document.getElementById('dz-ai-btn');
+  const isAddie = designTab === 'addie';
+  btn.textContent = '✨ Drafting…'; btn.disabled = true;
+  const keys = isAddie ? ADDIE_PHASES.map(p => p.k) : KOLB_STAGES.map(s => s.k);
+  const spec = isAddie
+    ? 'ADDIE phases. For each key (analyze, design, develop, implement, evaluate) give 2-3 short, concrete sentences of notes specific to this program.'
+    : 'Kolb experiential learning cycle. For each key (ce = Concrete Experience, ro = Reflective Observation, ac = Abstract Conceptualization, ae = Active Experimentation) describe one specific learner activity for this program in 1-2 sentences.';
+  const prompt = 'You are an instructional designer helping a leadership development consultant.\n'
+    + 'Training idea: ' + d.title + '\nDetails: ' + (d.idea || 'none given') + '\n\n'
+    + 'Draft ' + spec + '\nReturn ONLY valid JSON with exactly these keys: ' + keys.join(', ') + '. Values are plain strings.';
+  try {
+    const resp = await fetch('https://orange-unit-d4c5.dan-29e.workers.dev', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1200, messages: [{ role: 'user', content: prompt }] })
+    });
+    const data = await resp.json();
+    const raw = (data.content || []).find(b => b.type === 'text');
+    const out = JSON.parse((raw ? raw.text : '{}').replace(/```json|```/g, '').trim());
+    let filled = 0;
+    keys.forEach(k => {
+      if (!out[k]) return;
+      if (isAddie) { if (!d.addie[k].notes.trim()) { d.addie[k].notes = out[k]; filled++; } }
+      else { if (!(d.kolb[k] || '').trim()) { d.kolb[k] = out[k]; filled++; } }
+    });
+    saveLocal(); renderTrainDesign();
+    toast(filled ? '✨ Drafted ' + filled + ' section' + (filled > 1 ? 's' : '') : 'Nothing empty to fill.');
+  } catch (e) {
+    toast('AI unavailable. Try again.');
+    renderTrainDesign();
+  }
 }
 
 // ── ORGS ──
@@ -5504,182 +5324,6 @@ function renderDashTasks() {
         </div>`;
       }).join('')}` : '';
   }
-}
-
-function buildHotelLinks() {
-  const checkin = document.getElementById('hotel-checkin').value || '';
-  const checkout = document.getElementById('hotel-checkout').value || '';
-
-  const expedia = 'https://www.expedia.com/Hotel-Search?destination=Due+West%2C+South+Carolina&sort=distance' +
-    (checkin ? '&startDate=' + checkin : '') + (checkout ? '&endDate=' + checkout : '');
-  const hotelscom = 'https://www.hotels.com/search.do?q-destination=Due+West%2C+SC' +
-    (checkin ? '&q-check-in=' + checkin : '') + (checkout ? '&q-check-out=' + checkout : '');
-  const marriott = 'https://www.marriott.com/search/default.mi?address=Greenwood%2C+SC' +
-    (checkin ? '&fromDate=' + checkin.replace(/-/g,'') : '') + (checkout ? '&toDate=' + checkout.replace(/-/g,'') : '');
-  const hilton = 'https://www.hilton.com/en/locations/usa/south-carolina/greenwood/' +
-    (checkin ? '?arrivalDate=' + checkin + '&departureDate=' + (checkout||checkin) : '');
-  const ihg = 'https://www.ihg.com/hotels/us/en/find-hotels/hotel/list?qDest=Greenwood%2C+SC%2C+United+States' +
-    (checkin ? '&qChkIn=' + checkin + '&qChkOut=' + (checkout||checkin) : '');
-  const hyatt = 'https://www.hyatt.com/search/results?location=Greenville%2C+SC' +
-    (checkin ? '&checkinDate=' + checkin + '&checkoutDate=' + (checkout||checkin) : '');
-
-  const links = {expedia,hotels:hotelscom,marriott,hilton,ihg,hyatt};
-  Object.entries(links).forEach(([key, url]) => {
-    const el = document.getElementById('hotel-link-' + key);
-    if (el) el.href = url;
-  });
-  return true;
-}
-
-// ═══════════════════════════
-//  ERSKINE SOCCER — LIVE ICS FEED
-// ═══════════════════════════
-const ERSKINE_ICS_URL = 'http://erskinesports.com/calendar.ashx/calendar.ics?sport_id=3&_=cms651dyr00013d9gpxh7vjgx';
-let erskineSoccer = [];
-let socFilter = 'all';
-let soccerLoaded = false;
-
-function parseICS(icsText) {
-  const events = [];
-  const blocks = icsText.split('BEGIN:VEVENT');
-  blocks.slice(1).forEach(block => {
-    const get = (key) => {
-      const match = block.match(new RegExp(key + '[^:]*:([^\\r\\n]+)'));
-      return match ? match[1].trim() : '';
-    };
-    const summary = get('SUMMARY').replace(/\\n/g,'').replace(/Men's Soccer /,'').trim();
-    const location = get('LOCATION').replace(/\\,/g,',').trim();
-    const dtstart = get('DTSTART');
-    const url = get('URL');
-
-    let date = '', time = 'TBD';
-    if (dtstart.includes('T')) {
-      // Has time — parse UTC
-      const y = dtstart.slice(0,4), m = dtstart.slice(4,6), d = dtstart.slice(6,8);
-      const h = parseInt(dtstart.slice(9,11)), mn = dtstart.slice(11,13);
-      // Convert UTC to Eastern (UTC-4 summer, UTC-5 winter)
-      const utcDate = new Date(`${y}-${m}-${d}T${dtstart.slice(9,15)}Z`);
-      date = utcDate.toLocaleDateString('en-CA', {timeZone:'America/New_York'}); // YYYY-MM-DD
-      time = utcDate.toLocaleTimeString('en-US', {timeZone:'America/New_York', hour:'numeric', minute:'2-digit'});
-    } else if (dtstart.includes('DATE:')) {
-      date = dtstart.replace('DATE:','').slice(0,4) + '-' + dtstart.replace('DATE:','').slice(4,6) + '-' + dtstart.replace('DATE:','').slice(6,8);
-      time = 'TBD';
-    } else if (dtstart.length >= 8) {
-      date = dtstart.slice(0,4) + '-' + dtstart.slice(4,6) + '-' + dtstart.slice(6,8);
-    }
-
-    if (!summary || !date) return;
-
-    const home = summary.startsWith('vs') || location.toLowerCase().includes('due west') || location.toLowerCase().includes('lundy');
-    const isExhibition = summary.toLowerCase().includes('exhibition');
-    const cleanSummary = summary.replace(/ - Exhibition/gi,'').replace(/ - exhibition/gi,'').trim();
-
-    events.push({ date, time, summary: cleanSummary, location, home, isExhibition, url });
-  });
-  return events.sort((a,b) => a.date.localeCompare(b.date));
-}
-
-async function loadErskineSoccer() {
-  const el = document.getElementById('soccer-schedule-list');
-  if (!el) return;
-  el.innerHTML = '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:13px;">⚽ Loading schedule…</div>';
-
-  try {
-    // Use a CORS proxy since the ICS is HTTP not HTTPS
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(ERSKINE_ICS_URL);
-    const resp = await fetch(proxyUrl);
-    if (!resp.ok) throw new Error('Failed to fetch');
-    const text = await resp.text();
-    erskineSoccer = parseICS(text);
-    soccerLoaded = true;
-    renderSoccerSchedule();
-  } catch(e) {
-    // Fallback to hardcoded if fetch fails
-    erskineSoccer = [
-      {date:'2026-08-17',time:'3:00 PM',summary:'vs USC Salkehatchie',location:'Due West, SC — Lundy Field',home:true,isExhibition:true},
-      {date:'2026-08-20',time:'3:00 PM',summary:'vs USC Union',location:'Due West, SC — Lundy Field',home:true,isExhibition:true},
-      {date:'2026-08-27',time:'1:00 PM',summary:'vs Ferrum College',location:'Due West, SC — Lundy Field',home:true,isExhibition:false},
-      {date:'2026-09-01',time:'6:00 PM',summary:'at USC Aiken',location:'Aiken, SC',home:false,isExhibition:false},
-      {date:'2026-09-05',time:'TBD',summary:'at Shorter University',location:'Rome, GA',home:false,isExhibition:false},
-      {date:'2026-09-08',time:'4:30 PM',summary:'vs Young Harris College',location:'Due West, SC — Lundy Field',home:true,isExhibition:false},
-      {date:'2026-09-12',time:'3:00 PM',summary:'at Chowan University',location:'Murfreesboro, NC',home:false,isExhibition:false},
-      {date:'2026-09-16',time:'4:30 PM',summary:'vs Southern Wesleyan University',location:'Due West, SC — Lundy Field',home:true,isExhibition:false},
-      {date:'2026-09-19',time:'TBD',summary:'at North Greenville University',location:'Tigerville, SC',home:false,isExhibition:false},
-      {date:'2026-09-26',time:'4:00 PM',summary:'at Lees-McRae College',location:'Banner Elk, NC',home:false,isExhibition:false},
-      {date:'2026-09-30',time:'6:30 PM',summary:'at Young Harris College',location:'Young Harris, GA',home:false,isExhibition:false},
-      {date:'2026-10-03',time:'3:30 PM',summary:'vs Barton College',location:'Due West, SC — Lundy Field',home:true,isExhibition:false},
-      {date:'2026-10-06',time:'3:30 PM',summary:'vs Emmanuel University',location:'Due West, SC — Lundy Field',home:true,isExhibition:false},
-      {date:'2026-10-10',time:'3:30 PM',summary:'vs Shorter University',location:'Due West, SC — Lundy Field',home:true,isExhibition:false},
-      {date:'2026-10-14',time:'7:00 PM',summary:'at Southern Wesleyan University',location:'Central, SC',home:false,isExhibition:false},
-      {date:'2026-10-17',time:'3:30 PM',summary:'vs Converse University',location:'Due West, SC — Lundy Field',home:true,isExhibition:false},
-      {date:'2026-10-24',time:'4:00 PM',summary:'at Emmanuel University',location:'Franklin Springs, GA',home:false,isExhibition:false},
-    ];
-    soccerLoaded = true;
-    renderSoccerSchedule();
-    console.log('Soccer schedule: using fallback data');
-  }
-}
-
-function setSocFilter(f) {
-  socFilter = f;
-  document.getElementById('soc-filter-all').className = 'task-filter-pill' + (f==='all'?' active':'');
-  document.getElementById('soc-filter-away').className = 'task-filter-pill' + (f==='away'?' active':'');
-  renderSoccerSchedule();
-}
-
-function renderSoccerSchedule() {
-  const el = document.getElementById('soccer-schedule-list');
-  if (!el) return;
-  if (!soccerLoaded) { loadErskineSoccer(); return; }
-
-  const todayStr = today();
-  const games = socFilter === 'away' ? erskineSoccer.filter(g=>!g.home) : erskineSoccer;
-  const upcoming = games.filter(g=>g.date >= todayStr);
-  const past = games.filter(g=>g.date < todayStr);
-
-  const renderGame = (g) => {
-    const isPast = g.date < todayStr;
-    const d = new Date(g.date + 'T12:00:00');
-    const dateStr = d.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
-    return `<div style="display:flex;align-items:stretch;gap:0;margin-bottom:8px;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.06);opacity:${isPast?'.55':'1'};">
-      <div style="width:5px;background:${g.home?'#2563EB':'#D97706'};flex-shrink:0;"></div>
-      <div style="background:var(--white);padding:11px 13px;flex:1;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
-          <div>
-            <div style="font-size:13px;font-weight:700;color:var(--text-primary);">${g.summary}</div>
-            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">📍 ${g.location}</div>
-          </div>
-          <div style="text-align:right;flex-shrink:0;">
-            <div style="font-size:11px;font-weight:700;color:var(--text-secondary);">${dateStr}</div>
-            <div style="font-size:11px;color:var(--text-muted);">${g.time}</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:6px;margin-top:7px;align-items:center;">
-          <span style="font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;background:${g.home?'#DBEAFE':'#FEF3C7'};color:${g.home?'#1D4ED8':'#92400E'};">${g.home?'HOME':'AWAY'}</span>
-          ${g.isExhibition?'<span style="font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--surface);color:var(--text-muted);">Exhibition</span>':''}
-          ${!g.home&&!isPast?`<button onclick="prefillTravelFromGame('${g.date}','${g.location.replace(/'/g,"\\'")}','${g.summary.replace(/'/g,"\\'")}');" style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--navy);color:white;border:none;cursor:pointer;margin-left:auto;">✈️ Plan Trip</button>`:''}
-        </div>
-      </div>
-    </div>`;
-  };
-
-  const total = erskineSoccer.length;
-  document.querySelectorAll('.soccer-count').forEach(el => el.textContent = total + ' Games');
-
-  el.innerHTML = (upcoming.length ? upcoming.map(renderGame).join('') : '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:13px;">Season complete!</div>') +
-    (past.length ? `<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:12px 0 8px;">Past Games</div>` + [...past].reverse().map(renderGame).join('') : '');
-}
-
-function prefillTravelFromGame(date, location, summary) {
-  document.getElementById('page-scroll').scrollTo({top:0,behavior:'smooth'});
-  document.getElementById('travel-depart').value = date;
-  document.getElementById('trip-name').value = 'Erskine Soccer — ' + summary;
-  document.getElementById('trip-depart').value = date;
-  document.getElementById('trip-notes').value = location;
-  const tFromSel = document.getElementById('trip-from');
-  if (tFromSel) tFromSel.value = 'DAY';
-  openSheet('sheet-add-trip');
-  toast('✈️ Trip pre-filled — check dates and save!');
 }
 
 load();
